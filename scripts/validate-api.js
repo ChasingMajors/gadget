@@ -7,6 +7,11 @@ const cases = [
     expected: "2025-26 Topps Finest First Ace Bailey Sky Blue Refractor /150 RC"
   },
   {
+    query: "2025-26 Topps NBA Flagship Basketball Ace Bailey RC Rookie #205 Utah Jazz Base",
+    expected: "2025-26 Topps Basketball Ace Bailey #205 RC",
+    expectedPrintRun: 1265000
+  },
+  {
     query: "2022 Panini Prizm Patrick Mahomes Color Blast SSP PSA 10",
     expected: "2022 Panini Prizm Patrick Mahomes Color Blast SSP"
   },
@@ -29,7 +34,8 @@ for (const testCase of cases) {
 
   const passed = testCase.expected === "Unknown"
     ? response.rarityTier === "Unknown"
-    : response.title === testCase.expected;
+    : response.title === testCase.expected
+      && (testCase.expectedPrintRun === undefined || response.printRun === testCase.expectedPrintRun);
 
   if (!passed) {
     failures.push({
