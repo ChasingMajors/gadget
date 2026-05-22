@@ -14,6 +14,7 @@ Chrome extension scaffold for Chasing Majors rarity intelligence on eBay and COM
 - `storage.js`: user state and daily free lookup tracking with `chrome.storage.local`.
 - `styles.css`: isolated overlay styling.
 - `backend/`: minimal hosted `/rarity` API for MVP trials.
+- `PRV_IMPORT.md`: CSV import workflow for expanding the Worker dataset from PRV.
 
 ## API Contract
 
