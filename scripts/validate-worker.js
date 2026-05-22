@@ -1,0 +1,31 @@
+const fs = require("fs");
+
+const required = [
+  "wrangler.toml",
+  "backend/worker.js",
+  "backend/worker-matcher.js",
+  "backend/data/cards.json"
+];
+
+const missing = required.filter((file) => !fs.existsSync(file));
+
+if (missing.length) {
+  console.error("Missing Cloudflare Worker files:");
+  missing.forEach((file) => console.error(`- ${file}`));
+  process.exit(1);
+}
+
+const worker = fs.readFileSync("backend/worker.js", "utf8");
+const wrangler = fs.readFileSync("wrangler.toml", "utf8");
+
+if (!worker.includes("export default")) {
+  console.error("backend/worker.js must export a default Worker handler");
+  process.exit(1);
+}
+
+if (!wrangler.includes('main = "backend/worker.js"')) {
+  console.error("wrangler.toml must point main to backend/worker.js");
+  process.exit(1);
+}
+
+console.log("Cloudflare Worker validation passed.");

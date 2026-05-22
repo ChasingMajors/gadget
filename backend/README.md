@@ -25,7 +25,16 @@ Environment:
 
 ## Deploy
 
-This service has no package dependencies. It can be deployed to Render, Railway, Fly.io, a VPS, or any Node-compatible host. Point `https://api.chasingmajors.com` at the hosted service and confirm:
+This service has no package dependencies. It can be deployed to Cloudflare Workers using `backend/worker.js`, or to any Node-compatible host using `backend/server.js`.
+
+For Cloudflare Workers, deploy with:
+
+```txt
+wrangler.toml
+main = "backend/worker.js"
+```
+
+Point `https://api.chasingmajors.com` at the hosted service and confirm:
 
 ```txt
 https://api.chasingmajors.com/health

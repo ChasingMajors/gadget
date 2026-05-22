@@ -8,6 +8,7 @@
     "api:validate": "node scripts/validate-api.js",
     "generate:icons": "node scripts/generate-icons.js",
     "validate": "node scripts/validate-extension.js",
-    "validate:all": "node scripts/validate-extension.js && node scripts/validate-api.js"
+    "validate:worker": "node scripts/validate-worker.js",
+    "validate:all": "node scripts/validate-extension.js && node scripts/validate-api.js && node scripts/validate-worker.js"
   }
 }

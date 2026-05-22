@@ -77,6 +77,7 @@ Run:
 ```bash
 npm run validate
 npm run api:validate
+npm run validate:worker
 npm run validate:all
 ```
 
