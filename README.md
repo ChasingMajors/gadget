@@ -70,6 +70,8 @@ https://cm-rarity-api.johndownard.workers.dev
 
 Before production submission, point `API_BASE_URL` to `https://api.chasingmajors.com`.
 
+`API_CACHE_TTL_MS` is currently `0` so MVP data corrections appear immediately while testing.
+
 ## Chrome Web Store Notes
 
 This scaffold avoids bundled paid rarity data. Free users only see limited fields, paid users can see all fields returned by the backend when they are not marked locked by `lockedFields`.

@@ -2,6 +2,10 @@ importScripts("config.js");
 
 const cache = new Map();
 
+function cacheTtlMs() {
+  return Number(globalThis.CM_RARITY_CONFIG.API_CACHE_TTL_MS || 0);
+}
+
 function normalizedApiBase() {
   return globalThis.CM_RARITY_CONFIG.API_BASE_URL.replace(/\/+$/, "");
 }
@@ -34,9 +38,11 @@ function sanitizeApiResponse(data, title) {
 
 async function fetchRarity(payload) {
   const cacheKey = `${payload.source}:${payload.title}:${payload.pageUrl}`;
+  const ttl = cacheTtlMs();
+  const cached = cache.get(cacheKey);
 
-  if (cache.has(cacheKey)) {
-    return cache.get(cacheKey);
+  if (ttl > 0 && cached && Date.now() - cached.timestamp < ttl) {
+    return cached.rarity;
   }
 
   const response = await fetch(buildRarityUrl(payload), {
@@ -52,7 +58,12 @@ async function fetchRarity(payload) {
   }
 
   const rarity = sanitizeApiResponse(await response.json(), payload.title);
-  cache.set(cacheKey, rarity);
+  if (ttl > 0) {
+    cache.set(cacheKey, {
+      rarity,
+      timestamp: Date.now()
+    });
+  }
   return rarity;
 }
 

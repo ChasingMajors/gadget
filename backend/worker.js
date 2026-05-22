@@ -10,7 +10,7 @@ function json(body, status = 200) {
       "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Methods": "GET, OPTIONS",
       "Access-Control-Allow-Headers": "Accept, Content-Type, Authorization, X-CM-User-State",
-      "Cache-Control": status === 200 ? "public, max-age=300" : "no-store",
+      "Cache-Control": "no-store",
       "Content-Type": "application/json; charset=utf-8"
     }
   });

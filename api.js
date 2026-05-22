@@ -32,6 +32,10 @@
     return window.CM_RARITY_CONFIG;
   }
 
+  function cacheTtlMs() {
+    return Number(config().API_CACHE_TTL_MS || 0);
+  }
+
   function normalizedApiBase() {
     return config().API_BASE_URL.replace(/\/+$/, "");
   }
@@ -116,9 +120,11 @@
 
   async function fetchRarity({ title, source, pageUrl }) {
     const cacheKey = `${source}:${title}:${pageUrl}`;
+    const ttl = cacheTtlMs();
+    const cached = cache.get(cacheKey);
 
-    if (cache.has(cacheKey)) {
-      return cache.get(cacheKey);
+    if (ttl > 0 && cached && Date.now() - cached.timestamp < ttl) {
+      return cached.rarity;
     }
 
     try {
@@ -126,11 +132,21 @@
       const rarity = canUseBackgroundProxy()
         ? await fetchViaBackground(payload)
         : await fetchDirect(payload);
-      cache.set(cacheKey, rarity);
+      if (ttl > 0) {
+        cache.set(cacheKey, {
+          rarity,
+          timestamp: Date.now()
+        });
+      }
       return rarity;
     } catch (error) {
       const fallback = fallbackResponse(title);
-      cache.set(cacheKey, fallback);
+      if (ttl > 0) {
+        cache.set(cacheKey, {
+          rarity: fallback,
+          timestamp: Date.now()
+        });
+      }
       return fallback;
     }
   }
