@@ -65,6 +65,30 @@
     return panel;
   }
 
+  function positionPanel(panel, badge) {
+    const margin = 12;
+    const gap = 8;
+    const badgeRect = badge.getBoundingClientRect();
+    const panelRect = panel.getBoundingClientRect();
+    const width = panelRect.width || 300;
+    const height = panelRect.height || 220;
+    const viewportWidth = document.documentElement.clientWidth;
+    const viewportHeight = document.documentElement.clientHeight;
+
+    let left = badgeRect.right - width;
+    let top = badgeRect.top - height - gap;
+
+    if (top < margin) {
+      top = badgeRect.bottom + gap;
+    }
+
+    left = Math.max(margin, Math.min(left, viewportWidth - width - margin));
+    top = Math.max(margin, Math.min(top, viewportHeight - height - margin));
+
+    panel.style.left = `${Math.round(left)}px`;
+    panel.style.top = `${Math.round(top)}px`;
+  }
+
   function renderPanel(panel, listing, rarity, accessState) {
     const fields = ["rarityTier", "scarcityScore", "printRun", "packOdds", "popTotal", "popGem"];
     const upgradeUrl = rarity.upgradeUrl || `${window.CM_RARITY_CONFIG.APP_URL}/upgrade`;
@@ -174,7 +198,8 @@
     const panel = createPanelShell();
     panel.hidden = true;
 
-    wrapper.append(badge, panel);
+    wrapper.append(badge);
+    document.body.append(panel);
 
     const container = listing.container;
     const computed = window.getComputedStyle(container);
@@ -189,7 +214,9 @@
     async function showPanel() {
       panel.hidden = false;
       wrapper.classList.add("cm-rarity-active");
+      positionPanel(panel, badge);
       await handlers.onOpen(panel);
+      positionPanel(panel, badge);
     }
 
     function hidePanel() {
@@ -200,6 +227,17 @@
       panel.hidden = true;
       wrapper.classList.remove("cm-rarity-active");
     }
+
+    window.addEventListener("scroll", () => {
+      if (!panel.hidden) {
+        positionPanel(panel, badge);
+      }
+    }, true);
+    window.addEventListener("resize", () => {
+      if (!panel.hidden) {
+        positionPanel(panel, badge);
+      }
+    });
 
     badge.addEventListener("mouseenter", showPanel);
     badge.addEventListener("focus", showPanel);

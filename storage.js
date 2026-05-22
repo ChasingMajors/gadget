@@ -91,14 +91,16 @@
       getDailyUsage()
     ]);
     const config = window.CM_RARITY_CONFIG;
-    const isPaid = userState.plan === "paid";
+    const isAdmin = Boolean(config.MVP_ADMIN_MODE) || userState.plan === "admin" || userState.status === "admin";
+    const isPaid = userState.plan === "paid" || isAdmin;
     const remainingFreeLookups = Math.max(0, config.FREE_DAILY_LIMIT - dailyUsage.count);
 
     return {
       userState,
       dailyUsage,
+      isAdmin,
       isPaid,
-      isLoggedIn: userState.status === "logged_in",
+      isLoggedIn: userState.status === "logged_in" || isAdmin,
       remainingFreeLookups,
       hasFreeLookup: remainingFreeLookups > 0
     };

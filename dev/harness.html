@@ -166,6 +166,7 @@
         <button type="button" data-state="anonymous">Anonymous/free</button>
         <button type="button" data-state="logged_in">Logged in/free</button>
         <button type="button" data-state="paid">Paid</button>
+        <button type="button" data-state="admin">Admin MVP</button>
         <button type="button" id="reset">Reset usage</button>
       </div>
     </header>
@@ -208,17 +209,19 @@
       </ul>
     </main>
 
-    <script src="../config.js"></script>
-    <script src="../storage.js"></script>
-    <script src="../parser.js"></script>
-    <script src="../api.js"></script>
-    <script src="../ui.js"></script>
-    <script src="../content.js"></script>
+    <script src="../config.js?v=4"></script>
+    <script src="../storage.js?v=4"></script>
+    <script src="../parser.js?v=4"></script>
+    <script src="../api.js?v=4"></script>
+    <script src="../ui.js?v=4"></script>
+    <script src="../content.js?v=4"></script>
     <script>
       const status = document.getElementById("status");
 
       async function setState(state) {
-        const next = state === "paid"
+        const next = state === "admin"
+          ? { status: "admin", plan: "admin" }
+          : state === "paid"
           ? { status: "logged_in", plan: "paid" }
           : { status: state, plan: "free" };
         await window.CMRarityStorage.setUserState(next);

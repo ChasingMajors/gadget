@@ -54,6 +54,11 @@ Supported states:
 - Anonymous/free: `{ "status": "anonymous", "plan": "free" }`
 - Logged in/free: `{ "status": "logged_in", "plan": "free" }`
 - Paid: `{ "status": "logged_in", "plan": "paid" }`
+- Admin MVP: `{ "status": "admin", "plan": "admin" }`
+
+Admin MVP state is treated as full access for local trials. It does not add real paid rarity values to the extension bundle; it only shows every field returned by the API, or `Unknown` when fallback data has no value.
+
+`config.js` currently has `MVP_ADMIN_MODE: true` so unpacked extension trials show the full field set before production auth is connected. Set it to `false` before Chrome Web Store submission.
 
 ## Chrome Web Store Notes
 
