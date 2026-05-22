@@ -29,7 +29,7 @@
 
   function canShowField(field, rarity, accessState) {
     if (accessState.isPaid) {
-      return PAID_FIELDS.has(field) && !rarity.lockedFields.includes(field);
+      return PAID_FIELDS.has(field);
     }
 
     return FREE_FIELDS.has(field) && !rarity.lockedFields.includes(field);
