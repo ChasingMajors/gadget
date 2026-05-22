@@ -1,0 +1,255 @@
+(function () {
+  const FIELD_LABELS = Object.freeze({
+    rarityTier: "Rarity tier",
+    scarcityScore: "Scarcity score",
+    printRun: "Est. print run",
+    packOdds: "Pack odds",
+    popTotal: "POP count",
+    popGem: "POP gem"
+  });
+
+  const FREE_FIELDS = new Set(["rarityTier", "scarcityScore"]);
+  const PAID_FIELDS = new Set(["rarityTier", "scarcityScore", "printRun", "packOdds", "popTotal", "popGem"]);
+
+  function formatValue(field, value) {
+    if (value === null || value === undefined || value === "") {
+      return "Unknown";
+    }
+
+    if (field === "scarcityScore") {
+      return `${value}/100`;
+    }
+
+    if (typeof value === "number") {
+      return value.toLocaleString();
+    }
+
+    return String(value);
+  }
+
+  function canShowField(field, rarity, accessState) {
+    if (accessState.isPaid) {
+      return PAID_FIELDS.has(field) && !rarity.lockedFields.includes(field);
+    }
+
+    return FREE_FIELDS.has(field) && !rarity.lockedFields.includes(field);
+  }
+
+  function createFieldRow(field, rarity, accessState) {
+    const row = document.createElement("div");
+    row.className = "cm-rarity-row";
+
+    const label = document.createElement("span");
+    label.className = "cm-rarity-label";
+    label.textContent = FIELD_LABELS[field];
+
+    const value = document.createElement("span");
+    value.className = "cm-rarity-value";
+
+    if (canShowField(field, rarity, accessState)) {
+      value.textContent = formatValue(field, rarity[field]);
+    } else {
+      row.classList.add("cm-rarity-row-locked");
+      value.textContent = "Locked";
+    }
+
+    row.append(label, value);
+    return row;
+  }
+
+  function createPanelShell() {
+    const panel = document.createElement("aside");
+    panel.className = "cm-rarity-panel";
+    panel.setAttribute("role", "dialog");
+    panel.setAttribute("aria-label", "Chasing Majors rarity intelligence");
+    return panel;
+  }
+
+  function renderPanel(panel, listing, rarity, accessState) {
+    const fields = ["rarityTier", "scarcityScore", "printRun", "packOdds", "popTotal", "popGem"];
+    const upgradeUrl = rarity.upgradeUrl || `${window.CM_RARITY_CONFIG.APP_URL}/upgrade`;
+    const hasLockedFields = !accessState.isPaid && fields.some((field) => !canShowField(field, rarity, accessState));
+
+    panel.textContent = "";
+
+    const header = document.createElement("div");
+    header.className = "cm-rarity-panel-header";
+
+    const title = document.createElement("strong");
+    title.className = "cm-rarity-title";
+    title.textContent = "Chasing Majors";
+
+    const confidence = document.createElement("span");
+    confidence.className = "cm-rarity-confidence";
+    confidence.textContent = `${Math.round((rarity.matchConfidence || 0) * 100)}% match`;
+
+    header.append(title, confidence);
+
+    const cardTitle = document.createElement("p");
+    cardTitle.className = "cm-rarity-card-title";
+    cardTitle.textContent = rarity.title || listing.title;
+
+    const rows = document.createElement("div");
+    rows.className = "cm-rarity-rows";
+    fields.forEach((field) => rows.append(createFieldRow(field, rarity, accessState)));
+
+    const actions = document.createElement("div");
+    actions.className = "cm-rarity-actions";
+
+    if (hasLockedFields) {
+      const upgrade = document.createElement("a");
+      upgrade.className = "cm-rarity-upgrade";
+      upgrade.href = upgradeUrl;
+      upgrade.target = "_blank";
+      upgrade.rel = "noopener noreferrer";
+      upgrade.textContent = accessState.userState.status === "anonymous"
+        ? "Sign in to unlock more rarity data"
+        : "Upgrade to unlock full rarity data";
+      actions.append(upgrade);
+    }
+
+    const openApp = document.createElement("a");
+    openApp.className = "cm-rarity-open";
+    openApp.href = window.CM_RARITY_CONFIG.APP_URL;
+    openApp.target = "_blank";
+    openApp.rel = "noopener noreferrer";
+    openApp.textContent = "Open Chasing Majors";
+    actions.append(openApp);
+
+    if (rarity.isFallback) {
+      const fallback = document.createElement("p");
+      fallback.className = "cm-rarity-note";
+      fallback.textContent = "Showing limited fallback data while CM rarity service is unavailable.";
+      panel.append(header, cardTitle, rows, actions, fallback);
+      return;
+    }
+
+    panel.append(header, cardTitle, rows, actions);
+  }
+
+  function renderLimitPanel(panel, accessState) {
+    panel.textContent = "";
+
+    const title = document.createElement("strong");
+    title.className = "cm-rarity-title";
+    title.textContent = "Daily free limit reached";
+
+    const message = document.createElement("p");
+    message.className = "cm-rarity-card-title";
+    message.textContent = `Free users get ${window.CM_RARITY_CONFIG.FREE_DAILY_LIMIT} rarity lookups per day.`;
+
+    const actions = document.createElement("div");
+    actions.className = "cm-rarity-actions";
+
+    const upgrade = document.createElement("a");
+    upgrade.className = "cm-rarity-upgrade";
+    upgrade.href = `${window.CM_RARITY_CONFIG.APP_URL}/upgrade`;
+    upgrade.target = "_blank";
+    upgrade.rel = "noopener noreferrer";
+    upgrade.textContent = accessState.userState.status === "anonymous"
+      ? "Sign in to continue"
+      : "Upgrade for unlimited rarity";
+
+    const openApp = document.createElement("a");
+    openApp.className = "cm-rarity-open";
+    openApp.href = window.CM_RARITY_CONFIG.APP_URL;
+    openApp.target = "_blank";
+    openApp.rel = "noopener noreferrer";
+    openApp.textContent = "Open Chasing Majors";
+
+    actions.append(upgrade, openApp);
+    panel.append(title, message, actions);
+  }
+
+  function attachBadge(listing, handlers) {
+    const wrapper = document.createElement("span");
+    wrapper.className = "cm-rarity-wrapper";
+
+    const badge = document.createElement("button");
+    badge.className = "cm-rarity-badge";
+    badge.type = "button";
+    badge.textContent = "CM";
+    badge.setAttribute("aria-label", "Show Chasing Majors rarity intelligence");
+
+    const panel = createPanelShell();
+    panel.hidden = true;
+
+    wrapper.append(badge, panel);
+
+    const container = listing.container;
+    const computed = window.getComputedStyle(container);
+    if (computed.position === "static") {
+      container.classList.add("cm-rarity-positioned");
+    }
+
+    container.append(wrapper);
+
+    let isPinned = false;
+
+    async function showPanel() {
+      panel.hidden = false;
+      wrapper.classList.add("cm-rarity-active");
+      await handlers.onOpen(panel);
+    }
+
+    function hidePanel() {
+      if (isPinned) {
+        return;
+      }
+
+      panel.hidden = true;
+      wrapper.classList.remove("cm-rarity-active");
+    }
+
+    badge.addEventListener("mouseenter", showPanel);
+    badge.addEventListener("focus", showPanel);
+    badge.addEventListener("click", async (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      isPinned = !isPinned;
+
+      if (isPinned) {
+        await showPanel();
+      } else {
+        hidePanel();
+      }
+    });
+
+    wrapper.addEventListener("mouseleave", hidePanel);
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        isPinned = false;
+        hidePanel();
+      }
+    });
+
+    return {
+      badge,
+      panel,
+      renderPanel: (rarity, accessState) => renderPanel(panel, listing, rarity, accessState),
+      renderLimitPanel: (accessState) => renderLimitPanel(panel, accessState)
+    };
+  }
+
+  function renderLoading(panel) {
+    panel.textContent = "";
+    const loading = document.createElement("p");
+    loading.className = "cm-rarity-loading";
+    loading.textContent = "Loading rarity intelligence...";
+    panel.append(loading);
+  }
+
+  function renderError(panel) {
+    panel.textContent = "";
+    const error = document.createElement("p");
+    error.className = "cm-rarity-note";
+    error.textContent = "Rarity intelligence is temporarily unavailable.";
+    panel.append(error);
+  }
+
+  window.CMRarityUI = {
+    attachBadge,
+    renderError,
+    renderLoading
+  };
+})();

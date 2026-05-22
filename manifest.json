@@ -1,0 +1,50 @@
+{
+  "manifest_version": 3,
+  "name": "CM Rarity Gadget",
+  "version": "4.0.0",
+  "description": "Chasing Majors rarity intelligence overlays for sports card listings on eBay and COMC.",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "permissions": [
+    "storage"
+  ],
+  "host_permissions": [
+    "https://www.ebay.com/*",
+    "https://www.comc.com/*",
+    "https://api.chasingmajors.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.ebay.com/*",
+        "https://www.comc.com/*"
+      ],
+      "js": [
+        "config.js",
+        "storage.js",
+        "parser.js",
+        "api.js",
+        "ui.js",
+        "content.js"
+      ],
+      "css": [
+        "styles.css"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "styles.css"
+      ],
+      "matches": [
+        "https://www.ebay.com/*",
+        "https://www.comc.com/*"
+      ]
+    }
+  ]
+}
