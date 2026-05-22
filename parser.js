@@ -11,6 +11,11 @@
   ];
 
   function getSource() {
+    const declaredSource = document.documentElement.dataset.cmSource || document.body?.dataset.cmSource;
+    if (declaredSource === "ebay" || declaredSource === "comc") {
+      return declaredSource;
+    }
+
     const host = window.location.hostname.toLowerCase();
     return SOURCE_HOSTS.find((entry) => entry.test(host))?.source || "unknown";
   }
@@ -102,8 +107,9 @@
 
   function getImageContainer(image) {
     const candidates = [
-      image.closest("a"),
       image.parentElement,
+      image.closest("picture"),
+      image.closest("a"),
       image
     ].filter(Boolean);
 

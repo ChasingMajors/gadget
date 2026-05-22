@@ -58,3 +58,7 @@ Supported states:
 ## Chrome Web Store Notes
 
 This scaffold avoids bundled paid rarity data. Free users only see limited fields, paid users can see all fields returned by the backend when they are not marked locked by `lockedFields`.
+
+## Local Harness
+
+Open `dev/harness.html` in Chrome to test badge placement, fallback data, daily limits, and local free/paid user state without loading marketplace pages.
