@@ -5,6 +5,7 @@ Chrome extension scaffold for Chasing Majors rarity intelligence on eBay and COM
 ## Architecture
 
 - `manifest.json`: Chrome Manifest V3 extension config.
+- `background.js`: API proxy service worker for backend calls, future auth, and rate-limit handling.
 - `config.js`: API and freemium settings.
 - `content.js`: page scan orchestration and lookup flow.
 - `parser.js`: source detection and listing/image extraction.

@@ -28,8 +28,12 @@
 
   const cache = new Map();
 
+  function config() {
+    return window.CM_RARITY_CONFIG;
+  }
+
   function normalizedApiBase() {
-    return window.CM_RARITY_CONFIG.API_BASE_URL.replace(/\/+$/, "");
+    return config().API_BASE_URL.replace(/\/+$/, "");
   }
 
   function buildRarityUrl({ title, source, pageUrl }) {
@@ -64,9 +68,50 @@
       popTotal: data.popTotal ?? null,
       popGem: data.popGem ?? null,
       lockedFields: Array.isArray(data.lockedFields) ? data.lockedFields : [],
-      upgradeUrl: data.upgradeUrl || `${window.CM_RARITY_CONFIG.APP_URL}/upgrade`,
+      upgradeUrl: data.upgradeUrl || `${config().APP_URL}/upgrade`,
       isFallback: false
     };
+  }
+
+  function canUseBackgroundProxy() {
+    return typeof chrome !== "undefined" && Boolean(chrome.runtime?.sendMessage);
+  }
+
+  function fetchViaBackground(payload) {
+    return new Promise((resolve, reject) => {
+      chrome.runtime.sendMessage({
+        type: "CM_RARITY_LOOKUP",
+        payload
+      }, (response) => {
+        if (chrome.runtime.lastError) {
+          reject(new Error(chrome.runtime.lastError.message));
+          return;
+        }
+
+        if (!response?.ok) {
+          reject(new Error(response?.error || "Rarity API unavailable"));
+          return;
+        }
+
+        resolve(response.rarity);
+      });
+    });
+  }
+
+  async function fetchDirect(payload) {
+    const response = await fetch(buildRarityUrl(payload), {
+      method: "GET",
+      headers: {
+        "Accept": "application/json"
+      },
+      credentials: "omit"
+    });
+
+    if (!response.ok) {
+      throw new Error(`Rarity API returned ${response.status}`);
+    }
+
+    return sanitizeApiResponse(await response.json(), payload.title);
   }
 
   async function fetchRarity({ title, source, pageUrl }) {
@@ -77,20 +122,10 @@
     }
 
     try {
-      const response = await fetch(buildRarityUrl({ title, source, pageUrl }), {
-        method: "GET",
-        headers: {
-          "Accept": "application/json"
-        },
-        credentials: "omit"
-      });
-
-      if (!response.ok) {
-        throw new Error(`Rarity API returned ${response.status}`);
-      }
-
-      const data = await response.json();
-      const rarity = sanitizeApiResponse(data, title);
+      const payload = { title, source, pageUrl };
+      const rarity = canUseBackgroundProxy()
+        ? await fetchViaBackground(payload)
+        : await fetchDirect(payload);
       cache.set(cacheKey, rarity);
       return rarity;
     } catch (error) {
