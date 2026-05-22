@@ -1,0 +1,37 @@
+name: Sync PRV data
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 */6 * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  sync-prv:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Sync PRV CSV into Worker dataset
+        env:
+          CM_PRV_CSV_URL: ${{ secrets.CM_PRV_CSV_URL }}
+        run: node scripts/sync-prv-from-url.js
+
+      - name: Validate generated data
+        run: |
+          node scripts/validate-api.js
+          node scripts/validate-worker.js
+
+      - name: Commit PRV dataset changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Sync PRV dataset"
+          file_pattern: backend/data/cards.json

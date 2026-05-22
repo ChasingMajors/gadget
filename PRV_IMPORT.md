@@ -28,6 +28,28 @@ node scripts/validate-worker.js
 
 Then commit, push, and wait for Cloudflare to redeploy.
 
+## Automated Sync
+
+For low-manual operation, publish or expose the PRV sheet as CSV and save the URL in GitHub Actions as:
+
+```txt
+CM_PRV_CSV_URL
+```
+
+Then run the GitHub Action:
+
+```txt
+Sync PRV data
+```
+
+The action downloads the CSV, runs the importer, validates the generated Worker dataset, and commits `backend/data/cards.json` back to `main`. Cloudflare then redeploys from GitHub.
+
+Local equivalent:
+
+```bash
+CM_PRV_CSV_URL="https://docs.google.com/spreadsheets/d/.../export?format=csv&gid=0" node scripts/sync-prv-from-url.js
+```
+
 ## Trial Loop
 
 1. Search eBay for a player/product.

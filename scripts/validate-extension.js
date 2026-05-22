@@ -109,6 +109,7 @@ function checkRequiredFiles() {
     "backend/data/prv-template.csv",
     "PRV_IMPORT.md",
     "scripts/import-prv-csv.js",
+    "scripts/sync-prv-from-url.js",
     "scripts/validate-api.js",
     "scripts/validate-parser.js",
     "scripts/generate-icons.js"
