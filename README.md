@@ -69,4 +69,14 @@ This scaffold avoids bundled paid rarity data. Free users only see limited field
 
 Open `dev/harness.html` in Chrome to test badge placement, fallback data, daily limits, and local free/paid user state without loading marketplace pages.
 
+## Validation
+
+Run:
+
+```bash
+npm run validate
+```
+
+This checks the Manifest V3 wiring, required files, icon references, host permissions, and MVP/admin config warnings.
+
 Before production or Chrome Web Store submission, turn `MVP_ADMIN_MODE` off.
