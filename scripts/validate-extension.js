@@ -77,7 +77,11 @@ function checkConfig() {
   const config = fs.readFileSync(configPath, "utf8");
 
   if (!config.includes('API_BASE_URL: "https://api.chasingmajors.com"')) {
-    warnings.push("config.js API_BASE_URL is not the production Chasing Majors API");
+    if (!config.includes('PRODUCTION_API_BASE_URL: "https://api.chasingmajors.com"')) {
+      warnings.push("config.js does not reference the production Chasing Majors API");
+    }
+
+    warnings.push("config.js API_BASE_URL is set to an MVP/staging API. Point it to production before Chrome Web Store submission.");
   }
 
   if (config.includes("MVP_ADMIN_MODE: true")) {

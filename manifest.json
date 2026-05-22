@@ -17,7 +17,8 @@
   "host_permissions": [
     "https://www.ebay.com/*",
     "https://www.comc.com/*",
-    "https://api.chasingmajors.com/*"
+    "https://api.chasingmajors.com/*",
+    "https://cm-rarity-api.johndownard.workers.dev/*"
   ],
   "content_scripts": [
     {

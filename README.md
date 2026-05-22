@@ -62,6 +62,14 @@ Admin MVP state is treated as full access for local trials. It does not add real
 
 `config.js` currently has `MVP_ADMIN_MODE: true` so unpacked extension trials show the full field set before production auth is connected. Set it to `false` before Chrome Web Store submission.
 
+`config.js` currently points `API_BASE_URL` at the MVP Cloudflare Worker:
+
+```txt
+https://cm-rarity-api.johndownard.workers.dev
+```
+
+Before production submission, point `API_BASE_URL` to `https://api.chasingmajors.com`.
+
 ## Chrome Web Store Notes
 
 This scaffold avoids bundled paid rarity data. Free users only see limited fields, paid users can see all fields returned by the backend when they are not marked locked by `lockedFields`.
