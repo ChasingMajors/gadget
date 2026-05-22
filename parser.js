@@ -33,15 +33,54 @@
     return "";
   }
 
+  function cleanTitle(text) {
+    return String(text || "")
+      .replace(/\s+/g, " ")
+      .trim();
+  }
+
+  function isBadTitle(title) {
+    return !title
+      || title.length < 7
+      || /^shop on ebay$/i.test(title)
+      || /^\d[\d,+]*\+?\s+results?\s+for\b/i.test(title)
+      || /\bsave this search\b/i.test(title)
+      || /\bwe.ve streamlined your search results\b/i.test(title);
+  }
+
+  function closestTitleFromItemLinks(image) {
+    const maxDepth = 9;
+    let node = image.parentElement;
+
+    for (let depth = 0; node && depth < maxDepth; depth += 1) {
+      const links = Array.from(node.querySelectorAll("a[href*='/itm/'], a[href*='itm/']"));
+      const titles = links
+        .map((link) => cleanTitle(link.getAttribute("title") || link.textContent || link.getAttribute("aria-label")))
+        .filter((title) => !isBadTitle(title))
+        .sort((a, b) => b.length - a.length);
+
+      if (titles[0]) {
+        return titles[0];
+      }
+
+      node = node.parentElement;
+    }
+
+    return "";
+  }
+
   function nearestListingRoot(image, source) {
     const selectors = source === "ebay"
       ? [
           "li.s-item",
           ".s-item",
+          "[data-testid='item-card']",
+          ".brwrvr__item-card",
+          ".brwrvr__item-card__body",
+          ".su-card-container",
+          ".s-card",
           ".vim.x-item-title",
-          ".x-item-title",
-          "main",
-          "body"
+          ".x-item-title"
         ]
       : [
           ".item",
@@ -63,13 +102,23 @@
   }
 
   function titleForImage(image, source) {
+    if (source === "ebay") {
+      const itemLinkTitle = closestTitleFromItemLinks(image);
+      if (itemLinkTitle) {
+        return itemLinkTitle;
+      }
+    }
+
     const root = nearestListingRoot(image, source);
     const sourceSelectors = source === "ebay"
       ? [
           ".s-item__title",
+          "[data-testid='item-title']",
+          ".brwrvr__item-card__title",
+          ".su-card-title",
+          ".s-card__title",
           "h1.x-item-title__mainTitle",
           "[data-testid='x-item-title']",
-          "h1",
           "a[title]"
         ]
       : [
@@ -81,12 +130,13 @@
           "a[title]"
         ];
 
-    const title = textFrom(root, sourceSelectors);
-    if (title && !/^shop on ebay$/i.test(title)) {
+    const title = cleanTitle(textFrom(root, sourceSelectors));
+    if (!isBadTitle(title)) {
       return title;
     }
 
-    return image.alt?.trim() || image.getAttribute("aria-label")?.trim() || "";
+    const fallbackTitle = cleanTitle(image.alt || image.getAttribute("aria-label") || "");
+    return isBadTitle(fallbackTitle) ? "" : fallbackTitle;
   }
 
   function isLikelyCardImage(image) {

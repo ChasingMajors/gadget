@@ -107,6 +107,7 @@ function checkRequiredFiles() {
     "backend/lib/matcher.js",
     "backend/data/cards.json",
     "scripts/validate-api.js",
+    "scripts/validate-parser.js",
     "scripts/generate-icons.js"
   ].forEach((file) => assertFile(file));
 }
