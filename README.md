@@ -67,3 +67,5 @@ This scaffold avoids bundled paid rarity data. Free users only see limited field
 ## Local Harness
 
 Open `dev/harness.html` in Chrome to test badge placement, fallback data, daily limits, and local free/paid user state without loading marketplace pages.
+
+Before production or Chrome Web Store submission, turn `MVP_ADMIN_MODE` off.
