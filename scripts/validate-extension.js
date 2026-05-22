@@ -98,6 +98,11 @@ function checkRequiredFiles() {
     "storage.js",
     "styles.css",
     "dev/harness.html",
+    "backend/README.md",
+    "backend/server.js",
+    "backend/lib/matcher.js",
+    "backend/data/cards.json",
+    "scripts/validate-api.js",
     "scripts/generate-icons.js"
   ].forEach((file) => assertFile(file));
 }

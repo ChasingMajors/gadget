@@ -28,6 +28,8 @@ The extension expects:
 GET /rarity?q={encoded card title}&source={ebay|comc}&url={current page url}
 ```
 
+The repo now includes a minimal Node implementation in `backend/`. It is intended to be hosted behind `https://api.chasingmajors.com` or a staging API domain for MVP trials.
+
 Response:
 
 ```json
@@ -92,6 +94,13 @@ For each card, stage:
 4. Reload the unpacked extension in Chrome.
 5. Test on real eBay and COMC pages.
 6. Log which titles fail to match, which fields are missing, and where the panel feels intrusive.
+
+Current backend smoke test:
+
+```txt
+GET /health
+GET /rarity?q=2025-26%20Topps%20Finest%20Ace%20Bailey%20Sky%20Blue%20/150&source=ebay&url=https://www.ebay.com
+```
 
 ## Production Prep After MVP
 

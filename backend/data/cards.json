@@ -1,0 +1,104 @@
+[
+  {
+    "id": "2025-26-topps-finest-ace-bailey-first-sky-blue-refractor-150",
+    "canonicalTitle": "2025-26 Topps Finest First Ace Bailey Sky Blue Refractor /150 RC",
+    "aliases": [
+      "2025-26 Topps Finest First Ace Bailey F-5 Sky Blue Refractor /150 RC",
+      "2025-26 Topps Finest Ace Bailey Sky Blue Refractor /150",
+      "Topps Finest First Ace Bailey Sky Blue /150"
+    ],
+    "requiredTerms": ["ace", "bailey", "finest"],
+    "serialTerms": ["/150", "150"],
+    "rarityTier": "Rare",
+    "scarcityScore": 82,
+    "printRun": 150,
+    "packOdds": "TBD",
+    "popTotal": 0,
+    "popGem": 0
+  },
+  {
+    "id": "2025-26-topps-basketball-ace-bailey-205-rc",
+    "canonicalTitle": "2025-26 Topps Basketball Ace Bailey #205 RC",
+    "aliases": [
+      "2025-26 Topps Ace Bailey #205 RC",
+      "2025-26 Topps Basketball Ace Bailey Rookie #205",
+      "Ace Bailey 205 RC"
+    ],
+    "requiredTerms": ["ace", "bailey", "topps"],
+    "serialTerms": ["205"],
+    "rarityTier": "Base Rookie",
+    "scarcityScore": 54,
+    "printRun": null,
+    "packOdds": "Base card",
+    "popTotal": 0,
+    "popGem": 0
+  },
+  {
+    "id": "2025-26-topps-nba-hoops-ace-bailey-rc-38",
+    "canonicalTitle": "2025-26 Topps NBA Hoops Ace Bailey RC #38",
+    "aliases": [
+      "2025-26 Topps NBA Hoops Ace Bailey RC #38",
+      "Topps NBA Hoops Ace Bailey Rookie 38",
+      "Ace Bailey RC 38"
+    ],
+    "requiredTerms": ["ace", "bailey", "hoops"],
+    "serialTerms": ["38"],
+    "rarityTier": "Rookie",
+    "scarcityScore": 58,
+    "printRun": null,
+    "packOdds": "Base card",
+    "popTotal": 0,
+    "popGem": 0
+  },
+  {
+    "id": "2024-topps-chrome-victor-wembanyama-green-refractor-99",
+    "canonicalTitle": "2024 Topps Chrome Victor Wembanyama Green Refractor /99 RC",
+    "aliases": [
+      "2024 Topps Chrome Wembanyama Green Refractor /99",
+      "Victor Wembanyama Topps Chrome Green /99",
+      "Wemby Green Refractor /99"
+    ],
+    "requiredTerms": ["wembanyama", "chrome", "green"],
+    "serialTerms": ["/99", "99"],
+    "rarityTier": "Short Print",
+    "scarcityScore": 88,
+    "printRun": 99,
+    "packOdds": "1:180 packs",
+    "popTotal": 24,
+    "popGem": 8
+  },
+  {
+    "id": "2023-bowman-chrome-jackson-holliday-gold-auto-50",
+    "canonicalTitle": "2023 Bowman Chrome Jackson Holliday Gold Auto /50",
+    "aliases": [
+      "2023 Bowman Chrome Jackson Holliday Gold Autograph /50",
+      "Jackson Holliday Bowman Chrome Gold Auto 50",
+      "Jackson Holliday Gold Auto /50"
+    ],
+    "requiredTerms": ["jackson", "holliday", "gold", "auto"],
+    "serialTerms": ["/50", "50"],
+    "rarityTier": "Ultra Rare",
+    "scarcityScore": 94,
+    "printRun": 50,
+    "packOdds": "1:420 packs",
+    "popTotal": 11,
+    "popGem": 4
+  },
+  {
+    "id": "2022-panini-prizm-patrick-mahomes-color-blast-ssp",
+    "canonicalTitle": "2022 Panini Prizm Patrick Mahomes Color Blast SSP",
+    "aliases": [
+      "2022 Prizm Patrick Mahomes Color Blast",
+      "Patrick Mahomes Prizm Color Blast SSP",
+      "Mahomes Color Blast"
+    ],
+    "requiredTerms": ["mahomes", "color", "blast"],
+    "serialTerms": [],
+    "rarityTier": "Case Hit",
+    "scarcityScore": 91,
+    "printRun": null,
+    "packOdds": "Case hit",
+    "popTotal": 132,
+    "popGem": 58
+  }
+]

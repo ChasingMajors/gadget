@@ -13,6 +13,7 @@ Chrome extension scaffold for Chasing Majors rarity intelligence on eBay and COM
 - `ui.js`: CM badge and hover/click panel rendering.
 - `storage.js`: user state and daily free lookup tracking with `chrome.storage.local`.
 - `styles.css`: isolated overlay styling.
+- `backend/`: minimal hosted `/rarity` API for MVP trials.
 
 ## API Contract
 
@@ -75,8 +76,10 @@ Run:
 
 ```bash
 npm run validate
+npm run api:validate
+npm run validate:all
 ```
 
-This checks the Manifest V3 wiring, required files, icon references, host permissions, and MVP/admin config warnings.
+This checks the Manifest V3 wiring, required files, icon references, host permissions, MVP/admin config warnings, and seed API matching.
 
 Before production or Chrome Web Store submission, turn `MVP_ADMIN_MODE` off.

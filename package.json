@@ -4,7 +4,10 @@
   "private": true,
   "description": "Chasing Majors rarity intelligence Chrome extension.",
   "scripts": {
+    "api:start": "node backend/server.js",
+    "api:validate": "node scripts/validate-api.js",
     "generate:icons": "node scripts/generate-icons.js",
-    "validate": "node scripts/validate-extension.js"
+    "validate": "node scripts/validate-extension.js",
+    "validate:all": "node scripts/validate-extension.js && node scripts/validate-api.js"
   }
 }
