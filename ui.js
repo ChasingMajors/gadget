@@ -1,16 +1,16 @@
 (function () {
   const FIELD_LABELS = Object.freeze({
     rarityTier: "Product Type",
-    scarcityScore: "Scarcity score",
-    printRun: "Est. print run",
-    packOdds: "Pack odds"
+    scarcityScore: "Scarcity Score",
+    printRun: "Est. Print Run",
+    packOdds: "Pack Odds"
   });
 
   const FREE_FIELDS = new Set(["rarityTier", "scarcityScore"]);
   const PAID_FIELDS = new Set(["rarityTier", "scarcityScore", "printRun", "packOdds"]);
 
   function matchModeLabel(matchMode) {
-    return matchMode === "set" ? "Product/set estimate" : "Exact card match";
+    return matchMode === "set" ? "Product/Set Estimate" : "Exact Card Match";
   }
 
   function appUrl(path = "") {
@@ -19,11 +19,19 @@
 
   function vaultUrl(rarity, listing) {
     const url = new URL("/vault", appUrl());
-    const query = rarity.title || listing.title;
+    const query = vaultQuery(rarity, listing);
     if (query) {
       url.searchParams.set("q", query);
     }
     return url.toString();
+  }
+
+  function vaultQuery(rarity, listing) {
+    if (rarity.matchMode === "set" && rarity.title) {
+      return rarity.title.split(" - ")[0].trim();
+    }
+
+    return rarity.title || listing.title;
   }
 
   function badgeIconUrl() {
@@ -31,6 +39,24 @@
       return chrome.runtime.getURL("icons/cm-logo.png");
     }
     return "";
+  }
+
+  function createBrandLogo(className) {
+    const iconUrl = badgeIconUrl();
+    if (!iconUrl) {
+      const fallback = document.createElement("strong");
+      fallback.className = className;
+      fallback.textContent = "Chasing Majors";
+      return fallback;
+    }
+
+    const logo = document.createElement("img");
+    logo.className = className;
+    logo.src = iconUrl;
+    logo.alt = "Chasing Majors";
+    logo.decoding = "async";
+    logo.loading = "eager";
+    return logo;
   }
 
   function formatValue(field, value) {
@@ -123,9 +149,7 @@
     const header = document.createElement("div");
     header.className = "cm-rarity-panel-header";
 
-    const title = document.createElement("strong");
-    title.className = "cm-rarity-title";
-    title.textContent = "Chasing Majors";
+    const title = createBrandLogo("cm-rarity-panel-logo");
 
     const confidence = document.createElement("span");
     confidence.className = "cm-rarity-confidence";
@@ -133,15 +157,12 @@
 
     header.append(title, confidence);
 
-    const listingTitle = document.createElement("p");
-    listingTitle.className = "cm-rarity-card-title";
-    listingTitle.textContent = listing.title;
-
     const matchedTitle = document.createElement("p");
     matchedTitle.className = "cm-rarity-matched-title";
-    matchedTitle.textContent = rarity.matchMode === "set"
-      ? `CM Details: ${rarity.title || "Unknown"}`
-      : `CM Details: ${rarity.title || listing.title}`;
+
+    const recognitionLabel = document.createElement("strong");
+    recognitionLabel.textContent = rarity.matchMode === "set" ? "Set recognition: " : "Card recognition: ";
+    matchedTitle.append(recognitionLabel, rarity.title || listing.title || "Unknown");
 
     const matchMode = document.createElement("div");
     matchMode.className = `cm-rarity-match-mode cm-rarity-match-mode-${rarity.matchMode || "card"}`;
@@ -178,23 +199,21 @@
       const fallback = document.createElement("p");
       fallback.className = "cm-rarity-note";
       fallback.textContent = "Showing limited fallback data while CM rarity service is unavailable.";
-      panel.append(header, listingTitle, matchedTitle, matchMode, rows, actions, fallback);
+      panel.append(header, matchedTitle, matchMode, rows, actions, fallback);
       return;
     }
 
-    panel.append(header, listingTitle, matchedTitle, matchMode, rows, actions);
+    panel.append(header, matchedTitle, matchMode, rows, actions);
   }
 
   function renderLimitPanel(panel, accessState) {
     panel.textContent = "";
 
-    const title = document.createElement("strong");
-    title.className = "cm-rarity-title";
-    title.textContent = "Daily free limit reached";
+    const title = createBrandLogo("cm-rarity-panel-logo");
 
     const message = document.createElement("p");
     message.className = "cm-rarity-card-title";
-    message.textContent = `Free users get ${window.CM_RARITY_CONFIG.FREE_DAILY_LIMIT} rarity lookups per day.`;
+    message.textContent = `Daily free limit reached. Free users get ${window.CM_RARITY_CONFIG.FREE_DAILY_LIMIT} rarity lookups per day.`;
 
     const actions = document.createElement("div");
     actions.className = "cm-rarity-actions";
