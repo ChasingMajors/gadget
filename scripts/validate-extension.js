@@ -118,10 +118,38 @@ function checkRequiredFiles() {
   ].forEach((file) => assertFile(file));
 }
 
+function checkMasterBadgeImplementation() {
+  const content = fs.readFileSync(path.join(root, "content.js"), "utf8");
+  const parser = fs.readFileSync(path.join(root, "parser.js"), "utf8");
+  const styles = fs.readFileSync(path.join(root, "styles.css"), "utf8");
+  const ui = fs.readFileSync(path.join(root, "ui.js"), "utf8");
+
+  if (!content.includes("maybeAttachMasterBadge")) {
+    errors.push("content.js must include the eBay master badge lookup flow");
+  }
+
+  if (!content.includes("window.CMRarityParser.getSource() !== \"ebay\"")) {
+    errors.push("master badge lookup must be limited to eBay");
+  }
+
+  if (!parser.includes("titleFromEbaySearch")) {
+    errors.push("parser.js must expose titleFromEbaySearch for master badge lookup");
+  }
+
+  if (!styles.includes(".cm-rarity-master-wrapper") || !styles.includes(".cm-rarity-master-badge")) {
+    errors.push("styles.css must include master badge positioning and sizing");
+  }
+
+  if (!ui.includes("🧠")) {
+    errors.push("ui.js badge label should default to the brain emoji");
+  }
+}
+
 const manifest = readJson("manifest.json");
 checkManifest(manifest);
 checkConfig();
 checkRequiredFiles();
+checkMasterBadgeImplementation();
 
 if (warnings.length) {
   console.warn("Warnings:");

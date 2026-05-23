@@ -9,7 +9,15 @@
   line-height: 1.2;
   pointer-events: auto;
   position: absolute;
-  right: 8px;
+  left: 8px;
+  z-index: 2147483000;
+}
+
+.cm-rarity-master-wrapper {
+  bottom: 18px;
+  left: 50%;
+  position: fixed;
+  transform: translateX(-50%);
   z-index: 2147483000;
 }
 
@@ -29,6 +37,13 @@
   letter-spacing: 0;
   min-width: 32px;
   padding: 0 7px;
+}
+
+.cm-rarity-master-badge {
+  font-size: 24px;
+  height: 64px;
+  min-width: 64px;
+  padding: 0 14px;
 }
 
 .cm-rarity-badge:focus-visible {

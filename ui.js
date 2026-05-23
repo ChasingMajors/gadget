@@ -67,7 +67,7 @@
     return panel;
   }
 
-  function positionPanel(panel, badge) {
+  function positionPanel(panel, badge, options = {}) {
     const margin = 12;
     const gap = 8;
     const badgeRect = badge.getBoundingClientRect();
@@ -77,7 +77,9 @@
     const viewportWidth = document.documentElement.clientWidth;
     const viewportHeight = document.documentElement.clientHeight;
 
-    let left = badgeRect.right - width;
+    let left = options.align === "center"
+      ? badgeRect.left + (badgeRect.width / 2) - (width / 2)
+      : badgeRect.right - width;
     let top = badgeRect.top - height - gap;
 
     if (top < margin) {
@@ -197,15 +199,15 @@
     panel.append(title, message, actions);
   }
 
-  function attachBadge(listing, handlers) {
+  function attachBadge(listing, handlers, options = {}) {
     const wrapper = document.createElement("span");
-    wrapper.className = "cm-rarity-wrapper";
+    wrapper.className = options.master ? "cm-rarity-wrapper cm-rarity-master-wrapper" : "cm-rarity-wrapper";
 
     const badge = document.createElement("button");
-    badge.className = "cm-rarity-badge";
+    badge.className = options.master ? "cm-rarity-badge cm-rarity-master-badge" : "cm-rarity-badge";
     badge.type = "button";
-    badge.textContent = "CM";
-    badge.setAttribute("aria-label", "Show Chasing Majors rarity intelligence");
+    badge.textContent = options.label || "🧠";
+    badge.setAttribute("aria-label", options.ariaLabel || "Show Chasing Majors rarity intelligence");
 
     const panel = createPanelShell();
     panel.hidden = true;
@@ -213,22 +215,26 @@
     wrapper.append(badge);
     document.body.append(panel);
 
-    const container = listing.container;
-    const computed = window.getComputedStyle(container);
-    if (computed.position === "static") {
-      container.classList.add("cm-rarity-positioned");
-    }
+    if (options.master) {
+      document.body.append(wrapper);
+    } else {
+      const container = listing.container;
+      const computed = window.getComputedStyle(container);
+      if (computed.position === "static") {
+        container.classList.add("cm-rarity-positioned");
+      }
 
-    container.append(wrapper);
+      container.append(wrapper);
+    }
 
     let isPinned = false;
 
     async function showPanel() {
       panel.hidden = false;
       wrapper.classList.add("cm-rarity-active");
-      positionPanel(panel, badge);
+      positionPanel(panel, badge, options.panelPosition);
       await handlers.onOpen(panel);
-      positionPanel(panel, badge);
+      positionPanel(panel, badge, options.panelPosition);
     }
 
     function hidePanel() {
@@ -242,12 +248,12 @@
 
     window.addEventListener("scroll", () => {
       if (!panel.hidden) {
-        positionPanel(panel, badge);
+        positionPanel(panel, badge, options.panelPosition);
       }
     }, true);
     window.addEventListener("resize", () => {
       if (!panel.hidden) {
-        positionPanel(panel, badge);
+        positionPanel(panel, badge, options.panelPosition);
       }
     });
 

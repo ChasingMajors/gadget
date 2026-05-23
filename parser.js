@@ -354,8 +354,29 @@
       .filter((listing) => listing.title.length > 6 && listing.container);
   }
 
+  function titleFromEbaySearch() {
+    if (getSource() !== "ebay") {
+      return "";
+    }
+
+    const params = new URLSearchParams(window.location.search || "");
+    const query = cleanTitle(params.get("_nkw") || "");
+    if (!isBadTitle(query)) {
+      return query;
+    }
+
+    const input = document.querySelector("input[name='_nkw'], input[aria-label*='Search']");
+    const inputTitle = cleanTitle(input?.value || input?.getAttribute("value") || "");
+    if (!isBadTitle(inputTitle)) {
+      return inputTitle;
+    }
+
+    return "";
+  }
+
   window.CMRarityParser = {
     findListings,
+    titleFromEbaySearch,
     getSource
   };
 })();

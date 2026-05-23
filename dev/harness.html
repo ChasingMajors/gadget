@@ -152,6 +152,11 @@
     </style>
     <script>
       window.chrome = window.chrome || {};
+      const url = new URL(window.location.href);
+      if (!url.searchParams.has("_nkw")) {
+        url.searchParams.set("_nkw", "2025-26 Topps Basketball");
+        window.history.replaceState(null, "", url.toString());
+      }
       chrome.storage = chrome.storage || {};
       chrome.storage.local = chrome.storage.local || {
         get(keys, callback) {
@@ -172,7 +177,7 @@
           callback?.();
         }
       };
-      document.documentElement.dataset.cmSource = window.localStorage.getItem("cmHarnessSource") || "ebay";
+      document.documentElement.dataset.cmSource = url.searchParams.get("cmSource") || window.localStorage.getItem("cmHarnessSource") || "ebay";
       document.documentElement.dataset.cmSport = document.documentElement.dataset.cmSource === "comc" ? "Basketball" : "";
     </script>
   </head>
@@ -295,7 +300,7 @@
       });
 
       const sourceSelect = document.getElementById("source");
-      const savedSource = window.localStorage.getItem("cmHarnessSource") || "ebay";
+      const savedSource = new URL(window.location.href).searchParams.get("cmSource") || window.localStorage.getItem("cmHarnessSource") || "ebay";
       sourceSelect.value = savedSource;
       document.documentElement.dataset.cmSource = savedSource;
       document.documentElement.dataset.cmSport = savedSource === "comc" ? "Basketball" : "";
