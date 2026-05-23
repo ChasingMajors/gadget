@@ -110935,5 +110935,294 @@
       "setLine": "Cactus Ink",
       "subsetSize": 49
     }
+  },
+  {
+    "id": "1994-score-series1-baseball",
+    "canonicalTitle": "1994 Score Series 1 Baseball - Base - Parallel - Gold Rush",
+    "aliases": [
+      "1994 Score Series 1 Baseball",
+      "1994 Score Series 1 Baseball - Base - Parallel - Gold Rush",
+      "1994 Score Series 1 Gold Rush",
+      "1994 Score Series 1 Base - Parallel"
+    ],
+    "requiredTerms": [
+      "1994",
+      "score",
+      "series",
+      "baseball",
+      "gold",
+      "rush"
+    ],
+    "serialTerms": [],
+    "rarityTier": "Base - Parallel",
+    "scarcityScore": 54,
+    "printRun": 31900,
+    "packOdds": null,
+    "popTotal": 0,
+    "popGem": 0,
+    "matchMode": "set",
+    "sourceUrl": null,
+    "metadata": {
+      "year": "1994",
+      "sport": "Baseball",
+      "brand": "Score",
+      "product": "Series 1",
+      "setType": "Base - Parallel",
+      "setLine": "Gold Rush",
+      "subsetSize": 330
+    }
+  },
+  {
+    "id": "1994-score-series1-baseball",
+    "canonicalTitle": "1994 Score Series 1 Baseball - Insert - Dream Team",
+    "aliases": [
+      "1994 Score Series 1 Baseball",
+      "1994 Score Series 1 Baseball - Insert - Dream Team",
+      "1994 Score Series 1 Dream Team",
+      "1994 Score Series 1 Insert"
+    ],
+    "requiredTerms": [
+      "1994",
+      "score",
+      "series",
+      "baseball",
+      "dream",
+      "team"
+    ],
+    "serialTerms": [],
+    "rarityTier": "Insert",
+    "scarcityScore": 54,
+    "printRun": 14625,
+    "packOdds": null,
+    "popTotal": 0,
+    "popGem": 0,
+    "matchMode": "set",
+    "sourceUrl": null,
+    "metadata": {
+      "year": "1994",
+      "sport": "Baseball",
+      "brand": "Score",
+      "product": "Series 1",
+      "setType": "Insert",
+      "setLine": "Dream Team",
+      "subsetSize": 10
+    }
+  },
+  {
+    "id": "1994-score-series1-baseball",
+    "canonicalTitle": "1994 Score Series 1 Baseball - Insert - Gold Stars",
+    "aliases": [
+      "1994 Score Series 1 Baseball",
+      "1994 Score Series 1 Baseball - Insert - Gold Stars",
+      "1994 Score Series 1 Gold Stars",
+      "1994 Score Series 1 Insert"
+    ],
+    "requiredTerms": [
+      "1994",
+      "score",
+      "series",
+      "baseball",
+      "gold",
+      "stars"
+    ],
+    "serialTerms": [],
+    "rarityTier": "Insert",
+    "scarcityScore": 68,
+    "printRun": 6500,
+    "packOdds": null,
+    "popTotal": 0,
+    "popGem": 0,
+    "matchMode": "set",
+    "sourceUrl": null,
+    "metadata": {
+      "year": "1994",
+      "sport": "Baseball",
+      "brand": "Score",
+      "product": "Series 1",
+      "setType": "Insert",
+      "setLine": "Gold Stars",
+      "subsetSize": 30
+    }
+  },
+  {
+    "id": "1994-score-series1-baseball",
+    "canonicalTitle": "1994 Score Series 1 Baseball - Insert - Boys of Summer",
+    "aliases": [
+      "1994 Score Series 1 Baseball",
+      "1994 Score Series 1 Baseball - Insert - Boys of Summer",
+      "1994 Score Series 1 Boys of Summer",
+      "1994 Score Series 1 Insert"
+    ],
+    "requiredTerms": [
+      "1994",
+      "score",
+      "series",
+      "baseball",
+      "boys",
+      "of",
+      "summer"
+    ],
+    "serialTerms": [],
+    "rarityTier": "Insert",
+    "scarcityScore": 54,
+    "printRun": 14625,
+    "packOdds": null,
+    "popTotal": 0,
+    "popGem": 0,
+    "matchMode": "set",
+    "sourceUrl": null,
+    "metadata": {
+      "year": "1994",
+      "sport": "Baseball",
+      "brand": "Score",
+      "product": "Series 1",
+      "setType": "Insert",
+      "setLine": "Boys of Summer",
+      "subsetSize": 30
+    }
+  },
+  {
+    "id": "1994-score-series2-baseball",
+    "canonicalTitle": "1994 Score Series 2 Baseball - Base - Parallel - Gold Rush",
+    "aliases": [
+      "1994 Score Series 2 Baseball",
+      "1994 Score Series 2 Baseball - Base - Parallel - Gold Rush",
+      "1994 Score Series 2 Gold Rush",
+      "1994 Score Series 2 Base - Parallel"
+    ],
+    "requiredTerms": [
+      "1994",
+      "score",
+      "series",
+      "baseball",
+      "gold",
+      "rush"
+    ],
+    "serialTerms": [],
+    "rarityTier": "Base - Parallel",
+    "scarcityScore": 54,
+    "printRun": 31900,
+    "packOdds": null,
+    "popTotal": 0,
+    "popGem": 0,
+    "matchMode": "set",
+    "sourceUrl": null,
+    "metadata": {
+      "year": "1994",
+      "sport": "Baseball",
+      "brand": "Score",
+      "product": "Series 2",
+      "setType": "Base - Parallel",
+      "setLine": "Gold Rush",
+      "subsetSize": 330
+    }
+  },
+  {
+    "id": "1994-score-series2-baseball",
+    "canonicalTitle": "1994 Score Series 2 Baseball - Insert - Cycle",
+    "aliases": [
+      "1994 Score Series 2 Baseball",
+      "1994 Score Series 2 Baseball - Insert - Cycle",
+      "1994 Score Series 2 Cycle",
+      "1994 Score Series 2 Insert"
+    ],
+    "requiredTerms": [
+      "1994",
+      "score",
+      "series",
+      "baseball",
+      "cycle"
+    ],
+    "serialTerms": [],
+    "rarityTier": "Insert",
+    "scarcityScore": 54,
+    "printRun": 14625,
+    "packOdds": null,
+    "popTotal": 0,
+    "popGem": 0,
+    "matchMode": "set",
+    "sourceUrl": null,
+    "metadata": {
+      "year": "1994",
+      "sport": "Baseball",
+      "brand": "Score",
+      "product": "Series 2",
+      "setType": "Insert",
+      "setLine": "Cycle",
+      "subsetSize": 10
+    }
+  },
+  {
+    "id": "1994-score-series2-baseball",
+    "canonicalTitle": "1994 Score Series 2 Baseball - Insert - Gold Stars",
+    "aliases": [
+      "1994 Score Series 2 Baseball",
+      "1994 Score Series 2 Baseball - Insert - Gold Stars",
+      "1994 Score Series 2 Gold Stars",
+      "1994 Score Series 2 Insert"
+    ],
+    "requiredTerms": [
+      "1994",
+      "score",
+      "series",
+      "baseball",
+      "gold",
+      "stars"
+    ],
+    "serialTerms": [],
+    "rarityTier": "Insert",
+    "scarcityScore": 68,
+    "printRun": 6500,
+    "packOdds": null,
+    "popTotal": 0,
+    "popGem": 0,
+    "matchMode": "set",
+    "sourceUrl": null,
+    "metadata": {
+      "year": "1994",
+      "sport": "Baseball",
+      "brand": "Score",
+      "product": "Series 2",
+      "setType": "Insert",
+      "setLine": "Gold Stars",
+      "subsetSize": 30
+    }
+  },
+  {
+    "id": "1994-score-series2-baseball",
+    "canonicalTitle": "1994 Score Series 2 Baseball - Insert - Boys of Summer",
+    "aliases": [
+      "1994 Score Series 2 Baseball",
+      "1994 Score Series 2 Baseball - Insert - Boys of Summer",
+      "1994 Score Series 2 Boys of Summer",
+      "1994 Score Series 2 Insert"
+    ],
+    "requiredTerms": [
+      "1994",
+      "score",
+      "series",
+      "baseball",
+      "boys",
+      "of",
+      "summer"
+    ],
+    "serialTerms": [],
+    "rarityTier": "Insert",
+    "scarcityScore": 54,
+    "printRun": 14625,
+    "packOdds": null,
+    "popTotal": 0,
+    "popGem": 0,
+    "matchMode": "set",
+    "sourceUrl": null,
+    "metadata": {
+      "year": "1994",
+      "sport": "Baseball",
+      "brand": "Score",
+      "product": "Series 2",
+      "setType": "Insert",
+      "setLine": "Boys of Summer",
+      "subsetSize": 30
+    }
   }
 ]
