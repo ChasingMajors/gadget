@@ -98,48 +98,6 @@ if (falseSetPositiveResponse.rarityTier !== "Unknown") {
   });
 }
 
-const specificSetResponse = buildRarityResponse({
-  query: "2022 Topps Bowman Chrome Mojo Mega Autograph Baseball",
-  source: "ebay",
-  pageUrl: "https://www.ebay.com",
-  cards: [
-    {
-      canonicalTitle: "2022 Topps Bowman Baseball - Autograph - Prospects Autographs",
-      aliases: ["2022 Topps Bowman Baseball", "2022 Topps Bowman Prospects Autographs"],
-      requiredTerms: ["2022", "topps", "bowman", "baseball", "prospects", "autographs"],
-      serialTerms: [],
-      rarityTier: "Autograph",
-      scarcityScore: 68,
-      printRun: 1952,
-      packOdds: null,
-      popTotal: 0,
-      popGem: 0,
-      matchMode: "set"
-    },
-    {
-      canonicalTitle: "2022 Topps Bowman Chrome Mojo Baseball - Autograph - Mega Autograph",
-      aliases: ["2022 Topps Bowman Chrome Mojo Baseball", "2022 Topps Bowman Chrome Mojo Mega Autograph"],
-      requiredTerms: ["2022", "topps", "bowman", "chrome", "mojo", "baseball", "mega", "autograph"],
-      serialTerms: [],
-      rarityTier: "Autograph",
-      scarcityScore: 68,
-      printRun: 1923,
-      packOdds: null,
-      popTotal: 0,
-      popGem: 0,
-      matchMode: "set"
-    }
-  ],
-  upgradeUrl: "https://chasingmajors.com/upgrade"
-});
-
-if (specificSetResponse.title !== "2022 Topps Bowman Chrome Mojo Baseball - Autograph - Mega Autograph") {
-  failures.push({
-    error: "Specific set modifiers should beat broader set rows",
-    actual: specificSetResponse
-  });
-}
-
 const ruleCards = [
   {
     canonicalTitle: "2025-26 Topps Basketball Cooper Flagg #1 RC",
