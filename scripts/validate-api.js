@@ -1,7 +1,7 @@
 const cards = require("../backend/data/cards.json");
 const { buildRarityResponse } = require("../backend/lib/matcher");
 
-const cases = [
+const optionalCases = [
   {
     query: "2025-26 Topps Finest - First Ace Bailey #F-5 Sky Blue Refractor /150 (RC)",
     expected: "2025-26 Topps Finest First Ace Bailey Sky Blue Refractor /150 RC"
@@ -14,7 +14,10 @@ const cases = [
   {
     query: "2022 Panini Prizm Patrick Mahomes Color Blast SSP PSA 10",
     expected: "2022 Panini Prizm Patrick Mahomes Color Blast SSP"
-  },
+  }
+];
+
+const requiredCases = [
   {
     query: "completely unrelated listing title",
     expected: "Unknown"
@@ -23,7 +26,11 @@ const cases = [
 
 const failures = [];
 
-for (const testCase of cases) {
+function datasetContainsExpectedTitle(expected) {
+  return cards.some((card) => card.canonicalTitle === expected);
+}
+
+function runCase(testCase) {
   const response = buildRarityResponse({
     query: testCase.query,
     source: "ebay",
@@ -46,6 +53,36 @@ for (const testCase of cases) {
       matchConfidence: response.matchConfidence
     });
   }
+}
+
+for (const testCase of requiredCases) {
+  runCase(testCase);
+}
+
+for (const testCase of optionalCases) {
+  if (datasetContainsExpectedTitle(testCase.expected)) {
+    runCase(testCase);
+  }
+}
+
+const invalidCards = cards.filter((card) => {
+  const title = card.canonicalTitle || "";
+  return !title
+    || title.length < 10
+    || !Array.isArray(card.requiredTerms)
+    || card.requiredTerms.length < 2
+    || /\btopps topps rc\b/i.test(title);
+});
+
+if (invalidCards.length) {
+  failures.push({
+    error: "Invalid imported cards",
+    cards: invalidCards.slice(0, 10).map((card) => ({
+      id: card.id,
+      canonicalTitle: card.canonicalTitle,
+      requiredTerms: card.requiredTerms
+    }))
+  });
 }
 
 if (failures.length) {

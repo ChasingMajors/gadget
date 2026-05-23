@@ -114,6 +114,10 @@ function termsFrom({ player, brand, product, parallel, cardNumber }) {
     .filter((term) => term.length > 1)));
 }
 
+function hasExplicitTitle(record) {
+  return Boolean(firstValue(record, ["canonicaltitle", "title", "card", "cardtitle", "cardname", "description"]));
+}
+
 function titleTerms(title) {
   const stopTerms = new Set([
     "the",
@@ -197,11 +201,16 @@ function rowToCard(record) {
   const team = firstValue(record, ["team"]);
   const parallel = firstValue(record, ["parallel", "variation"]) || "Base";
   const serial = firstValue(record, ["serial", "serialnumber", "numberedto"]);
-  const canonicalTitle = firstValue(record, ["canonicaltitle", "title", "card", "cardtitle", "cardname", "description", "name"]) || buildCanonicalTitle(record);
+  const explicitTitle = firstValue(record, ["canonicaltitle", "title", "card", "cardtitle", "cardname", "description"]);
+  const canonicalTitle = explicitTitle || buildCanonicalTitle(record);
   const rawAliases = listValue(firstValue(record, ["aliases", "alias"]));
   const printRun = numberValue(firstValue(record, ["prv", "printRun", "estimatedprintrun", "estimatedprv"]));
 
-  if (!canonicalTitle) {
+  if (!canonicalTitle || (!player && !hasExplicitTitle(record))) {
+    return null;
+  }
+
+  if (!explicitTitle && (!year || !brand || !player)) {
     return null;
   }
 
