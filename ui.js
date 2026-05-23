@@ -281,6 +281,7 @@
 
     return {
       badge,
+      wrapper,
       panel,
       renderPanel: (rarity, accessState) => renderPanel(panel, listing, rarity, accessState),
       renderLimitPanel: (accessState) => renderLimitPanel(panel, accessState)

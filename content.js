@@ -1,5 +1,6 @@
 (function () {
   const processedImages = new WeakSet();
+  const listingWidgets = new Set();
   const lookupPromises = new Map();
   let hasAttachedMasterBadge = false;
 
@@ -56,6 +57,14 @@
         }
       }
     });
+    listingWidgets.add(widget);
+  }
+
+  function fadeOutListingBadges() {
+    listingWidgets.forEach((widget) => {
+      widget.wrapper.classList.add("cm-rarity-wrapper-faded");
+      widget.panel.hidden = true;
+    });
   }
 
   function isUsefulMasterRarity(rarity) {
@@ -71,6 +80,7 @@
     }
 
     hasAttachedMasterBadge = true;
+    fadeOutListingBadges();
     const listing = {
       id: "ebay-master-search",
       source: "ebay",
