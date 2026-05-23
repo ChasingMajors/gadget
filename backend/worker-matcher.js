@@ -216,6 +216,54 @@ function serialScore(normalizedQuery, card) {
   return serialTerms.some((term) => normalizedQuery.includes(String(term).toLowerCase())) ? 0.12 : -0.08;
 }
 
+function querySerialLimit(query) {
+  const match = String(query || "").match(/\/\s*([\d,]{1,9})\b/);
+  if (!match) {
+    return null;
+  }
+
+  const limit = Number(match[1].replace(/,/g, ""));
+  return Number.isFinite(limit) && limit > 0 && limit <= 10000 ? limit : null;
+}
+
+function serialLimitScore(query, normalizedQuery, card) {
+  const limit = querySerialLimit(query);
+  if (!limit) {
+    return 0;
+  }
+
+  const serialTerms = card.serialTerms || [];
+  const hasSerialTerm = serialTerms.some((term) => normalizedQuery.includes(String(term).toLowerCase()));
+  const hasPrintRunMatch = Number(card.printRun) === limit;
+
+  if (hasSerialTerm || hasPrintRunMatch) {
+    return 0.12;
+  }
+
+  return -0.32;
+}
+
+function serialVariantPenalty(query, queryTokens, card) {
+  if (!querySerialLimit(query)) {
+    return 0;
+  }
+
+  const queryVariantTokens = Array.from(queryTokens).filter((token) => VARIANT_TERMS.has(token));
+  if (!queryVariantTokens.length) {
+    return 0;
+  }
+
+  const cardVariantTokens = tokenSet([
+    card.canonicalTitle,
+    card.metadata?.setLine,
+    card.metadata?.setType,
+    ...(card.aliases || [])
+  ].filter(Boolean).join(" "));
+  const missingVariants = queryVariantTokens.filter((token) => !cardVariantTokens.has(token));
+
+  return missingVariants.length ? -0.28 : 0;
+}
+
 export function scoreCard(query, card) {
   const queryTokens = queryTokensForCard(query, card);
   const normalizedQuery = normalizeTitle(query);
@@ -234,6 +282,8 @@ export function scoreCard(query, card) {
     + requiredBoost
     + aliasBoost
     + serialScore(normalizedQuery, card)
+    + serialLimitScore(query, normalizedQuery, card)
+    + serialVariantPenalty(query, queryTokens, card)
     + setBoost
     + setSpecificityPenalty(queryTokens, card);
 

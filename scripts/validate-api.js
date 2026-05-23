@@ -45,6 +45,10 @@ const requiredCases = [
     minimumConfidence: 0.59
   },
   {
+    query: "2025-26 Topps Chrome basketball Gold /50",
+    expected: "Unknown"
+  },
+  {
     query: "2025-26 Topps Chrome - [Base] - Xfractors #251 Cooper Flagg Basketball",
     source: "comc",
     expected: "2025-26 Topps Chrome Basketball - Base - Parallel - X-Fractors",
@@ -139,6 +143,70 @@ if (plainToppsResponse.title !== "2025-26 Topps Basketball - Base" || plainTopps
   failures.push({
     error: "Plain Topps Basketball base should not match Chrome/Sapphire/parallel rows",
     actual: plainToppsResponse
+  });
+}
+
+const serialNumberedResponse = buildRarityResponse({
+  query: "2025-26 Topps Chrome Basketball Gold Refractor /50",
+  source: "ebay",
+  pageUrl: "https://www.ebay.com",
+  cards: [
+    {
+      canonicalTitle: "2025-26 Topps Chrome Basketball - Base - Parallel - Gold Refractor",
+      aliases: [
+        "2025-26 Topps Chrome Basketball",
+        "2025-26 Topps Chrome Basketball Gold Refractor"
+      ],
+      requiredTerms: ["2025", "26", "topps", "chrome", "basketball", "gold", "refractor"],
+      serialTerms: ["/50", "50"],
+      rarityTier: "Base - Parallel",
+      scarcityScore: 82,
+      printRun: 50,
+      packOdds: null,
+      popTotal: 0,
+      popGem: 0,
+      matchMode: "set",
+      metadata: {
+        year: "2025-26",
+        sport: "Basketball",
+        brand: "Topps",
+        product: "Chrome",
+        setType: "Base - Parallel",
+        setLine: "Gold Refractor"
+      }
+    },
+    {
+      canonicalTitle: "2025-26 Topps Chrome Basketball - Autograph - Chrome Rookie Auto",
+      aliases: [
+        "2025-26 Topps Chrome Basketball",
+        "2025-26 Topps Chrome Basketball Chrome Rookie Auto"
+      ],
+      requiredTerms: ["2025", "26", "topps", "chrome", "basketball", "auto"],
+      serialTerms: [],
+      rarityTier: "Autograph",
+      scarcityScore: 68,
+      printRun: 2250,
+      packOdds: null,
+      popTotal: 0,
+      popGem: 0,
+      matchMode: "set",
+      metadata: {
+        year: "2025-26",
+        sport: "Basketball",
+        brand: "Topps",
+        product: "Chrome",
+        setType: "Autograph",
+        setLine: "Chrome Rookie Auto"
+      }
+    }
+  ],
+  upgradeUrl: "https://chasingmajors.com/upgrade"
+});
+
+if (serialNumberedResponse.title !== "2025-26 Topps Chrome Basketball - Base - Parallel - Gold Refractor") {
+  failures.push({
+    error: "Serial-numbered query should prefer the matching /50 parallel over broad set rows",
+    actual: serialNumberedResponse
   });
 }
 
