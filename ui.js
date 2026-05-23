@@ -113,9 +113,15 @@
 
     header.append(title, confidence);
 
-    const cardTitle = document.createElement("p");
-    cardTitle.className = "cm-rarity-card-title";
-    cardTitle.textContent = rarity.title || listing.title;
+    const listingTitle = document.createElement("p");
+    listingTitle.className = "cm-rarity-card-title";
+    listingTitle.textContent = listing.title;
+
+    const matchedTitle = document.createElement("p");
+    matchedTitle.className = "cm-rarity-matched-title";
+    matchedTitle.textContent = rarity.matchMode === "set"
+      ? `PRV set: ${rarity.title || "Unknown"}`
+      : `Matched: ${rarity.title || listing.title}`;
 
     const matchMode = document.createElement("div");
     matchMode.className = `cm-rarity-match-mode cm-rarity-match-mode-${rarity.matchMode || "card"}`;
@@ -152,11 +158,11 @@
       const fallback = document.createElement("p");
       fallback.className = "cm-rarity-note";
       fallback.textContent = "Showing limited fallback data while CM rarity service is unavailable.";
-      panel.append(header, cardTitle, matchMode, rows, actions, fallback);
+      panel.append(header, listingTitle, matchedTitle, matchMode, rows, actions, fallback);
       return;
     }
 
-    panel.append(header, cardTitle, matchMode, rows, actions);
+    panel.append(header, listingTitle, matchedTitle, matchMode, rows, actions);
   }
 
   function renderLimitPanel(panel, accessState) {

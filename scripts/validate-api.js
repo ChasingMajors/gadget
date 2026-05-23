@@ -65,6 +65,39 @@ for (const testCase of optionalCases) {
   }
 }
 
+const falseSetPositiveResponse = buildRarityResponse({
+  query: "2025-26 Bowman #1 Cooper Flagg",
+  source: "ebay",
+  pageUrl: "https://www.ebay.com",
+  cards: [
+    {
+      canonicalTitle: "2025 Bowman Draft Baseball - Auto. - In Action Auto. (Ref)",
+      aliases: [
+        "2025 Bowman Draft Baseball",
+        "2025 Bowman Draft Baseball - Auto. - In Action Auto. (Ref)",
+        "2025 Bowman Draft In Action Auto Ref"
+      ],
+      requiredTerms: ["2025", "bowman", "draft", "baseball", "auto", "action", "ref"],
+      serialTerms: [],
+      rarityTier: "Auto.",
+      scarcityScore: 82,
+      printRun: 100,
+      packOdds: null,
+      popTotal: 0,
+      popGem: 0,
+      matchMode: "set"
+    }
+  ],
+  upgradeUrl: "https://chasingmajors.com/upgrade"
+});
+
+if (falseSetPositiveResponse.rarityTier !== "Unknown") {
+  failures.push({
+    error: "Set-level false positive should not match",
+    actual: falseSetPositiveResponse
+  });
+}
+
 const invalidCards = cards.filter((card) => {
   const title = card.canonicalTitle || "";
   return !title

@@ -84,6 +84,7 @@
 }
 
 .cm-rarity-card-title,
+.cm-rarity-matched-title,
 .cm-rarity-loading,
 .cm-rarity-note {
   color: #4b5563;
@@ -97,6 +98,11 @@
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+
+.cm-rarity-matched-title {
+  color: #64748b;
+  font-size: 11px;
 }
 
 .cm-rarity-match-mode {

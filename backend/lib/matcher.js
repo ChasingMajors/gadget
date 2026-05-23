@@ -56,7 +56,7 @@ function hasRequiredTerms(queryTokens, card) {
   if (card.matchMode === "set") {
     const terms = card.requiredTerms || [];
     const hits = terms.filter((term) => queryTokens.has(term)).length;
-    return hits >= Math.min(3, terms.length);
+    return hits >= Math.min(4, terms.length);
   }
 
   return (card.requiredTerms || []).every((term) => queryTokens.has(term));
@@ -77,7 +77,12 @@ function scoreCard(query, card) {
   const cardTokens = tokenSet([card.canonicalTitle, ...(card.aliases || [])].join(" "));
   const overlap = Array.from(cardTokens).filter((token) => queryTokens.has(token));
   const coverage = cardTokens.size ? overlap.length / cardTokens.size : 0;
-  const requiredBoost = hasRequiredTerms(queryTokens, card) ? 0.22 : -0.2;
+  const hasRequired = hasRequiredTerms(queryTokens, card);
+  if (card.matchMode === "set" && !hasRequired) {
+    return 0;
+  }
+
+  const requiredBoost = hasRequired ? 0.22 : -0.2;
   const aliasBoost = includesAlias(query, card) ? 0.25 : 0;
   const setBoost = card.matchMode === "set" ? 0.08 : 0;
   const score = coverage * 0.68 + requiredBoost + aliasBoost + serialScore(normalizedQuery, card) + setBoost;
