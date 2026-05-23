@@ -22,6 +22,14 @@ If Command Center/CM Sentinel only has a full card title and PRV, this is also s
 title,prv,rarityTier,scarcityScore,packOdds,popTotal,popGem,aliases
 ```
 
+The current Command Center set-level schema is also supported:
+
+```txt
+Code,DisplayName,Keywords,year,sport,manufacturer,product,setType,setLine,printRun,serial,subSetSize,notes,cmURL
+```
+
+Rows from that schema are imported with `matchMode: "set"`, meaning marketplace listings can match the product/set when individual player-card rows are not available yet.
+
 Aliases can be separated with `|` or `;`.
 
 ## Import

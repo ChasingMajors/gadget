@@ -88,7 +88,7 @@ function numberValue(value) {
 
 function listValue(value) {
   return String(value || "")
-    .split(/[|;]/)
+    .split(/[|;,]/)
     .map((entry) => entry.trim())
     .filter(Boolean);
 }
@@ -116,6 +116,10 @@ function termsFrom({ player, brand, product, parallel, cardNumber }) {
 
 function hasExplicitTitle(record) {
   return Boolean(firstValue(record, ["canonicaltitle", "title", "card", "cardtitle", "cardname", "description"]));
+}
+
+function hasSetSchema(record) {
+  return Boolean(firstValue(record, ["displayname"]) && firstValue(record, ["printrun"]));
 }
 
 function titleTerms(title) {
@@ -167,6 +171,66 @@ function buildCanonicalTitle(record) {
   ].filter(Boolean).join(" ").replace(/\s+\/(\d+)/, " /$1");
 }
 
+function setRowToCard(record) {
+  const code = firstValue(record, ["code"]);
+  const displayName = firstValue(record, ["displayname"]);
+  const year = firstValue(record, ["year", "season"]);
+  const sport = firstValue(record, ["sport"]);
+  const brand = firstValue(record, ["manufacturer", "brand"]);
+  const product = firstValue(record, ["product", "set", "setname"]);
+  const setType = firstValue(record, ["settype"]);
+  const setLine = firstValue(record, ["setline"]);
+  const printRun = numberValue(firstValue(record, ["printrun", "prv", "estimatedprintrun", "estimatedprv"]));
+  const serial = firstValue(record, ["serial", "serialnumber", "numberedto"]);
+  const subsetSize = numberValue(firstValue(record, ["subsetsize"]));
+  const rawKeywords = listValue(firstValue(record, ["keywords"]));
+  const notes = firstValue(record, ["notes"]);
+  const cmURL = firstValue(record, ["cmurl"]);
+
+  if (!displayName || printRun === null) {
+    return null;
+  }
+
+  const titleParts = [displayName, setType, setLine].filter(Boolean);
+  const canonicalTitle = Array.from(new Set(titleParts)).join(" - ");
+  const requiredTerms = Array.from(new Set([
+    ...titleTerms(displayName),
+    ...titleTerms(setLine),
+    ...rawKeywords.map((keyword) => keyword.toLowerCase().replace(/[^a-z0-9/]+/g, "")).filter(Boolean)
+  ])).slice(0, 12);
+
+  return {
+    id: slug(code && code !== "#N/A" ? code : canonicalTitle),
+    canonicalTitle,
+    aliases: Array.from(new Set([
+      displayName,
+      canonicalTitle,
+      [year, brand, product, setLine].filter(Boolean).join(" "),
+      [year, brand, product, setType].filter(Boolean).join(" "),
+      ...rawKeywords
+    ].filter(Boolean))),
+    requiredTerms,
+    serialTerms: serial ? [`/${serial.replace(/^\/+/, "")}`, serial.replace(/^\/+/, "")] : [],
+    rarityTier: setType || "Product",
+    scarcityScore: printRun <= 1000 ? 82 : printRun <= 10000 ? 68 : 54,
+    printRun,
+    packOdds: notes || null,
+    popTotal: 0,
+    popGem: 0,
+    matchMode: "set",
+    sourceUrl: cmURL || null,
+    metadata: {
+      year,
+      sport,
+      brand,
+      product,
+      setType,
+      setLine,
+      subsetSize
+    }
+  };
+}
+
 function buildAliases({ canonicalTitle, year, brand, product, player, cardNumber, team, parallel, serial, rawAliases }) {
   const number = cardNumber ? cardNumber.replace(/^#/, "") : "";
   const serialText = serial ? `/${serial.replace(/^\/+/, "")}` : "";
@@ -193,6 +257,10 @@ function buildAliases({ canonicalTitle, year, brand, product, player, cardNumber
 }
 
 function rowToCard(record) {
+  if (hasSetSchema(record)) {
+    return setRowToCard(record);
+  }
+
   const year = firstValue(record, ["year", "season"]);
   const brand = firstValue(record, ["brand", "manufacturer"]);
   const product = firstValue(record, ["product", "set", "setname"]);
