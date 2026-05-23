@@ -190,6 +190,25 @@ function setSpecificityHits(queryTokens, card) {
   return tokens.filter((token) => queryTokens.has(token)).length;
 }
 
+function cardVariantTokens(card) {
+  return tokenSet([
+    card.canonicalTitle,
+    card.metadata?.setLine,
+    card.metadata?.setType,
+    ...(card.aliases || [])
+  ].filter(Boolean).join(" "));
+}
+
+function unmatchedQueryVariants(queryTokens, card) {
+  const queryVariantTokens = Array.from(queryTokens).filter((token) => VARIANT_TERMS.has(token));
+  if (!queryVariantTokens.length) {
+    return [];
+  }
+
+  const tokens = cardVariantTokens(card);
+  return queryVariantTokens.filter((token) => !tokens.has(token));
+}
+
 function includesAlias(query, card) {
   const normalizedQuery = normalizeTitle(query);
   return [card.canonicalTitle, ...(card.aliases || [])]
@@ -248,20 +267,15 @@ function serialVariantPenalty(query, queryTokens, card) {
     return 0;
   }
 
-  const queryVariantTokens = Array.from(queryTokens).filter((token) => VARIANT_TERMS.has(token));
-  if (!queryVariantTokens.length) {
+  return unmatchedQueryVariants(queryTokens, card).length ? -0.28 : 0;
+}
+
+function variantMismatchPenalty(queryTokens, card) {
+  if (card.matchMode !== "set") {
     return 0;
   }
 
-  const cardVariantTokens = tokenSet([
-    card.canonicalTitle,
-    card.metadata?.setLine,
-    card.metadata?.setType,
-    ...(card.aliases || [])
-  ].filter(Boolean).join(" "));
-  const missingVariants = queryVariantTokens.filter((token) => !cardVariantTokens.has(token));
-
-  return missingVariants.length ? -0.28 : 0;
+  return unmatchedQueryVariants(queryTokens, card).length ? -0.32 : 0;
 }
 
 export function scoreCard(query, card) {
@@ -284,6 +298,7 @@ export function scoreCard(query, card) {
     + serialScore(normalizedQuery, card)
     + serialLimitScore(query, normalizedQuery, card)
     + serialVariantPenalty(query, queryTokens, card)
+    + variantMismatchPenalty(queryTokens, card)
     + setBoost
     + setSpecificityPenalty(queryTokens, card);
 

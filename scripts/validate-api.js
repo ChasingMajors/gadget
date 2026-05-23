@@ -49,6 +49,10 @@ const requiredCases = [
     expected: "Unknown"
   },
   {
+    query: "2025-26 Topps Chrome basketball Gold",
+    expected: "Unknown"
+  },
+  {
     query: "2025-26 Topps Chrome - [Base] - Xfractors #251 Cooper Flagg Basketball",
     source: "comc",
     expected: "2025-26 Topps Chrome Basketball - Base - Parallel - X-Fractors",
