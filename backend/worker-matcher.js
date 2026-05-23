@@ -37,6 +37,21 @@ const NOISE_TERMS = new Set([
 ]);
 
 const UNSUPPORTED_DIGITAL_TERMS = new Set(["bunt", "digital", "digitals", "nft"]);
+const SET_MODIFIER_TERMS = [
+  "archives",
+  "bowman",
+  "chrome",
+  "draft",
+  "finest",
+  "gypsy",
+  "heritage",
+  "mega",
+  "mojo",
+  "prizm",
+  "queen",
+  "stadium",
+  "update"
+];
 
 export function normalizeTitle(title) {
   return String(title || "")
@@ -79,6 +94,12 @@ function phraseTokens(card) {
 
 function hasRequiredPhrases(normalizedQuery, card) {
   return phraseTokens(card).every((phrase) => normalizedQuery.includes(phrase));
+}
+
+function modifierMismatchPenalty(queryTokens, cardTokens) {
+  const queryModifiers = SET_MODIFIER_TERMS.filter((term) => queryTokens.has(term));
+  const missing = queryModifiers.filter((term) => !cardTokens.has(term));
+  return Math.min(0.45, missing.length * 0.14);
 }
 
 function includesAlias(query, card) {
@@ -129,7 +150,8 @@ export function scoreCard(query, card) {
   const requiredBoost = hasRequired ? 0.22 : -0.2;
   const aliasBoost = includesAlias(query, card) ? 0.25 : 0;
   const setBoost = card.matchMode === "set" ? 0.08 : 0;
-  const score = coverage * 0.68 + requiredBoost + aliasBoost + serialScore(normalizedQuery, card) + setBoost;
+  const mismatchPenalty = card.matchMode === "set" ? modifierMismatchPenalty(queryTokens, cardTokens) : 0;
+  const score = coverage * 0.68 + requiredBoost + aliasBoost + serialScore(normalizedQuery, card) + setBoost - mismatchPenalty;
 
   return Math.max(0, Math.min(0.99, Number(score.toFixed(2))));
 }
