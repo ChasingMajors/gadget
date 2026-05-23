@@ -12,6 +12,9 @@ function makeElement({ tag = "div", text = "", attrs = {}, className = "", child
     className,
     dataset: {},
     style: {},
+    get innerText() {
+      return [this.textContent, ...(this.children || []).map((child) => child.innerText)].filter(Boolean).join("\n");
+    },
     getAttribute(name) {
       return attrs[name] || null;
     },
@@ -35,6 +38,9 @@ function makeElement({ tag = "div", text = "", attrs = {}, className = "", child
         if (singleSelector.startsWith("[data-testid='")) {
           return node.attrs?.["data-testid"] === singleSelector.slice(15, -2);
         }
+        if (/^[a-z][a-z0-9]*$/i.test(singleSelector)) {
+          return node.tag === singleSelector.toLowerCase();
+        }
         return false;
       }
 
@@ -57,6 +63,9 @@ function makeElement({ tag = "div", text = "", attrs = {}, className = "", child
           return node;
         }
         if (selector.startsWith("[data-testid='") && node.attrs?.["data-testid"] === selector.slice(15, -2)) {
+          return node;
+        }
+        if (/^[a-z][a-z0-9]*$/i.test(selector) && node.tag === selector.toLowerCase()) {
           return node;
         }
         node = node.parentElement;
@@ -146,6 +155,81 @@ const expected = "2025-26 Topps NBA Flagship Basketball Ace Bailey RC Rookie #20
 
 if (title !== expected) {
   console.error(`Parser validation failed. Expected "${expected}" but got "${title}"`);
+  process.exit(1);
+}
+
+const comcImage = makeElement({
+  tag: "img",
+  attrs: {
+    width: 220,
+    height: 310,
+    src: "https://img.comc.com/i/Basketball/2025-26/Topps/201/Cooper-Flagg.jpg"
+  }
+});
+comcImage.alt = "2025-26 Topps - [Base] #201 Cooper Flagg [PSA 10 GEM MT]";
+comcImage.src = comcImage.attrs.src;
+comcImage.currentSrc = comcImage.attrs.src;
+
+const comcSetLine = makeElement({
+  tag: "a",
+  className: "card-title",
+  text: "2025-26 Topps - [Base] #201",
+  attrs: {
+    href: "https://www.comc.com/Cards/Basketball/2025-26/Topps/201/Cooper_Flagg"
+  }
+});
+
+const comcPlayerLine = makeElement({
+  tag: "h3",
+  className: "name",
+  text: "Cooper Flagg [PSA 10 GEM MT] #/1,265,000"
+});
+
+const comcPrice = makeElement({
+  tag: "span",
+  text: "$98.18"
+});
+
+const comcCard = makeElement({
+  className: "cardItem",
+  children: [comcImage, comcSetLine, comcPlayerLine, comcPrice]
+});
+
+const comcBody = makeElement({
+  children: [comcCard]
+});
+
+const comcContext = {
+  window: {
+    location: {
+      hostname: "www.comc.com",
+      href: "https://www.comc.com/Players/Basketball/Cooper_Flagg/c465571/Cards/Basketball"
+    },
+    getComputedStyle() {
+      return {
+        position: "relative"
+      };
+    },
+    CMRarityParser: null
+  },
+  document: {
+    body: comcBody,
+    documentElement: {
+      dataset: {}
+    },
+    images: [comcImage]
+  }
+};
+
+vm.createContext(comcContext);
+vm.runInContext(parserSource, comcContext);
+
+const comcListings = comcContext.window.CMRarityParser.findListings();
+const comcTitle = comcListings[0]?.title;
+const expectedComc = "2025-26 Topps - [Base] #201 Cooper Flagg #/1,265,000 Basketball";
+
+if (comcTitle !== expectedComc) {
+  console.error(`COMC parser validation failed. Expected "${expectedComc}" but got "${comcTitle}"`);
   process.exit(1);
 }
 

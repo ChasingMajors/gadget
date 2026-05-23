@@ -26,6 +26,18 @@ const requiredCases = [
     query: "2025-26 Topps NBA Flagship Basketball Ace Bailey RC Rookie #205 Utah Jazz Base",
     expected: "2025-26 Topps Basketball - Base",
     expectedPrintRun: 1265000
+  },
+  {
+    query: "2025-26 Topps - [Base] #201 Cooper Flagg #/1,265,000 Basketball",
+    source: "comc",
+    expected: "2025-26 Topps Basketball - Base",
+    expectedPrintRun: 1265000
+  },
+  {
+    query: "2025-26 Topps Chrome - [Base] - Xfractors #251 Cooper Flagg Basketball",
+    source: "comc",
+    expected: "2025-26 Topps Chrome Basketball - Base - Parallel - X-Fractors",
+    expectedPrintRun: 7750
   }
 ];
 
@@ -38,7 +50,7 @@ function datasetContainsExpectedTitle(expected) {
 function runCase(testCase) {
   const response = buildRarityResponse({
     query: testCase.query,
-    source: "ebay",
+    source: testCase.source || "ebay",
     pageUrl: "https://www.ebay.com",
     cards,
     upgradeUrl: "https://chasingmajors.com/upgrade"

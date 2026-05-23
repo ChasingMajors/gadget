@@ -35,6 +35,7 @@
 
   function cleanTitle(text) {
     return String(text || "")
+      .replace(/\u00a0/g, " ")
       .replace(/\s+/g, " ")
       .trim();
   }
@@ -43,9 +44,58 @@
     return !title
       || title.length < 7
       || /^shop on ebay$/i.test(title)
+      || /^\$[\d,.]+/.test(title)
+      || /^get srp$/i.test(title)
+      || /^\d+\s+from$/i.test(title)
+      || /^\d+d\s+left\b/i.test(title)
       || /^\d[\d,+]*\+?\s+results?\s+for\b/i.test(title)
       || /\bsave this search\b/i.test(title)
       || /\bwe.ve streamlined your search results\b/i.test(title);
+  }
+
+  function cleanComcTitlePart(text) {
+    return cleanTitle(text)
+      .replace(/\bX[-\s]?Fractors?\b/gi, "Xfractors")
+      .replace(/\[(?=[^\]]*(?:psa|bgs|sgc|cgc|gem|mint|pristine|nm|mt|ex|vg|good|auth))[^\]]+\]/gi, "")
+      .replace(/\s+/g, " ")
+      .trim();
+  }
+
+  function comcSportFromUrl() {
+    const path = window.location.pathname || window.location.href || "";
+    const match = path.match(/\/(?:Cards|Players)\/(Basketball|Baseball|Football|Hockey|Soccer)\b/i)
+      || path.match(/\/Players\/(Basketball|Baseball|Football|Hockey|Soccer)\b/i);
+    return match ? match[1] : "";
+  }
+
+  function enrichComcTitle(title) {
+    const sport = comcSportFromUrl();
+    if (!sport || new RegExp(`\\b${sport}\\b`, "i").test(title)) {
+      return title;
+    }
+
+    return cleanTitle(`${title} ${sport}`);
+  }
+
+  function textLinesFrom(element) {
+    const blockText = element.innerText || element.textContent || "";
+    return blockText
+      .replace(/\u00a0/g, " ")
+      .split(/\n+/)
+      .map(cleanComcTitlePart)
+      .filter((line) => !isBadTitle(line));
+  }
+
+  function isComcSetLine(line) {
+    return /^(?:19|20)\d{2}(?:\s*[-/]\s*\d{2,4})?\s+.+/i.test(line)
+      && !/\ball\s+cards\b/i.test(line)
+      && !/\blistings?\b/i.test(line);
+  }
+
+  function isComcDetailLine(line) {
+    return !isComcSetLine(line)
+      && !/^(?:basketball|baseball|football|hockey|soccer|cards?|set name|card #|description|srp|price|qty)$/i.test(line)
+      && !/\b(?:sort by|select|attributes|players|teams)\b/i.test(line);
   }
 
   function closestTitleFromItemLinks(image) {
@@ -85,7 +135,15 @@
       : [
           ".item",
           ".card",
+          ".cardItem",
+          ".card-item",
+          ".card-list-item",
+          ".product",
+          ".product-list-item",
           ".search-result",
+          "li",
+          "article",
+          "tr",
           ".row",
           "main",
           "body"
@@ -101,12 +159,58 @@
     return image.parentElement || document.body;
   }
 
+  function comcTitleForImage(image) {
+    const root = nearestListingRoot(image, "comc");
+    const selectorText = [
+      ".set-name",
+      ".setName",
+      ".card-title",
+      ".cardTitle",
+      ".item-title",
+      ".itemTitle",
+      ".title",
+      ".description",
+      ".player",
+      ".name",
+      "h1",
+      "h2",
+      "h3",
+      "h4",
+      "a[title]"
+    ]
+      .map((selector) => Array.from(root.querySelectorAll(selector)))
+      .flat()
+      .map((element) => cleanComcTitlePart(element.getAttribute("title") || element.textContent))
+      .filter((title) => !isBadTitle(title));
+
+    const lines = Array.from(new Set([
+      ...selectorText,
+      ...textLinesFrom(root),
+      cleanComcTitlePart(image.alt || image.getAttribute("aria-label") || "")
+    ].filter(Boolean)));
+
+    const setLineIndex = lines.findIndex(isComcSetLine);
+    if (setLineIndex >= 0) {
+      const setLine = lines[setLineIndex];
+      const detailLine = lines.slice(setLineIndex + 1).find(isComcDetailLine)
+        || lines.find((line, index) => index !== setLineIndex && isComcDetailLine(line));
+      return enrichComcTitle(cleanTitle([setLine, detailLine].filter(Boolean).join(" ")));
+    }
+
+    const fallback = lines.find((line) => !isBadTitle(line)) || "";
+    return fallback ? enrichComcTitle(fallback) : "";
+  }
+
   function titleForImage(image, source) {
     if (source === "ebay") {
       const itemLinkTitle = closestTitleFromItemLinks(image);
       if (itemLinkTitle) {
         return itemLinkTitle;
       }
+    }
+
+    if (source === "comc") {
+      return comcTitleForImage(image);
     }
 
     const root = nearestListingRoot(image, source);

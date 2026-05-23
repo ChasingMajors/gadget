@@ -40,10 +40,42 @@ const BRAND_TERMS = new Set([
   "sage"
 ]);
 
+const VARIANT_TERMS = new Set([
+  "aqua",
+  "blackout",
+  "blue",
+  "crackleboard",
+  "diamante",
+  "foil",
+  "foilboard",
+  "fractor",
+  "geometric",
+  "gold",
+  "green",
+  "holo",
+  "mojo",
+  "orange",
+  "parallel",
+  "pink",
+  "prism",
+  "pulsar",
+  "rainbow",
+  "raywave",
+  "refractor",
+  "sandglitter",
+  "shimmer",
+  "sapphire",
+  "silver",
+  "wave",
+  "xfractor",
+  "xfractors"
+]);
+
 export function normalizeTitle(title) {
   return String(title || "")
     .toLowerCase()
     .replace(/&amp;/g, " and ")
+    .replace(/\bx[\s-]?fractors?\b/g, " xfractors ")
     .replace(/[#(),.:;!?'"[\]{}|\\]/g, " ")
     .replace(/[-_]/g, " ")
     .replace(/\s+/g, " ")
@@ -100,6 +132,20 @@ function setSpecificityPenalty(queryTokens, card) {
     .filter((token) => !sportTokens.has(token))
     .filter((token) => !productTokens.includes(token))
     .filter((token) => !NOISE_TERMS.has(token));
+  const queryVariantTokens = Array.from(queryTokens).filter((token) => VARIANT_TERMS.has(token));
+
+  if (!modifierTokens.length && queryVariantTokens.length) {
+    return -0.42;
+  }
+
+  const unmatchedQueryVariants = queryVariantTokens
+    .filter((token) => !modifierTokens.includes(token))
+    .filter((token) => !productTokens.includes(token));
+
+  if (unmatchedQueryVariants.length) {
+    return -0.3;
+  }
+
   const missingModifierTokens = missingTokens(queryTokens, modifierTokens);
 
   if (modifierTokens.length && missingModifierTokens.length === modifierTokens.length) {

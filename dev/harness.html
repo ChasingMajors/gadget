@@ -75,7 +75,17 @@
         padding: 0;
       }
 
-      .s-item {
+      .fixture[hidden] {
+        display: none;
+      }
+
+      html[data-cm-source="ebay"] .fixture[data-fixture="comc"],
+      html[data-cm-source="comc"] .fixture[data-fixture="ebay"] {
+        display: none;
+      }
+
+      .s-item,
+      .cardItem {
         background: #ffffff;
         border: 1px solid #e5e7eb;
         border-radius: 8px;
@@ -85,6 +95,12 @@
       .s-item a {
         color: inherit;
         display: block;
+        text-decoration: none;
+      }
+
+      .cardItem a {
+        color: inherit;
+        font-weight: 700;
         text-decoration: none;
       }
 
@@ -123,6 +139,12 @@
         margin-top: 8px;
       }
 
+      .cardItem .name {
+        font-size: 14px;
+        line-height: 1.35;
+        margin: 6px 0 0;
+      }
+
       .status {
         color: #475569;
         font-size: 13px;
@@ -150,6 +172,7 @@
           callback?.();
         }
       };
+      document.documentElement.dataset.cmSource = window.localStorage.getItem("cmHarnessSource") || "ebay";
     </script>
   </head>
   <body>
@@ -172,7 +195,7 @@
     </header>
 
     <main>
-      <ul class="s-results">
+      <ul class="s-results fixture" data-fixture="ebay">
         <li class="s-item">
           <a href="#">
             <div class="s-item__image">
@@ -207,6 +230,39 @@
           </a>
         </li>
       </ul>
+
+      <ul class="s-results fixture" data-fixture="comc">
+        <li class="cardItem">
+          <div class="s-item__image">
+            <img alt="2025-26 Topps - [Base] #201 Cooper Flagg [PSA 10 GEM MT]" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 420 560'%3E%3Crect width='420' height='560' fill='%23f8fafc'/%3E%3Crect x='52' y='42' width='316' height='476' rx='24' fill='%23111827'/%3E%3Crect x='78' y='72' width='264' height='334' rx='16' fill='%23e0f2fe'/%3E%3Ccircle cx='210' cy='194' r='68' fill='%230ea5e9'/%3E%3Crect x='91' y='430' width='238' height='28' rx='8' fill='%23ffffff'/%3E%3Crect x='121' y='470' width='178' height='20' rx='8' fill='%23ffffff'/%3E%3C/svg%3E">
+          </div>
+          <div class="s-item__details">
+            <a class="card-title" href="https://www.comc.com/Cards/Basketball/2025-26/Topps/201/Cooper_Flagg">2025-26 Topps - [Base] #201</a>
+            <h3 class="name">Cooper Flagg [PSA 10 GEM MT] #/1,265,000</h3>
+            <span class="s-item__price">$98.18</span>
+          </div>
+        </li>
+        <li class="cardItem">
+          <div class="s-item__image">
+            <img alt="2025-26 Topps Chrome - [Base] - X-Fractor #251 Cooper Flagg" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 420 560'%3E%3Crect width='420' height='560' fill='%23ecfeff'/%3E%3Crect x='50' y='40' width='320' height='480' rx='24' fill='%230f172a'/%3E%3Crect x='78' y='72' width='264' height='332' rx='16' fill='%23dbeafe'/%3E%3Cpath d='M125 278 L210 126 L296 278 Z' fill='%2338bdf8'/%3E%3Crect x='91' y='430' width='238' height='28' rx='8' fill='%23ffffff'/%3E%3Crect x='121' y='470' width='178' height='20' rx='8' fill='%23ffffff'/%3E%3C/svg%3E">
+          </div>
+          <div class="s-item__details">
+            <a class="card-title" href="https://www.comc.com/Cards/Basketball/2025-26/Topps_Chrome/251/Cooper_Flagg">2025-26 Topps Chrome - [Base] - X-Fractor #251</a>
+            <h3 class="name">Cooper Flagg</h3>
+            <span class="s-item__price">$102.50</span>
+          </div>
+        </li>
+        <li class="cardItem">
+          <div class="s-item__image">
+            <img alt="2024-25 Bowman University Chrome - [Base] #16 Cooper Flagg" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 420 560'%3E%3Crect width='420' height='560' fill='%23fef2f2'/%3E%3Crect x='50' y='40' width='320' height='480' rx='24' fill='%23111827'/%3E%3Crect x='78' y='72' width='264' height='332' rx='16' fill='%23fee2e2'/%3E%3Ccircle cx='158' cy='190' r='54' fill='%23ef4444'/%3E%3Ccircle cx='262' cy='230' r='62' fill='%233b82f6'/%3E%3Crect x='91' y='430' width='238' height='28' rx='8' fill='%23ffffff'/%3E%3Crect x='121' y='470' width='178' height='20' rx='8' fill='%23ffffff'/%3E%3C/svg%3E">
+          </div>
+          <div class="s-item__details">
+            <a class="card-title" href="https://www.comc.com/Cards/Basketball/2024-25/Bowman_University_Chrome/16/Cooper_Flagg">2024-25 Bowman University Chrome - [Base] #16</a>
+            <h3 class="name">Cooper Flagg [BGS 9.5 GEM MINT]</h3>
+            <span class="s-item__price">$209.09</span>
+          </div>
+        </li>
+      </ul>
     </main>
 
     <script src="../config.js?v=5"></script>
@@ -237,8 +293,16 @@
         window.location.reload();
       });
 
-      document.getElementById("source").addEventListener("change", (event) => {
-        document.documentElement.dataset.cmSource = event.target.value;
+      const sourceSelect = document.getElementById("source");
+      const savedSource = window.localStorage.getItem("cmHarnessSource") || "ebay";
+      sourceSelect.value = savedSource;
+      document.documentElement.dataset.cmSource = savedSource;
+      document.querySelectorAll(".fixture").forEach((fixture) => {
+        fixture.hidden = fixture.dataset.fixture !== savedSource;
+      });
+
+      sourceSelect.addEventListener("change", (event) => {
+        window.localStorage.setItem("cmHarnessSource", event.target.value);
         window.location.reload();
       });
 
