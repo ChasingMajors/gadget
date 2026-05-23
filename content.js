@@ -5,7 +5,7 @@
   let hasAttachedMasterBadge = false;
 
   function shouldSkipListing(listing) {
-    return processedImages.has(listing.image) || !listing.title || listing.source === "unknown";
+    return hasAttachedMasterBadge || processedImages.has(listing.image) || !listing.title || listing.source === "unknown";
   }
 
   async function loadRarityForListing(listing) {
@@ -64,6 +64,10 @@
     listingWidgets.forEach((widget) => {
       widget.wrapper.classList.add("cm-rarity-wrapper-faded");
       widget.panel.hidden = true;
+    });
+
+    document.querySelectorAll(".cm-rarity-wrapper:not(.cm-rarity-master-wrapper)").forEach((wrapper) => {
+      wrapper.classList.add("cm-rarity-wrapper-faded");
     });
   }
 

@@ -34,6 +34,17 @@ const requiredCases = [
     expectedPrintRun: 1265000
   },
   {
+    query: "2025-26 topps mirror image",
+    expected: "2025-26 Topps Basketball - Variation - Golden Mirror SSP",
+    expectedPrintRun: 155
+  },
+  {
+    query: "2025-26 topps mirror image basketball",
+    expected: "2025-26 Topps Basketball - Variation - Golden Mirror SSP",
+    expectedPrintRun: 155,
+    minimumConfidence: 0.59
+  },
+  {
     query: "2025-26 Topps Chrome - [Base] - Xfractors #251 Cooper Flagg Basketball",
     source: "comc",
     expected: "2025-26 Topps Chrome Basketball - Base - Parallel - X-Fractors",
@@ -59,7 +70,8 @@ function runCase(testCase) {
   const passed = testCase.expected === "Unknown"
     ? response.rarityTier === "Unknown"
     : response.title === testCase.expected
-      && (testCase.expectedPrintRun === undefined || response.printRun === testCase.expectedPrintRun);
+      && (testCase.expectedPrintRun === undefined || response.printRun === testCase.expectedPrintRun)
+      && (testCase.minimumConfidence === undefined || response.matchConfidence >= testCase.minimumConfidence);
 
   if (!passed) {
     failures.push({

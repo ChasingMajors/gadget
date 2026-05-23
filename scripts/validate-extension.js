@@ -143,6 +143,14 @@ function checkMasterBadgeImplementation() {
   if (!ui.includes("🧠")) {
     errors.push("ui.js badge label should default to the brain emoji");
   }
+
+  if (!content.includes("hasAttachedMasterBadge || processedImages.has(listing.image)")) {
+    errors.push("content.js must skip new listing badges after a master badge is attached");
+  }
+
+  if (!content.includes(".cm-rarity-wrapper:not(.cm-rarity-master-wrapper)")) {
+    errors.push("content.js must fade all non-master rarity wrappers when the master badge appears");
+  }
 }
 
 const manifest = readJson("manifest.json");

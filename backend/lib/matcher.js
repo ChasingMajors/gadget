@@ -94,6 +94,22 @@ function tokenSet(title) {
   return new Set(tokenize(title));
 }
 
+function queryTokensForCard(query, card) {
+  const tokens = tokenSet(query);
+  const normalizedQuery = normalizeTitle(query);
+  const normalizedCard = normalizeTitle([
+    card.canonicalTitle,
+    card.metadata?.setLine,
+    ...(card.aliases || [])
+  ].filter(Boolean).join(" "));
+
+  if (/\bmirror image\b/.test(normalizedQuery) && /\bgolden mirror\b/.test(normalizedCard)) {
+    tokens.add("golden");
+  }
+
+  return tokens;
+}
+
 function metadataTokens(value) {
   return tokenize(value).filter((token) => token !== "base");
 }
@@ -202,7 +218,7 @@ function serialScore(normalizedQuery, card) {
 }
 
 function scoreCard(query, card) {
-  const queryTokens = tokenSet(query);
+  const queryTokens = queryTokensForCard(query, card);
   const normalizedQuery = normalizeTitle(query);
   const cardTokens = tokenSet([card.canonicalTitle, ...(card.aliases || [])].join(" "));
   const overlap = Array.from(cardTokens).filter((token) => queryTokens.has(token));
@@ -226,12 +242,11 @@ function scoreCard(query, card) {
 }
 
 function findBestMatch(query, cards, minimumConfidence = 0.54) {
-  const queryTokens = tokenSet(query);
   const ranked = cards
     .map((card) => ({
       card,
       confidence: scoreCard(query, card),
-      specificity: setSpecificityHits(queryTokens, card)
+      specificity: setSpecificityHits(queryTokensForCard(query, card), card)
     }))
     .sort((a, b) => b.confidence - a.confidence || b.specificity - a.specificity);
 
