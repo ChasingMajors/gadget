@@ -16,6 +16,12 @@ Minimum useful columns:
 year,brand,product,player,cardNumber,prv
 ```
 
+If Command Center/CM Sentinel only has a full card title and PRV, this is also supported:
+
+```txt
+title,prv,rarityTier,scarcityScore,packOdds,popTotal,popGem,aliases
+```
+
 Aliases can be separated with `|` or `;`.
 
 ## Import
@@ -43,6 +49,8 @@ Sync PRV data
 ```
 
 The action downloads the CSV, runs the importer, validates the generated Worker dataset, and commits `backend/data/cards.json` back to `main`. Cloudflare then redeploys from GitHub.
+
+If the sync fails, the action logs the detected CSV headers and a small first-row sample so we can map the source sheet without exposing the secret URL.
 
 Local equivalent:
 

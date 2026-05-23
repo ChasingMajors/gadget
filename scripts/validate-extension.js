@@ -107,6 +107,7 @@ function checkRequiredFiles() {
     "backend/lib/matcher.js",
     "backend/data/cards.json",
     "backend/data/prv-template.csv",
+    "backend/data/title-only-prv-template.csv",
     "PRV_IMPORT.md",
     "scripts/import-prv-csv.js",
     "scripts/sync-prv-from-url.js",

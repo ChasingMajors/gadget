@@ -42,15 +42,22 @@ function parseCsv(raw) {
     .split("\n")
     .filter((line) => line.trim());
 
-  const headers = parseCsvLine(lines[0]).map((header) => normalizeHeader(header));
+  const rawHeaders = parseCsvLine(lines[0]);
+  const headers = rawHeaders.map((header) => normalizeHeader(header));
 
-  return lines.slice(1).map((line) => {
+  const rows = lines.slice(1).map((line) => {
     const values = parseCsvLine(line);
     return headers.reduce((record, header, index) => {
       record[header] = values[index] || "";
       return record;
     }, {});
   });
+
+  return {
+    rawHeaders,
+    headers,
+    rows
+  };
 }
 
 function normalizeHeader(header) {
@@ -105,6 +112,34 @@ function termsFrom({ player, brand, product, parallel, cardNumber }) {
   return Array.from(new Set(terms
     .map((term) => term.toLowerCase().replace(/[^a-z0-9/]+/g, ""))
     .filter((term) => term.length > 1)));
+}
+
+function titleTerms(title) {
+  const stopTerms = new Set([
+    "the",
+    "and",
+    "with",
+    "rookie",
+    "card",
+    "cards",
+    "base",
+    "pre",
+    "owned",
+    "psa",
+    "bgs",
+    "sgc",
+    "gem",
+    "mint"
+  ]);
+
+  return Array.from(new Set(String(title || "")
+    .toLowerCase()
+    .replace(/[#(),.:;!?'"[\]{}|\\]/g, " ")
+    .replace(/[-_]/g, " ")
+    .split(/\s+/)
+    .map((term) => term.replace(/[^a-z0-9/]+/g, ""))
+    .filter((term) => term.length > 1)
+    .filter((term) => !stopTerms.has(term))));
 }
 
 function buildCanonicalTitle(record) {
@@ -162,19 +197,23 @@ function rowToCard(record) {
   const team = firstValue(record, ["team"]);
   const parallel = firstValue(record, ["parallel", "variation"]) || "Base";
   const serial = firstValue(record, ["serial", "serialnumber", "numberedto"]);
-  const canonicalTitle = firstValue(record, ["canonicaltitle", "title"]) || buildCanonicalTitle(record);
+  const canonicalTitle = firstValue(record, ["canonicaltitle", "title", "card", "cardtitle", "cardname", "description", "name"]) || buildCanonicalTitle(record);
   const rawAliases = listValue(firstValue(record, ["aliases", "alias"]));
   const printRun = numberValue(firstValue(record, ["prv", "printRun", "estimatedprintrun", "estimatedprv"]));
 
-  if (!player || !canonicalTitle) {
+  if (!canonicalTitle) {
     return null;
   }
 
+  const requiredTerms = player
+    ? termsFrom({ player, brand, product, parallel, cardNumber })
+    : titleTerms(canonicalTitle).slice(0, 8);
+
   return {
-    id: slug([year, brand, product, player, cardNumber, parallel, serial].filter(Boolean).join(" ")),
+    id: slug([year, brand, product, player || canonicalTitle, cardNumber, parallel, serial].filter(Boolean).join(" ")),
     canonicalTitle,
     aliases: buildAliases({ canonicalTitle, year, brand, product, player, cardNumber, team, parallel, serial, rawAliases }),
-    requiredTerms: termsFrom({ player, brand, product, parallel, cardNumber }),
+    requiredTerms,
     serialTerms: serial ? [`/${serial.replace(/^\/+/, "")}`, serial.replace(/^\/+/, "")] : cardNumber ? [cardNumber.replace(/^#/, "")] : [],
     rarityTier: firstValue(record, ["raritytier", "tier"]) || (/^base$/i.test(parallel) ? "Base Rookie" : "Rare"),
     scarcityScore: numberValue(firstValue(record, ["scarcityscore", "score"])) ?? (/^base$/i.test(parallel) ? 54 : 75),
@@ -185,12 +224,18 @@ function rowToCard(record) {
   };
 }
 
-const cards = parseCsv(fs.readFileSync(inputPath, "utf8"))
+const parsed = parseCsv(fs.readFileSync(inputPath, "utf8"));
+const cards = parsed.rows
   .map(rowToCard)
   .filter(Boolean);
 
 if (!cards.length) {
   console.error("No cards imported. Check CSV headers and rows.");
+  console.error(`Detected headers: ${parsed.rawHeaders.join(" | ")}`);
+  if (parsed.rows[0]) {
+    const sample = Object.fromEntries(Object.entries(parsed.rows[0]).slice(0, 12));
+    console.error(`First row sample: ${JSON.stringify(sample)}`);
+  }
   process.exit(1);
 }
 
