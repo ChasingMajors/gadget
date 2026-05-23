@@ -21,6 +21,11 @@ const requiredCases = [
   {
     query: "completely unrelated listing title",
     expected: "Unknown"
+  },
+  {
+    query: "2025-26 Topps NBA Flagship Basketball Ace Bailey RC Rookie #205 Utah Jazz Base",
+    expected: "2025-26 Topps Basketball - Base",
+    expectedPrintRun: 1265000
   }
 ];
 
@@ -95,6 +100,21 @@ if (falseSetPositiveResponse.rarityTier !== "Unknown") {
   failures.push({
     error: "Set-level false positive should not match",
     actual: falseSetPositiveResponse
+  });
+}
+
+const plainToppsResponse = buildRarityResponse({
+  query: "2025-26 Topps NBA Flagship Basketball Cooper Flagg RC Rookie #201 Dallas Mavericks Base",
+  source: "ebay",
+  pageUrl: "https://www.ebay.com",
+  cards,
+  upgradeUrl: "https://chasingmajors.com/upgrade"
+});
+
+if (plainToppsResponse.title !== "2025-26 Topps Basketball - Base" || plainToppsResponse.printRun !== 1265000) {
+  failures.push({
+    error: "Plain Topps Basketball base should not match Chrome/Sapphire/parallel rows",
+    actual: plainToppsResponse
   });
 }
 
