@@ -1,14 +1,14 @@
 const NOISE_TERMS = new Set([
-  "🔥",
   "psa",
   "bgs",
   "sgc",
   "cgc",
   "gem",
   "mint",
-  "gemmint",
   "graded",
   "grade",
+  "auto",
+  "autograph",
   "rookie",
   "rc",
   "card",
@@ -19,33 +19,17 @@ const NOISE_TERMS = new Set([
   "read",
   "hot",
   "rare",
-  "case",
-  "hit",
   "ssp",
   "sp",
-  "mavericks",
-  "dallas",
-  "jazz",
-  "utah",
-  "lakers",
-  "celtics",
-  "warriors",
-  "knicks",
-  "bulls",
-  "heat",
-  "spurs"
+  "🔥"
 ]);
-
-const UNSUPPORTED_DIGITAL_TERMS = new Set(["bunt", "digital", "digitals", "nft"]);
 
 function normalizeTitle(title) {
   return String(title || "")
     .toLowerCase()
-    .replace(/20(\d{2})\s*[-/]\s*(\d{2})/g, "20$1-$2")
-    .replace(/20(\d{2})\s*[-/]\s*20(\d{2})/g, "20$1-$2")
     .replace(/&amp;/g, " and ")
     .replace(/[#(),.:;!?'"[\]{}|\\]/g, " ")
-    .replace(/[_]/g, " ")
+    .replace(/[-_]/g, " ")
     .replace(/\s+/g, " ")
     .trim();
 }
@@ -59,26 +43,6 @@ function tokenize(title) {
 
 function tokenSet(title) {
   return new Set(tokenize(title));
-}
-
-function hasUnsupportedDigitalTerms(queryTokens) {
-  return Array.from(UNSUPPORTED_DIGITAL_TERMS).some((term) => queryTokens.has(term));
-}
-
-function phraseTokens(card) {
-  const source = `${card.canonicalTitle || ""} ${(card.aliases || []).join(" ")}`.toLowerCase();
-  const phrases = [];
-
-  if (source.includes("topps chrome")) phrases.push("topps chrome");
-  if (source.includes("bowman chrome")) phrases.push("bowman chrome");
-  if (source.includes("bowman draft")) phrases.push("bowman draft");
-  if (source.includes("topps finest")) phrases.push("topps finest");
-
-  return phrases;
-}
-
-function hasRequiredPhrases(normalizedQuery, card) {
-  return phraseTokens(card).every((phrase) => normalizedQuery.includes(phrase));
 }
 
 function includesAlias(query, card) {
@@ -110,14 +74,6 @@ function serialScore(normalizedQuery, card) {
 function scoreCard(query, card) {
   const queryTokens = tokenSet(query);
   const normalizedQuery = normalizeTitle(query);
-  if (hasUnsupportedDigitalTerms(queryTokens)) {
-    return 0;
-  }
-
-  if (!hasRequiredPhrases(normalizedQuery, card)) {
-    return 0;
-  }
-
   const cardTokens = tokenSet([card.canonicalTitle, ...(card.aliases || [])].join(" "));
   const overlap = Array.from(cardTokens).filter((token) => queryTokens.has(token));
   const coverage = cardTokens.size ? overlap.length / cardTokens.size : 0;
@@ -135,15 +91,6 @@ function scoreCard(query, card) {
 }
 
 function findBestMatch(query, cards, minimumConfidence = 0.54) {
-  const queryTokens = tokenSet(query);
-  if (hasUnsupportedDigitalTerms(queryTokens)) {
-    return {
-      card: null,
-      confidence: 0,
-      unsupportedReason: "digital"
-    };
-  }
-
   const ranked = cards
     .map((card) => ({
       card,
@@ -170,7 +117,7 @@ function buildRarityResponse({ query, source, pageUrl, cards, upgradeUrl }) {
     return {
       title: query || "Unknown card",
       matchConfidence: match.confidence,
-      rarityTier: match.unsupportedReason === "digital" ? "Unsupported digital listing" : "Unknown",
+      rarityTier: "Unknown",
       scarcityScore: null,
       printRun: null,
       packOdds: null,
@@ -201,7 +148,6 @@ function buildRarityResponse({ query, source, pageUrl, cards, upgradeUrl }) {
 module.exports = {
   buildRarityResponse,
   findBestMatch,
-  hasUnsupportedDigitalTerms,
   normalizeTitle,
   scoreCard,
   tokenize
