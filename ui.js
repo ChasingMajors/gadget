@@ -3,13 +3,11 @@
     rarityTier: "Rarity tier",
     scarcityScore: "Scarcity score",
     printRun: "Est. print run",
-    packOdds: "Pack odds",
-    popTotal: "POP count",
-    popGem: "POP gem"
+    packOdds: "Pack odds"
   });
 
   const FREE_FIELDS = new Set(["rarityTier", "scarcityScore"]);
-  const PAID_FIELDS = new Set(["rarityTier", "scarcityScore", "printRun", "packOdds", "popTotal", "popGem"]);
+  const PAID_FIELDS = new Set(["rarityTier", "scarcityScore", "printRun", "packOdds"]);
 
   function matchModeLabel(matchMode) {
     return matchMode === "set" ? "Product/set estimate" : "Exact card match";
@@ -94,7 +92,7 @@
   }
 
   function renderPanel(panel, listing, rarity, accessState) {
-    const fields = ["rarityTier", "scarcityScore", "printRun", "packOdds", "popTotal", "popGem"];
+    const fields = ["rarityTier", "scarcityScore", "printRun", "packOdds"];
     const upgradeUrl = rarity.upgradeUrl || `${window.CM_RARITY_CONFIG.APP_URL}/upgrade`;
     const hasLockedFields = !accessState.isPaid && fields.some((field) => !canShowField(field, rarity, accessState));
 
