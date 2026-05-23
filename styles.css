@@ -99,6 +99,25 @@
   overflow: hidden;
 }
 
+.cm-rarity-match-mode {
+  border-radius: 999px;
+  display: inline-flex;
+  font-size: 11px;
+  font-weight: 800;
+  margin: 0 0 8px;
+  padding: 4px 7px;
+}
+
+.cm-rarity-match-mode-card {
+  background: #e8f5ee;
+  color: #166534;
+}
+
+.cm-rarity-match-mode-set {
+  background: #eef2ff;
+  color: #3730a3;
+}
+
 .cm-rarity-rows {
   border-bottom: 1px solid rgba(17, 24, 39, 0.1);
   border-top: 1px solid rgba(17, 24, 39, 0.1);

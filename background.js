@@ -32,6 +32,7 @@ function sanitizeApiResponse(data, title) {
     popGem: data.popGem ?? null,
     lockedFields: Array.isArray(data.lockedFields) ? data.lockedFields : [],
     upgradeUrl: data.upgradeUrl || `${globalThis.CM_RARITY_CONFIG.APP_URL}/upgrade`,
+    matchMode: data.matchMode || "card",
     isFallback: false
   };
 }

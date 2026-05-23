@@ -11,6 +11,10 @@
   const FREE_FIELDS = new Set(["rarityTier", "scarcityScore"]);
   const PAID_FIELDS = new Set(["rarityTier", "scarcityScore", "printRun", "packOdds", "popTotal", "popGem"]);
 
+  function matchModeLabel(matchMode) {
+    return matchMode === "set" ? "Product/set estimate" : "Exact card match";
+  }
+
   function formatValue(field, value) {
     if (value === null || value === undefined || value === "") {
       return "Unknown";
@@ -113,6 +117,10 @@
     cardTitle.className = "cm-rarity-card-title";
     cardTitle.textContent = rarity.title || listing.title;
 
+    const matchMode = document.createElement("div");
+    matchMode.className = `cm-rarity-match-mode cm-rarity-match-mode-${rarity.matchMode || "card"}`;
+    matchMode.textContent = matchModeLabel(rarity.matchMode);
+
     const rows = document.createElement("div");
     rows.className = "cm-rarity-rows";
     fields.forEach((field) => rows.append(createFieldRow(field, rarity, accessState)));
@@ -144,11 +152,11 @@
       const fallback = document.createElement("p");
       fallback.className = "cm-rarity-note";
       fallback.textContent = "Showing limited fallback data while CM rarity service is unavailable.";
-      panel.append(header, cardTitle, rows, actions, fallback);
+      panel.append(header, cardTitle, matchMode, rows, actions, fallback);
       return;
     }
 
-    panel.append(header, cardTitle, rows, actions);
+    panel.append(header, cardTitle, matchMode, rows, actions);
   }
 
   function renderLimitPanel(panel, accessState) {

@@ -10,7 +10,8 @@
       popTotal: null,
       popGem: null,
       lockedFields: ["printRun", "packOdds", "popTotal", "popGem"],
-      upgradeUrl: `${window.CM_RARITY_CONFIG.APP_URL}/upgrade`
+      upgradeUrl: `${window.CM_RARITY_CONFIG.APP_URL}/upgrade`,
+      matchMode: "card"
     },
     {
       title: "Matched card",
@@ -22,7 +23,8 @@
       popTotal: null,
       popGem: null,
       lockedFields: ["printRun", "packOdds", "popTotal", "popGem"],
-      upgradeUrl: `${window.CM_RARITY_CONFIG.APP_URL}/upgrade`
+      upgradeUrl: `${window.CM_RARITY_CONFIG.APP_URL}/upgrade`,
+      matchMode: "set"
     }
   ];
 
@@ -73,6 +75,7 @@
       popGem: data.popGem ?? null,
       lockedFields: Array.isArray(data.lockedFields) ? data.lockedFields : [],
       upgradeUrl: data.upgradeUrl || `${config().APP_URL}/upgrade`,
+      matchMode: data.matchMode || "card",
       isFallback: false
     };
   }

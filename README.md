@@ -37,9 +37,12 @@ Expected response:
   "popTotal": 24,
   "popGem": 8,
   "lockedFields": [],
-  "upgradeUrl": "https://chasingmajors.com/upgrade"
+  "upgradeUrl": "https://chasingmajors.com/upgrade",
+  "matchMode": "card"
 }
 ```
+
+`matchMode` can be `card` for exact card-level data or `set` for product/set-level PRV estimates.
 
 ## User State
 
