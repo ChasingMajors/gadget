@@ -98,6 +98,86 @@ if (falseSetPositiveResponse.rarityTier !== "Unknown") {
   });
 }
 
+const ruleCards = [
+  {
+    canonicalTitle: "2025-26 Topps Basketball Cooper Flagg #1 RC",
+    aliases: ["2025-26 Topps Basketball Cooper Flagg #1 RC"],
+    requiredTerms: ["2025-26", "topps", "basketball", "cooper", "flagg", "1"],
+    serialTerms: ["1"],
+    rarityTier: "Base Rookie",
+    scarcityScore: 54,
+    printRun: 1265000,
+    packOdds: "Base card",
+    popTotal: 0,
+    popGem: 0
+  },
+  {
+    canonicalTitle: "2025-26 Topps Chrome Basketball Cooper Flagg #1 RC",
+    aliases: ["2025-26 Topps Chrome Basketball Cooper Flagg #1 RC"],
+    requiredTerms: ["2025-26", "topps", "chrome", "basketball", "cooper", "flagg", "1"],
+    serialTerms: ["1"],
+    rarityTier: "Chrome Rookie",
+    scarcityScore: 62,
+    printRun: 400000,
+    packOdds: "Chrome base card",
+    popTotal: 0,
+    popGem: 0
+  }
+];
+
+[
+  "2025-26 Topps Basketball Cooper Flagg #1 RC Dallas Mavericks Gem Mint",
+  "2025 -26 Topps Basketball Cooper Flagg #1 🔥 Rare Case Hit",
+  "2025/26 Topps Basketball Cooper Flagg #1",
+  "2025-2026 Topps Basketball Cooper Flagg #1"
+].forEach((query) => {
+  const response = buildRarityResponse({
+    query,
+    source: "ebay",
+    pageUrl: "https://www.ebay.com",
+    cards: ruleCards,
+    upgradeUrl: "https://chasingmajors.com/upgrade"
+  });
+
+  if (response.title !== "2025-26 Topps Basketball Cooper Flagg #1 RC") {
+    failures.push({
+      error: "Season/noise/team normalization failed",
+      query,
+      actual: response
+    });
+  }
+});
+
+const chromeResponse = buildRarityResponse({
+  query: "2025-26 Topps Chrome Basketball Cooper Flagg #1 RC",
+  source: "ebay",
+  pageUrl: "https://www.ebay.com",
+  cards: ruleCards,
+  upgradeUrl: "https://chasingmajors.com/upgrade"
+});
+
+if (chromeResponse.title !== "2025-26 Topps Chrome Basketball Cooper Flagg #1 RC") {
+  failures.push({
+    error: "Topps Chrome should not collapse to plain Topps",
+    actual: chromeResponse
+  });
+}
+
+const digitalResponse = buildRarityResponse({
+  query: "2025-26 Topps Bunt Digital Cooper Flagg #1",
+  source: "ebay",
+  pageUrl: "https://www.ebay.com",
+  cards: ruleCards,
+  upgradeUrl: "https://chasingmajors.com/upgrade"
+});
+
+if (digitalResponse.rarityTier !== "Unsupported digital listing") {
+  failures.push({
+    error: "Digital/Bunt listing should be unsupported",
+    actual: digitalResponse
+  });
+}
+
 const invalidCards = cards.filter((card) => {
   const title = card.canonicalTitle || "";
   return !title
