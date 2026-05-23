@@ -62,6 +62,11 @@
   }
 
   function comcSportFromUrl() {
+    const declaredSport = document.documentElement.dataset.cmSport || document.body?.dataset.cmSport;
+    if (declaredSport) {
+      return declaredSport;
+    }
+
     const path = window.location.pathname || window.location.href || "";
     const match = path.match(/\/(?:Cards|Players)\/(Basketball|Baseball|Football|Hockey|Soccer)\b/i)
       || path.match(/\/Players\/(Basketball|Baseball|Football|Hockey|Soccer)\b/i);

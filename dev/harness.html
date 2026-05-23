@@ -173,6 +173,7 @@
         }
       };
       document.documentElement.dataset.cmSource = window.localStorage.getItem("cmHarnessSource") || "ebay";
+      document.documentElement.dataset.cmSport = document.documentElement.dataset.cmSource === "comc" ? "Basketball" : "";
     </script>
   </head>
   <body>
@@ -297,6 +298,7 @@
       const savedSource = window.localStorage.getItem("cmHarnessSource") || "ebay";
       sourceSelect.value = savedSource;
       document.documentElement.dataset.cmSource = savedSource;
+      document.documentElement.dataset.cmSport = savedSource === "comc" ? "Basketball" : "";
       document.querySelectorAll(".fixture").forEach((fixture) => {
         fixture.hidden = fixture.dataset.fixture !== savedSource;
       });
