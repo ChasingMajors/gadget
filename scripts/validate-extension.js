@@ -140,8 +140,16 @@ function checkMasterBadgeImplementation() {
     errors.push("styles.css must include master badge positioning and sizing");
   }
 
-  if (!ui.includes("🧠")) {
-    errors.push("ui.js badge label should default to the brain emoji");
+  if (!ui.includes("icons/cm-logo.png")) {
+    errors.push("ui.js badge label should default to the packaged CM logo");
+  }
+
+  if (!styles.includes(".cm-rarity-badge-icon")) {
+    errors.push("styles.css must style the CM logo badge asset");
+  }
+
+  if (!JSON.stringify(manifest.web_accessible_resources || []).includes("icons/cm-logo.png")) {
+    errors.push("manifest.json must expose the CM logo badge asset to content scripts");
   }
 
   if (!content.includes("hasAttachedMasterBadge || processedImages.has(listing.image)")) {

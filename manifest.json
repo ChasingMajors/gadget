@@ -43,7 +43,8 @@
   "web_accessible_resources": [
     {
       "resources": [
-        "styles.css"
+        "styles.css",
+        "icons/cm-logo.png"
       ],
       "matches": [
         "https://www.ebay.com/*",

@@ -114,7 +114,6 @@
       }
     }, {
       master: true,
-      label: "🧠",
       ariaLabel: "Show Chasing Majors search rarity intelligence",
       panelPosition: {
         align: "center"

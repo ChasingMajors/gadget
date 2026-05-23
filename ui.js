@@ -1,6 +1,6 @@
 (function () {
   const FIELD_LABELS = Object.freeze({
-    rarityTier: "Rarity tier",
+    rarityTier: "Product Type",
     scarcityScore: "Scarcity score",
     printRun: "Est. print run",
     packOdds: "Pack odds"
@@ -11,6 +11,26 @@
 
   function matchModeLabel(matchMode) {
     return matchMode === "set" ? "Product/set estimate" : "Exact card match";
+  }
+
+  function appUrl(path = "") {
+    return (window.CM_RARITY_CONFIG.APP_URL || "https://app.chasingmajors.com").replace(/\/+$/, "") + path;
+  }
+
+  function vaultUrl(rarity, listing) {
+    const url = new URL("/vault", appUrl());
+    const query = rarity.title || listing.title;
+    if (query) {
+      url.searchParams.set("q", query);
+    }
+    return url.toString();
+  }
+
+  function badgeIconUrl() {
+    if (typeof chrome !== "undefined" && chrome.runtime?.getURL) {
+      return chrome.runtime.getURL("icons/cm-logo.png");
+    }
+    return "";
   }
 
   function formatValue(field, value) {
@@ -120,8 +140,8 @@
     const matchedTitle = document.createElement("p");
     matchedTitle.className = "cm-rarity-matched-title";
     matchedTitle.textContent = rarity.matchMode === "set"
-      ? `PRV set: ${rarity.title || "Unknown"}`
-      : `Matched: ${rarity.title || listing.title}`;
+      ? `CM Details: ${rarity.title || "Unknown"}`
+      : `CM Details: ${rarity.title || listing.title}`;
 
     const matchMode = document.createElement("div");
     matchMode.className = `cm-rarity-match-mode cm-rarity-match-mode-${rarity.matchMode || "card"}`;
@@ -148,10 +168,10 @@
 
     const openApp = document.createElement("a");
     openApp.className = "cm-rarity-open";
-    openApp.href = window.CM_RARITY_CONFIG.APP_URL;
+    openApp.href = vaultUrl(rarity, listing);
     openApp.target = "_blank";
     openApp.rel = "noopener noreferrer";
-    openApp.textContent = "Open Chasing Majors";
+    openApp.textContent = "Open CM Vault";
     actions.append(openApp);
 
     if (rarity.isFallback) {
@@ -190,10 +210,10 @@
 
     const openApp = document.createElement("a");
     openApp.className = "cm-rarity-open";
-    openApp.href = window.CM_RARITY_CONFIG.APP_URL;
+    openApp.href = appUrl("/vault");
     openApp.target = "_blank";
     openApp.rel = "noopener noreferrer";
-    openApp.textContent = "Open Chasing Majors";
+    openApp.textContent = "Open CM Vault";
 
     actions.append(upgrade, openApp);
     panel.append(title, message, actions);
@@ -206,8 +226,20 @@
     const badge = document.createElement("button");
     badge.className = options.master ? "cm-rarity-badge cm-rarity-master-badge" : "cm-rarity-badge";
     badge.type = "button";
-    badge.textContent = options.label || "🧠";
     badge.setAttribute("aria-label", options.ariaLabel || "Show Chasing Majors rarity intelligence");
+
+    const iconUrl = options.iconUrl || badgeIconUrl();
+    if (iconUrl) {
+      const icon = document.createElement("img");
+      icon.className = "cm-rarity-badge-icon";
+      icon.src = iconUrl;
+      icon.alt = "";
+      icon.decoding = "async";
+      icon.loading = "eager";
+      badge.append(icon);
+    } else {
+      badge.textContent = options.label || "CM";
+    }
 
     const panel = createPanelShell();
     panel.hidden = true;

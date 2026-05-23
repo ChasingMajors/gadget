@@ -3,7 +3,7 @@
     API_BASE_URL: "https://cm-rarity-api.johndownard.workers.dev",
     PRODUCTION_API_BASE_URL: "https://api.chasingmajors.com",
     FREE_DAILY_LIMIT: 5,
-    APP_URL: "https://chasingmajors.com",
+    APP_URL: "https://app.chasingmajors.com",
     API_CACHE_TTL_MS: 0,
     MVP_ADMIN_MODE: true
   });
