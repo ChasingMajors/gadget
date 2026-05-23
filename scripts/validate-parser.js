@@ -29,6 +29,9 @@ function makeElement({ tag = "div", text = "", attrs = {}, className = "", child
         if (singleSelector === "a[title]") {
           return node.tag === "a" && Boolean(node.attrs?.title);
         }
+        if (singleSelector.includes("href*='/Cards/'")) {
+          return node.tag === "a" && String(node.attrs?.href || "").includes("/Cards/");
+        }
         if (singleSelector.includes("href*='/itm/'") || singleSelector.includes("href*='itm/'")) {
           return node.tag === "a" && String(node.attrs?.href || "").includes("/itm/");
         }
@@ -63,6 +66,9 @@ function makeElement({ tag = "div", text = "", attrs = {}, className = "", child
           return node;
         }
         if (selector.startsWith("[data-testid='") && node.attrs?.["data-testid"] === selector.slice(15, -2)) {
+          return node;
+        }
+        if (selector.includes("href*='/Cards/'") && node.tag === "a" && String(node.attrs?.href || "").includes("/Cards/")) {
           return node;
         }
         if (/^[a-z][a-z0-9]*$/i.test(selector) && node.tag === selector.toLowerCase()) {
@@ -163,7 +169,8 @@ const comcImage = makeElement({
   attrs: {
     width: 220,
     height: 310,
-    src: "https://img.comc.com/i/Basketball/2025-26/Topps/201/Cooper-Flagg.jpg"
+    src: "https://img.comc.com/i/Basketball/2025-26/Topps/201/Cooper-Flagg.jpg",
+    title: "2025-26 Topps - [Base] #201 Cooper Flagg [PSA 10 GEM MT]"
   }
 });
 comcImage.alt = "2025-26 Topps - [Base] #201 Cooper Flagg [PSA 10 GEM MT]";
@@ -199,8 +206,35 @@ const comcBody = makeElement({
   children: [comcCard]
 });
 
+const comcUrlOnlyImage = makeElement({
+  tag: "img",
+  attrs: {
+    width: 220,
+    height: 310,
+    src: "https://img.comc.com/i/Basketball/2025-26/Topps_Chrome/251/Cooper-Flagg.jpg"
+  }
+});
+comcUrlOnlyImage.alt = "";
+comcUrlOnlyImage.src = comcUrlOnlyImage.attrs.src;
+comcUrlOnlyImage.currentSrc = comcUrlOnlyImage.attrs.src;
+
+const comcUrlOnlyLink = makeElement({
+  tag: "a",
+  attrs: {
+    href: "https://www.comc.com/Cards/Basketball/2025-26/Topps_Chrome/251/Cooper_Flagg"
+  },
+  children: [comcUrlOnlyImage]
+});
+
+const comcUrlOnlyCard = makeElement({
+  className: "item",
+  children: [comcUrlOnlyLink]
+});
+
 const comcContext = {
+  URL,
   window: {
+    URL,
     location: {
       hostname: "www.comc.com",
       href: "https://www.comc.com/Players/Basketball/Cooper_Flagg/c465571/Cards/Basketball"
@@ -226,10 +260,48 @@ vm.runInContext(parserSource, comcContext);
 
 const comcListings = comcContext.window.CMRarityParser.findListings();
 const comcTitle = comcListings[0]?.title;
-const expectedComc = "2025-26 Topps - [Base] #201 Cooper Flagg #/1,265,000 Basketball";
+const expectedComc = "2025-26 Topps - [Base] #201 Cooper Flagg Basketball";
 
 if (comcTitle !== expectedComc) {
   console.error(`COMC parser validation failed. Expected "${expectedComc}" but got "${comcTitle}"`);
+  process.exit(1);
+}
+
+const comcUrlContext = {
+  URL,
+  window: {
+    URL,
+    location: {
+      hostname: "www.comc.com",
+      href: "https://www.comc.com/Cards/Basketball/2025-26/Topps_Chrome/251/Cooper_Flagg",
+      pathname: "/Cards/Basketball/2025-26/Topps_Chrome/251/Cooper_Flagg"
+    },
+    getComputedStyle() {
+      return {
+        position: "relative"
+      };
+    },
+    CMRarityParser: null
+  },
+  document: {
+    body: makeElement({
+      children: [comcUrlOnlyCard]
+    }),
+    documentElement: {
+      dataset: {}
+    },
+    images: [comcUrlOnlyImage]
+  }
+};
+
+vm.createContext(comcUrlContext);
+vm.runInContext(parserSource, comcUrlContext);
+
+const comcUrlTitle = comcUrlContext.window.CMRarityParser.findListings()[0]?.title;
+const expectedComcUrlTitle = "2025-26 Topps Chrome #251 Cooper Flagg Basketball";
+
+if (comcUrlTitle !== expectedComcUrlTitle) {
+  console.error(`COMC URL parser validation failed. Expected "${expectedComcUrlTitle}" but got "${comcUrlTitle}"`);
   process.exit(1);
 }
 

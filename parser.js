@@ -82,6 +82,47 @@
     return cleanTitle(`${title} ${sport}`);
   }
 
+  function humanizeComcPathPart(part) {
+    return decodeURIComponent(String(part || ""))
+      .replace(/[_+]+/g, " ")
+      .replace(/\s+/g, " ")
+      .trim();
+  }
+
+  function comcTitleFromCardUrl(url) {
+    if (!url) {
+      return "";
+    }
+
+    try {
+      const pathParts = new URL(url, window.location.href).pathname.split("/").filter(Boolean);
+      const cardsIndex = pathParts.findIndex((part) => part.toLowerCase() === "cards");
+      if (cardsIndex < 0) {
+        return "";
+      }
+
+      const sport = humanizeComcPathPart(pathParts[cardsIndex + 1]);
+      const year = humanizeComcPathPart(pathParts[cardsIndex + 2]);
+      const product = humanizeComcPathPart(pathParts[cardsIndex + 3]);
+      const number = humanizeComcPathPart(pathParts[cardsIndex + 4]);
+      const player = humanizeComcPathPart(pathParts[cardsIndex + 5]);
+
+      if (!year || !product) {
+        return "";
+      }
+
+      return cleanTitle([
+        year,
+        product,
+        number ? `#${number.replace(/^#/, "")}` : "",
+        player,
+        sport
+      ].filter(Boolean).join(" "));
+    } catch (error) {
+      return "";
+    }
+  }
+
   function textLinesFrom(element) {
     const blockText = element.innerText || element.textContent || "";
     return blockText
@@ -166,6 +207,19 @@
 
   function comcTitleForImage(image) {
     const root = nearestListingRoot(image, "comc");
+    const cardLink = image.closest("a[href*='/Cards/']")
+      || root.querySelector("a[href*='/Cards/']");
+    const cardHref = cardLink?.href || cardLink?.getAttribute("href") || "";
+    const linkedTitle = cleanComcTitlePart(cardLink?.getAttribute("title") || cardLink?.textContent || "");
+    const imageTitle = cleanComcTitlePart(image.getAttribute("title") || image.alt || image.getAttribute("aria-label") || "");
+    const urlTitle = comcTitleFromCardUrl(cardHref || image.closest("a")?.href || image.closest("a")?.getAttribute("href") || "");
+
+    const directTitle = [imageTitle, linkedTitle, urlTitle]
+      .find((title) => isComcSetLine(title));
+    if (directTitle) {
+      return enrichComcTitle(directTitle);
+    }
+
     const selectorText = [
       ".set-name",
       ".setName",
@@ -189,9 +243,11 @@
       .filter((title) => !isBadTitle(title));
 
     const lines = Array.from(new Set([
+      linkedTitle,
+      imageTitle,
+      urlTitle,
       ...selectorText,
       ...textLinesFrom(root),
-      cleanComcTitlePart(image.alt || image.getAttribute("aria-label") || "")
     ].filter(Boolean)));
 
     const setLineIndex = lines.findIndex(isComcSetLine);
