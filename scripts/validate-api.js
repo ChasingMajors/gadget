@@ -1,3 +1,7 @@
+const fs = require("fs");
+const os = require("os");
+const path = require("path");
+const { spawnSync } = require("child_process");
 const cards = require("../backend/data/cards.json");
 const { buildRarityResponse } = require("../backend/lib/matcher");
 
@@ -62,6 +66,46 @@ const requiredCases = [
 
 const failures = [];
 
+function validateSetPrvImportHeaders() {
+  const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "cm-prv-import-"));
+  const inputPath = path.join(tempDir, "new-prv.csv");
+  const outputPath = path.join(tempDir, "cards.json");
+  const csv = [
+    "Code,DisplayName,Keywords,year,sport,manufacturer,product,setType,setLine,parallel,printRun,serial,subSetSize,packOdds",
+    "2025_26_topps_chrome_basketball,2025-26 Topps Chrome Basketball,topps chrome gold basketball,2025-26,Basketball,Topps,Chrome,Base - Parallel,Base,Gold,50,50,300,1:120 packs"
+  ].join("\n");
+
+  fs.writeFileSync(inputPath, csv);
+  const result = spawnSync(process.execPath, ["scripts/import-prv-csv.js", inputPath, outputPath], {
+    encoding: "utf8"
+  });
+
+  if (result.status !== 0) {
+    failures.push({
+      error: "NewPRV header import fixture failed",
+      stderr: result.stderr,
+      stdout: result.stdout
+    });
+    return;
+  }
+
+  const imported = JSON.parse(fs.readFileSync(outputPath, "utf8"))[0];
+  if (!imported
+    || imported.id !== "2025-26-topps-chrome-basketball-base-parallel-gold"
+    || imported.canonicalTitle !== "2025-26 Topps Chrome Basketball - Base - Parallel - Gold"
+    || imported.packOdds !== "1:120 packs"
+    || imported.metadata.code !== "2025_26_topps_chrome_basketball"
+    || imported.metadata.parallel !== "Gold"
+    || imported.metadata.serial !== "50"
+    || !imported.requiredTerms.includes("gold")
+    || !imported.serialTerms.includes("/50")) {
+    failures.push({
+      error: "NewPRV headers should import parallel, serial, and pack odds",
+      imported
+    });
+  }
+}
+
 function datasetContainsExpectedTitle(expected) {
   return cards.some((card) => card.canonicalTitle === expected);
 }
@@ -101,6 +145,8 @@ for (const testCase of optionalCases) {
     runCase(testCase);
   }
 }
+
+validateSetPrvImportHeaders();
 
 const falseSetPositiveResponse = buildRarityResponse({
   query: "2025-26 Bowman #1 Cooper Flagg",

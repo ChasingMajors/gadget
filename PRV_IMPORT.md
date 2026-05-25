@@ -25,10 +25,11 @@ title,prv,rarityTier,scarcityScore,packOdds,popTotal,popGem,aliases
 The current Command Center set-level schema is also supported:
 
 ```txt
-Code,DisplayName,Keywords,year,sport,manufacturer,product,setType,setLine,printRun,serial,subSetSize,notes,cmURL
+Code,DisplayName,Keywords,year,sport,manufacturer,product,setType,setLine,parallel,printRun,serial,subSetSize,packOdds
 ```
 
 Rows from that schema are imported with `matchMode: "set"`, meaning marketplace listings can match the product/set when individual player-card rows are not available yet.
+`Code` is preserved as product-level metadata, while the generated internal card `id` is based on the full imported title so parallel rows stay unique.
 
 Aliases can be separated with `|` or `;`.
 

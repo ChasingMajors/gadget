@@ -180,33 +180,41 @@ function setRowToCard(record) {
   const product = firstValue(record, ["product", "set", "setname"]);
   const setType = firstValue(record, ["settype"]);
   const setLine = firstValue(record, ["setline"]);
+  const parallel = firstValue(record, ["parallel", "variation"]);
   const printRun = numberValue(firstValue(record, ["printrun", "prv", "estimatedprintrun", "estimatedprv"]));
   const serial = firstValue(record, ["serial", "serialnumber", "numberedto"]);
   const subsetSize = numberValue(firstValue(record, ["subsetsize"]));
   const rawKeywords = listValue(firstValue(record, ["keywords"]));
-  const notes = firstValue(record, ["notes"]);
+  const packOdds = firstValue(record, ["packodds", "odds", "notes"]);
   const cmURL = firstValue(record, ["cmurl"]);
 
   if (!displayName || printRun === null) {
     return null;
   }
 
-  const titleParts = [displayName, setType, setLine].filter(Boolean);
+  const titleParts = [
+    displayName,
+    setType,
+    setLine && !setType.toLowerCase().includes(setLine.toLowerCase()) ? setLine : "",
+    parallel
+  ].filter(Boolean);
   const canonicalTitle = Array.from(new Set(titleParts)).join(" - ");
   const requiredTerms = Array.from(new Set([
     ...titleTerms(displayName),
     ...titleTerms(setLine),
+    ...titleTerms(parallel),
     ...rawKeywords.map((keyword) => keyword.toLowerCase().replace(/[^a-z0-9/]+/g, "")).filter(Boolean)
   ])).slice(0, 12);
 
   return {
-    id: slug(code && code !== "#N/A" ? code : canonicalTitle),
+    id: slug(canonicalTitle),
     canonicalTitle,
     aliases: Array.from(new Set([
       displayName,
       canonicalTitle,
-      [year, brand, product, setLine].filter(Boolean).join(" "),
+      [year, brand, product, setLine, parallel, serial ? `/${serial.replace(/^\/+/, "")}` : ""].filter(Boolean).join(" "),
       [year, brand, product, setType].filter(Boolean).join(" "),
+      [year, brand, product, parallel].filter(Boolean).join(" "),
       ...rawKeywords
     ].filter(Boolean))),
     requiredTerms,
@@ -214,18 +222,21 @@ function setRowToCard(record) {
     rarityTier: setType || "Product",
     scarcityScore: printRun <= 1000 ? 82 : printRun <= 10000 ? 68 : 54,
     printRun,
-    packOdds: notes || null,
+    packOdds: packOdds || null,
     popTotal: 0,
     popGem: 0,
     matchMode: "set",
     sourceUrl: cmURL || null,
     metadata: {
       year,
+      code: code && code !== "#N/A" ? code : "",
       sport,
       brand,
       product,
       setType,
       setLine,
+      parallel,
+      serial,
       subsetSize
     }
   };
