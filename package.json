@@ -8,6 +8,7 @@
     "api:validate": "node scripts/validate-api.js",
     "generate:icons": "node scripts/generate-icons.js",
     "import:prv": "node scripts/import-prv-csv.js",
+    "package:extension": "node scripts/package-extension.js",
     "sync:prv": "node scripts/sync-prv-from-url.js",
     "validate:parser": "node scripts/validate-parser.js",
     "validate": "node scripts/validate-extension.js",

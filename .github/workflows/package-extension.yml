@@ -1,0 +1,46 @@
+name: Package Chrome extension
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - "manifest.json"
+      - "background.js"
+      - "config.js"
+      - "storage.js"
+      - "parser.js"
+      - "api.js"
+      - "ui.js"
+      - "content.js"
+      - "styles.css"
+      - "icons/**"
+      - "scripts/package-extension.js"
+      - "scripts/validate-*.js"
+      - ".github/workflows/package-extension.yml"
+
+jobs:
+  package-extension:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Validate extension
+        run: npm run validate:all
+
+      - name: Build extension ZIP
+        run: npm run package:extension
+
+      - name: Upload extension ZIP
+        uses: actions/upload-artifact@v4
+        with:
+          name: cm-rarity-gadget-extension
+          path: dist/cm-rarity-gadget-v*.zip
+          if-no-files-found: error

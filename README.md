@@ -84,6 +84,26 @@ This scaffold avoids bundled paid rarity data. Free users only see limited field
 
 Open `dev/harness.html` in Chrome to test badge placement, fallback data, daily limits, and local free/paid user state without loading marketplace pages.
 
+## Tester Updates
+
+For MVP testers, GitHub is the update source. Each pushed extension change builds a ZIP in the **Package Chrome extension** GitHub Action.
+
+Tester update flow:
+
+1. Open the latest successful **Package Chrome extension** workflow run in GitHub.
+2. Download the `cm-rarity-gadget-extension` artifact.
+3. Unzip it into a stable local folder, such as `~/ChasingMajors/cm-rarity-gadget`.
+4. Go to `chrome://extensions`.
+5. Click **Load unpacked** the first time, or **Reload** after replacing files in the same folder.
+
+Local ZIP build:
+
+```bash
+npm run package:extension
+```
+
+This creates `dist/cm-rarity-gadget-v4.0.0.zip`. Keep the unpacked extension folder path stable on each tester Mac so Chrome can reload updates without removing/re-adding the extension.
+
 ## Validation
 
 Run:
