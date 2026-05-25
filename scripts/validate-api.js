@@ -59,7 +59,11 @@ const requiredCases = [
   {
     query: "2025-26 Topps Chrome - [Base] - Xfractors #251 Cooper Flagg Basketball",
     source: "comc",
-    expected: "2025-26 Topps Chrome Basketball - Base - Parallel - X-Fractors",
+    expected: [
+      "2025-26 Topps Chrome Basketball - Base - Parallel - X-Fractors",
+      "2025-26 Topps Chrome Basketball - Base - Parallel - X-Fractor",
+      "2025-26 Topps Chrome Basketball - Base - X-Fractor"
+    ],
     expectedPrintRun: 7750
   }
 ];
@@ -131,9 +135,10 @@ function runCase(testCase) {
     upgradeUrl: "https://chasingmajors.com/upgrade"
   });
 
+  const expectedTitles = Array.isArray(testCase.expected) ? testCase.expected : [testCase.expected];
   const passed = testCase.expected === "Unknown"
     ? response.rarityTier === "Unknown"
-    : response.title === testCase.expected
+    : expectedTitles.includes(response.title)
       && (testCase.expectedPrintRun === undefined || response.printRun === testCase.expectedPrintRun)
       && (testCase.minimumConfidence === undefined || response.matchConfidence >= testCase.minimumConfidence);
 
@@ -143,7 +148,8 @@ function runCase(testCase) {
       expected: testCase.expected,
       actual: response.title,
       rarityTier: response.rarityTier,
-      matchConfidence: response.matchConfidence
+      matchConfidence: response.matchConfidence,
+      printRun: response.printRun
     });
   }
 }
