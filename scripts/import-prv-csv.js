@@ -142,6 +142,7 @@ function titleTerms(title) {
 
   return Array.from(new Set(String(title || "")
     .toLowerCase()
+    .replace(/\bx[\s-]?fractors?\b/g, " xfractors ")
     .replace(/[#(),.:;!?'"[\]{}|\\]/g, " ")
     .replace(/[-_]/g, " ")
     .split(/\s+/)

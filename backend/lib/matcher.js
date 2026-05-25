@@ -100,6 +100,7 @@ function queryTokensForCard(query, card) {
   const normalizedCard = normalizeTitle([
     card.canonicalTitle,
     card.metadata?.setLine,
+    card.metadata?.parallel,
     ...(card.aliases || [])
   ].filter(Boolean).join(" "));
 
@@ -137,6 +138,7 @@ function setSpecificityPenalty(queryTokens, card) {
     .filter((token) => !brandTokens.has(token))
     .filter((token) => !sportTokens.has(token));
   const lineTokens = metadataTokens(metadata.setLine);
+  const parallelTokens = metadataTokens(metadata.parallel);
   const typeTokens = metadataTokens(metadata.setType);
 
   const missingProductTokens = missingTokens(queryTokens, productTokens);
@@ -144,7 +146,7 @@ function setSpecificityPenalty(queryTokens, card) {
     return -0.45;
   }
 
-  const modifierTokens = Array.from(new Set([...lineTokens, ...typeTokens]))
+  const modifierTokens = Array.from(new Set([...lineTokens, ...parallelTokens, ...typeTokens]))
     .filter((token) => !brandTokens.has(token))
     .filter((token) => !sportTokens.has(token))
     .filter((token) => !productTokens.includes(token))
@@ -183,6 +185,7 @@ function setSpecificityHits(queryTokens, card) {
   const tokens = Array.from(new Set([
     ...metadataTokens(metadata.product),
     ...metadataTokens(metadata.setLine),
+    ...metadataTokens(metadata.parallel),
     ...metadataTokens(metadata.setType)
   ]))
     .filter((token) => !brandTokens.has(token))
@@ -195,9 +198,26 @@ function cardVariantTokens(card) {
   return tokenSet([
     card.canonicalTitle,
     card.metadata?.setLine,
+    card.metadata?.parallel,
     card.metadata?.setType,
     ...(card.aliases || [])
   ].filter(Boolean).join(" "));
+}
+
+function synonymScore(query, card) {
+  const normalizedQuery = normalizeTitle(query);
+  const normalizedCard = normalizeTitle([
+    card.canonicalTitle,
+    card.metadata?.setLine,
+    card.metadata?.parallel,
+    ...(card.aliases || [])
+  ].filter(Boolean).join(" "));
+
+  if (/\bmirror image\b/.test(normalizedQuery) && /\bgolden mirror\b/.test(normalizedCard)) {
+    return 0.08;
+  }
+
+  return 0;
 }
 
 function unmatchedQueryVariants(queryTokens, card) {
@@ -300,6 +320,7 @@ function scoreCard(query, card) {
     + serialLimitScore(query, normalizedQuery, card)
     + serialVariantPenalty(query, queryTokens, card)
     + variantMismatchPenalty(queryTokens, card)
+    + synonymScore(query, card)
     + setBoost
     + setSpecificityPenalty(queryTokens, card);
 

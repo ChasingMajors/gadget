@@ -46,7 +46,7 @@ const requiredCases = [
     query: "2025-26 topps mirror image basketball",
     expected: "2025-26 Topps Basketball - Variation - Golden Mirror SSP",
     expectedPrintRun: 155,
-    minimumConfidence: 0.59
+    minimumConfidence: 0.64
   },
   {
     query: "2025-26 Topps Chrome basketball Gold /50",
@@ -72,7 +72,8 @@ function validateSetPrvImportHeaders() {
   const outputPath = path.join(tempDir, "cards.json");
   const csv = [
     "Code,DisplayName,Keywords,year,sport,manufacturer,product,setType,setLine,parallel,printRun,serial,subSetSize,packOdds",
-    "2025_26_topps_chrome_basketball,2025-26 Topps Chrome Basketball,topps chrome gold basketball,2025-26,Basketball,Topps,Chrome,Base - Parallel,Base,Gold,50,50,300,1:120 packs"
+    "2025_26_topps_chrome_basketball,2025-26 Topps Chrome Basketball,topps chrome gold basketball,2025-26,Basketball,Topps,Chrome,Base - Parallel,Base,Gold,50,50,300,1:120 packs",
+    "2025_26_topps_chrome_basketball_xfractors,2025-26 Topps Chrome Basketball,topps chrome xfractors basketball,2025-26,Basketball,Topps,Chrome,Base - Parallel,Base,X-Fractors,7750,,299,"
   ].join("\n");
 
   fs.writeFileSync(inputPath, csv);
@@ -90,6 +91,7 @@ function validateSetPrvImportHeaders() {
   }
 
   const imported = JSON.parse(fs.readFileSync(outputPath, "utf8"))[0];
+  const xfractor = JSON.parse(fs.readFileSync(outputPath, "utf8"))[1];
   if (!imported
     || imported.id !== "2025-26-topps-chrome-basketball-base-parallel-gold"
     || imported.canonicalTitle !== "2025-26 Topps Chrome Basketball - Base - Parallel - Gold"
@@ -102,6 +104,16 @@ function validateSetPrvImportHeaders() {
     failures.push({
       error: "NewPRV headers should import parallel, serial, and pack odds",
       imported
+    });
+  }
+
+  if (!xfractor
+    || xfractor.canonicalTitle !== "2025-26 Topps Chrome Basketball - Base - Parallel - X-Fractors"
+    || xfractor.metadata.parallel !== "X-Fractors"
+    || !xfractor.requiredTerms.includes("xfractors")) {
+    failures.push({
+      error: "NewPRV parallel aliases should normalize X-Fractors consistently",
+      imported: xfractor
     });
   }
 }
