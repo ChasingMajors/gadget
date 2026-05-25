@@ -41,6 +41,19 @@ const BRAND_TERMS = new Set([
   "sage"
 ]);
 
+const SPORT_TERMS = new Set([
+  "baseball",
+  "basketball",
+  "football",
+  "hockey",
+  "soccer",
+  "wrestling",
+  "ufc",
+  "racing",
+  "tennis",
+  "golf"
+]);
+
 const VARIANT_TERMS = new Set([
   "aqua",
   "blackout",
@@ -55,6 +68,7 @@ const VARIANT_TERMS = new Set([
   "green",
   "holo",
   "mojo",
+  "mirror",
   "orange",
   "parallel",
   "pink",
@@ -117,6 +131,21 @@ function metadataTokens(value) {
 
 function missingTokens(queryTokens, tokens) {
   return tokens.filter((token) => !queryTokens.has(token));
+}
+
+function sportMismatchPenalty(queryTokens, card) {
+  if (card.matchMode !== "set") {
+    return 0;
+  }
+
+  const sportTokens = new Set(metadataTokens(card.metadata?.sport));
+  const querySportTokens = Array.from(queryTokens).filter((token) => SPORT_TERMS.has(token));
+
+  if (!querySportTokens.length || !sportTokens.size) {
+    return 0;
+  }
+
+  return querySportTokens.some((token) => !sportTokens.has(token)) ? -0.72 : 0;
 }
 
 function setSpecificityPenalty(queryTokens, card) {
@@ -320,6 +349,7 @@ function scoreCard(query, card) {
     + serialLimitScore(query, normalizedQuery, card)
     + serialVariantPenalty(query, queryTokens, card)
     + variantMismatchPenalty(queryTokens, card)
+    + sportMismatchPenalty(queryTokens, card)
     + synonymScore(query, card)
     + setBoost
     + setSpecificityPenalty(queryTokens, card);

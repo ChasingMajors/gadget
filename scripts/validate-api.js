@@ -193,6 +193,134 @@ if (falseSetPositiveResponse.rarityTier !== "Unknown") {
   });
 }
 
+const mirrorVariantResponse = buildRarityResponse({
+  query: "2025-26 topps mirror image basketball",
+  source: "ebay",
+  pageUrl: "https://www.ebay.com",
+  cards: [
+    {
+      canonicalTitle: "2025-26 Topps Basketball - Base",
+      aliases: [
+        "2025-26 Topps Basketball",
+        "2025-26 Topps Basketball - Base"
+      ],
+      requiredTerms: ["2025", "26", "topps", "basketball"],
+      serialTerms: [],
+      rarityTier: "Base",
+      scarcityScore: 54,
+      printRun: 1265000,
+      packOdds: "Base card",
+      popTotal: 0,
+      popGem: 0,
+      matchMode: "set",
+      metadata: {
+        year: "2025-26",
+        sport: "Basketball",
+        brand: "Topps",
+        product: "Topps",
+        setType: "Base",
+        setLine: "Base"
+      }
+    },
+    {
+      canonicalTitle: "2025-26 Topps Basketball - Variation - Golden Mirror SSP",
+      aliases: [
+        "2025-26 Topps Basketball",
+        "2025-26 Topps Basketball - Variation - Golden Mirror SSP"
+      ],
+      requiredTerms: ["2025", "26", "topps", "basketball", "golden", "mirror"],
+      serialTerms: [],
+      rarityTier: "Variation",
+      scarcityScore: 82,
+      printRun: 155,
+      packOdds: null,
+      popTotal: 0,
+      popGem: 0,
+      matchMode: "set",
+      metadata: {
+        year: "2025-26",
+        sport: "Basketball",
+        brand: "Topps",
+        product: "Topps",
+        setType: "Variation",
+        setLine: "Golden Mirror SSP"
+      }
+    }
+  ],
+  upgradeUrl: "https://chasingmajors.com/upgrade"
+});
+
+if (mirrorVariantResponse.title !== "2025-26 Topps Basketball - Variation - Golden Mirror SSP") {
+  failures.push({
+    error: "Mirror Image query should prefer Golden Mirror variation over broad base rows",
+    actual: mirrorVariantResponse
+  });
+}
+
+const sportMismatchResponse = buildRarityResponse({
+  query: "2025-26 Topps Chrome - [Base] - Xfractors #251 Cooper Flagg Basketball",
+  source: "comc",
+  pageUrl: "https://www.comc.com",
+  cards: [
+    {
+      canonicalTitle: "2025 Topps Chrome Baseball - Base - Parallel - X-Fractor",
+      aliases: [
+        "2025 Topps Chrome X-Fractor",
+        "Topps Chrome X-Fractor"
+      ],
+      requiredTerms: ["2025", "topps", "chrome", "xfractors"],
+      serialTerms: [],
+      rarityTier: "Base - Parallel",
+      scarcityScore: 68,
+      printRun: 5000,
+      packOdds: null,
+      popTotal: 0,
+      popGem: 0,
+      matchMode: "set",
+      metadata: {
+        year: "2025",
+        sport: "Baseball",
+        brand: "Topps",
+        product: "Chrome",
+        setType: "Base - Parallel",
+        setLine: "X-Fractor"
+      }
+    },
+    {
+      canonicalTitle: "2025-26 Topps Chrome Basketball - Base - Parallel - X-Fractors",
+      aliases: [
+        "2025-26 Topps Chrome Basketball",
+        "2025-26 Topps Chrome X-Fractors"
+      ],
+      requiredTerms: ["2025", "26", "topps", "chrome", "basketball", "xfractors"],
+      serialTerms: [],
+      rarityTier: "Base - Parallel",
+      scarcityScore: 68,
+      printRun: 7750,
+      packOdds: null,
+      popTotal: 0,
+      popGem: 0,
+      matchMode: "set",
+      metadata: {
+        year: "2025-26",
+        sport: "Basketball",
+        brand: "Topps",
+        product: "Chrome",
+        setType: "Base - Parallel",
+        setLine: "X-Fractors"
+      }
+    }
+  ],
+  upgradeUrl: "https://chasingmajors.com/upgrade"
+});
+
+if (sportMismatchResponse.title !== "2025-26 Topps Chrome Basketball - Base - Parallel - X-Fractors") {
+  failures.push({
+    error: "Basketball query should not prefer a Baseball X-Fractor row",
+    actual: sportMismatchResponse
+  });
+}
+
 const plainToppsResponse = buildRarityResponse({
   query: "2025-26 Topps NBA Flagship Basketball Cooper Flagg RC Rookie #201 Dallas Mavericks Base",
   source: "ebay",
