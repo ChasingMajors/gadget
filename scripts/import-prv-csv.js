@@ -134,7 +134,19 @@ function hasExplicitTitle(record) {
 
 function hasSetSchema(record) {
   return Boolean(firstValue(record, ["displayname"])
-    && (firstValue(record, ["printrun", "prv", "estimatedprintrun", "estimatedprv"])
+    && (firstValue(record, [
+      "printrun",
+      "print run",
+      "pr",
+      "prv",
+      "estimatedprintrun",
+      "estimated print run",
+      "estimatedpr",
+      "estimatedprv",
+      "calculatedprintrun",
+      "calculated print run",
+      "calculatedpr"
+    ])
       || firstValue(record, ["serial", "serialnumber", "numberedto"])));
 }
 
@@ -198,7 +210,19 @@ function setRowToCard(record) {
   const setType = firstValue(record, ["settype"]);
   const setLine = firstValue(record, ["setline"]);
   const parallel = firstValue(record, ["parallel", "variation"]);
-  const printRun = numberValue(firstValue(record, ["printrun", "prv", "estimatedprintrun", "estimatedprv"]));
+  const printRun = numberValue(firstValue(record, [
+    "printrun",
+    "print run",
+    "pr",
+    "prv",
+    "estimatedprintrun",
+    "estimated print run",
+    "estimatedpr",
+    "estimatedprv",
+    "calculatedprintrun",
+    "calculated print run",
+    "calculatedpr"
+  ]));
   const serial = firstValue(record, ["serial", "serialnumber", "numberedto"]);
   const normalizedSerial = serialText(serial);
   const serialPrintRun = numberValue(serialValue(serial));

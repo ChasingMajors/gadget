@@ -136,6 +136,41 @@ function validateSetPrvImportHeaders() {
   }
 }
 
+function validateSetPrvPrintRunAliases() {
+  const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "cm-prv-pr-import-"));
+  const inputPath = path.join(tempDir, "new-prv-pr.csv");
+  const outputPath = path.join(tempDir, "cards.json");
+  const csv = [
+    "Code,DisplayName,Keywords,year,sport,manufacturer,product,setType,setLine,parallel,PR,serial,subSetSize,packOdds",
+    "2025_26_bowman_basketball_greatness_loading,2025-26 Bowman Basketball,bowman greatness loading refractor basketball,2025-26,Basketball,Bowman,,Insert,Greatness Loading,Refractor,4025,,25,"
+  ].join("\n");
+
+  fs.writeFileSync(inputPath, csv);
+  const result = spawnSync(process.execPath, ["scripts/import-prv-csv.js", inputPath, outputPath], {
+    encoding: "utf8"
+  });
+
+  if (result.status !== 0) {
+    failures.push({
+      error: "NewPRV PR header import fixture failed",
+      stderr: result.stderr,
+      stdout: result.stdout
+    });
+    return;
+  }
+
+  const imported = JSON.parse(fs.readFileSync(outputPath, "utf8"))[0];
+  if (!imported
+    || imported.canonicalTitle !== "2025-26 Bowman Basketball - Insert - Greatness Loading - Refractor"
+    || imported.printRun !== 4025
+    || imported.metadata.serial !== "") {
+    failures.push({
+      error: "NewPRV PR header should import non-serial print runs",
+      imported
+    });
+  }
+}
+
 function datasetContainsExpectedTitle(expected) {
   return cards.some((card) => card.canonicalTitle === expected);
 }
@@ -179,6 +214,7 @@ for (const testCase of optionalCases) {
 }
 
 validateSetPrvImportHeaders();
+validateSetPrvPrintRunAliases();
 
 const falseSetPositiveResponse = buildRarityResponse({
   query: "2025-26 Bowman #1 Cooper Flagg",
