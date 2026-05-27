@@ -445,6 +445,72 @@ if (nonAutoComcResponse.title !== "2025-26 Bowman Basketball - Insert - Greatnes
   });
 }
 
+const comcStructuredResponse = buildRarityResponse({
+  query: "2025-26 Bowman - Greatness Loading - Refractor #GL-5 Ace Bailey Basketball",
+  source: "comc",
+  pageUrl: "https://www.comc.com",
+  cards: [
+    {
+      canonicalTitle: "2025-26 Bowman Basketball - Variation - Chrome Rookie Red RC Logo",
+      aliases: [
+        "2025-26 Bowman Basketball",
+        "2025-26 Bowman Chrome Rookie Red RC Logo"
+      ],
+      requiredTerms: ["2025", "26", "bowman", "basketball", "chrome", "red", "logo"],
+      serialTerms: [],
+      rarityTier: "Variation",
+      scarcityScore: 68,
+      printRun: 8000,
+      packOdds: null,
+      popTotal: 0,
+      popGem: 0,
+      matchMode: "set",
+      metadata: {
+        year: "2025-26",
+        sport: "Basketball",
+        brand: "Bowman",
+        product: "",
+        setType: "Variation",
+        setLine: "Chrome Rookie Red RC Logo",
+        parallel: ""
+      }
+    },
+    {
+      canonicalTitle: "2025-26 Bowman Basketball - Insert - Greatness Loading - Refractor",
+      aliases: [
+        "2025-26 Bowman Basketball",
+        "2025-26 Bowman Greatness Loading Refractor"
+      ],
+      requiredTerms: ["2025", "26", "bowman", "basketball", "greatness", "loading", "refractor"],
+      serialTerms: [],
+      rarityTier: "Insert",
+      scarcityScore: 68,
+      printRun: 4025,
+      packOdds: null,
+      popTotal: 0,
+      popGem: 0,
+      matchMode: "set",
+      metadata: {
+        year: "2025-26",
+        sport: "Basketball",
+        brand: "Bowman",
+        product: "",
+        setType: "Insert",
+        setLine: "Greatness Loading",
+        parallel: "Refractor"
+      }
+    }
+  ],
+  upgradeUrl: "https://chasingmajors.com/upgrade"
+});
+
+if (comcStructuredResponse.title !== "2025-26 Bowman Basketball - Insert - Greatness Loading - Refractor") {
+  failures.push({
+    error: "COMC structured subset and parallel should outrank broad/misleading matches",
+    actual: comcStructuredResponse
+  });
+}
+
 const autoComcResponse = buildRarityResponse({
   query: "2025-26 Bowman Greatness Loading Autograph Refractor Ace Bailey Basketball",
   source: "comc",
@@ -552,6 +618,48 @@ if (serialComcResponse.title !== "2025-26 Bowman Basketball - Variation - Chrome
   failures.push({
     error: "COMC serial-numbered query should prefer matching serial row",
     actual: serialComcResponse
+  });
+}
+
+const serialFallbackComcResponse = buildRarityResponse({
+  query: "2025-26 Bowman - Chrome - Blue Reptilian Refractor #BCV-5 Ace Bailey #/150 Basketball",
+  source: "comc",
+  pageUrl: "https://www.comc.com",
+  cards: [
+    {
+      canonicalTitle: "2025-26 Bowman Basketball - Variation - Chrome - Reptilian Refractor",
+      aliases: [
+        "2025-26 Bowman Basketball",
+        "2025-26 Bowman Chrome Reptilian Refractor"
+      ],
+      requiredTerms: ["2025", "26", "bowman", "basketball", "chrome", "reptilian", "refractor"],
+      serialTerms: [],
+      rarityTier: "Variation",
+      scarcityScore: 68,
+      printRun: 6050,
+      packOdds: null,
+      popTotal: 0,
+      popGem: 0,
+      matchMode: "set",
+      metadata: {
+        year: "2025-26",
+        sport: "Basketball",
+        brand: "Bowman",
+        product: "",
+        setType: "Variation",
+        setLine: "Chrome",
+        parallel: "Reptilian Refractor"
+      }
+    }
+  ],
+  upgradeUrl: "https://chasingmajors.com/upgrade"
+});
+
+if (serialFallbackComcResponse.rarityTier !== "Serial Numbered"
+  || serialFallbackComcResponse.printRun !== 150) {
+  failures.push({
+    error: "COMC serial-numbered query should show serial print run even without exact PRV row",
+    actual: serialFallbackComcResponse
   });
 }
 

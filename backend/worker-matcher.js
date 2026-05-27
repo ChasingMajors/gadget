@@ -139,6 +139,58 @@ function metadataTokens(value) {
   return tokenize(value).filter((token) => token !== "base");
 }
 
+function comcStructuredParts(query) {
+  const rawParts = String(query || "")
+    .replace(/\u00a0/g, " ")
+    .split(/\s+-\s+/)
+    .map((part) => part.trim())
+    .filter(Boolean);
+
+  if (rawParts.length < 2 || !/^(?:19|20)\d{2}(?:\s*[-/]\s*\d{2,4})?\b/.test(rawParts[0])) {
+    return [];
+  }
+
+  return rawParts.slice(1)
+    .map((part) => part
+      .replace(/\s+#\S+.*$/g, "")
+      .replace(/^\[base\]$/i, "base")
+      .trim())
+    .filter(Boolean)
+    .map((part) => metadataTokens(part))
+    .filter((tokens) => tokens.length);
+}
+
+function comcStructuredScore(query, queryTokens, card) {
+  if (card.matchMode !== "set") {
+    return 0;
+  }
+
+  const parts = comcStructuredParts(query);
+  if (!parts.length) {
+    return 0;
+  }
+
+  const cardTokens = tokenSet([
+    card.canonicalTitle,
+    card.metadata?.product,
+    card.metadata?.setType,
+    card.metadata?.setLine,
+    card.metadata?.parallel,
+    ...(card.aliases || [])
+  ].filter(Boolean).join(" "));
+
+  const hasAllParts = parts.every((partTokens) => partTokens.every((token) => cardTokens.has(token)));
+  if (hasAllParts) {
+    return 0.18;
+  }
+
+  const missingSpecificParts = parts
+    .filter((partTokens) => partTokens.some((token) => !cardTokens.has(token)))
+    .filter((partTokens) => partTokens.some((token) => queryTokens.has(token)));
+
+  return missingSpecificParts.length ? -0.5 : 0;
+}
+
 function missingTokens(queryTokens, tokens) {
   return tokens.filter((token) => !queryTokens.has(token));
 }
@@ -385,6 +437,7 @@ export function scoreCard(query, card) {
     + variantMismatchPenalty(queryTokens, card)
     + sportMismatchPenalty(queryTokens, card)
     + synonymScore(query, card)
+    + comcStructuredScore(query, queryTokens, card)
     + setBoost
     + setSpecificityPenalty(queryTokens, card);
 
@@ -412,10 +465,33 @@ export function findBestMatch(query, cardData, minimumConfidence = 0.54) {
   return best;
 }
 
+function scarcityScoreForPrintRun(printRun) {
+  return printRun <= 1000 ? 82 : printRun <= 10000 ? 68 : 54;
+}
+
 export function buildRarityResponse({ query, source, pageUrl, cards, upgradeUrl }) {
   const match = findBestMatch(query, cards);
+  const serialLimit = querySerialLimit(query);
 
   if (!match.card) {
+    if (serialLimit && source === "comc") {
+      return {
+        title: query || "Serial-numbered card",
+        matchConfidence: match.confidence,
+        rarityTier: "Serial Numbered",
+        scarcityScore: scarcityScoreForPrintRun(serialLimit),
+        printRun: serialLimit,
+        packOdds: null,
+        popTotal: null,
+        popGem: null,
+        lockedFields: [],
+        upgradeUrl,
+        source,
+        inspectedUrl: pageUrl,
+        matchMode: "set"
+      };
+    }
+
     return {
       title: query || "Unknown card",
       matchConfidence: match.confidence,
@@ -435,7 +511,7 @@ export function buildRarityResponse({ query, source, pageUrl, cards, upgradeUrl 
     matchConfidence: match.confidence,
     rarityTier: match.card.rarityTier,
     scarcityScore: match.card.scarcityScore,
-    printRun: match.card.printRun,
+    printRun: serialLimit || match.card.printRun,
     packOdds: match.card.packOdds,
     popTotal: match.card.popTotal,
     popGem: match.card.popGem,
