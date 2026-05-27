@@ -53,6 +53,17 @@ const SPORT_TERMS = new Set([
   "golf"
 ]);
 
+const AUTOGRAPH_TERMS = new Set([
+  "auto",
+  "autograph",
+  "autographs",
+  "signed",
+  "signature",
+  "signatures",
+  "ink",
+  "graphs"
+]);
+
 const VARIANT_TERMS = new Set([
   "aqua",
   "blackout",
@@ -232,6 +243,26 @@ function cardVariantTokens(card) {
   ].filter(Boolean).join(" "));
 }
 
+function cardTokensForIntent(card) {
+  return tokenSet([
+    card.canonicalTitle,
+    card.metadata?.setType,
+    card.metadata?.setLine,
+    card.metadata?.parallel,
+    ...(card.aliases || []),
+    ...(card.requiredTerms || [])
+  ].filter(Boolean).join(" "));
+}
+
+function isAutographCard(card) {
+  const tokens = cardTokensForIntent(card);
+  return Array.from(AUTOGRAPH_TERMS).some((token) => tokens.has(token));
+}
+
+function hasAutographIntent(queryTokens) {
+  return Array.from(queryTokens).some((token) => AUTOGRAPH_TERMS.has(token));
+}
+
 function synonymScore(query, card) {
   const normalizedQuery = normalizeTitle(query);
   const normalizedCard = normalizeTitle([
@@ -335,6 +366,10 @@ export function scoreCard(query, card) {
   const coverage = cardTokens.size ? overlap.length / cardTokens.size : 0;
   const hasRequired = hasRequiredTerms(queryTokens, card);
   if (card.matchMode === "set" && !hasRequired) {
+    return 0;
+  }
+
+  if (card.matchMode === "set" && isAutographCard(card) && !hasAutographIntent(queryTokens)) {
     return 0;
   }
 

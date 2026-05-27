@@ -327,6 +327,116 @@ if (sportMismatchResponse.title !== "2025-26 Topps Chrome Basketball - Base - Pa
   });
 }
 
+const nonAutoComcResponse = buildRarityResponse({
+  query: "2025-26 Bowman - Greatness Loading - Refractor #GL-5 Ace Bailey Basketball",
+  source: "comc",
+  pageUrl: "https://www.comc.com",
+  cards: [
+    {
+      canonicalTitle: "2025-26 Bowman Basketball - Autograph - Greatness Loading Autographs - Refractor",
+      aliases: [
+        "2025-26 Bowman Basketball",
+        "2025-26 Bowman Greatness Loading Autographs Refractor",
+        "2025-26 Bowman Autograph"
+      ],
+      requiredTerms: ["2025", "26", "bowman", "basketball", "greatness", "loading", "autographs", "refractor"],
+      serialTerms: [],
+      rarityTier: "Autograph",
+      scarcityScore: 82,
+      printRun: 145,
+      packOdds: null,
+      popTotal: 0,
+      popGem: 0,
+      matchMode: "set",
+      metadata: {
+        year: "2025-26",
+        sport: "Basketball",
+        brand: "Bowman",
+        product: "",
+        setType: "Autograph",
+        setLine: "Greatness Loading Autographs",
+        parallel: "Refractor"
+      }
+    },
+    {
+      canonicalTitle: "2025-26 Bowman Basketball - Insert - Greatness Loading - Refractor",
+      aliases: [
+        "2025-26 Bowman Basketball",
+        "2025-26 Bowman Greatness Loading Refractor",
+        "2025-26 Bowman Insert"
+      ],
+      requiredTerms: ["2025", "26", "bowman", "basketball", "greatness", "loading", "refractor"],
+      serialTerms: [],
+      rarityTier: "Insert",
+      scarcityScore: 68,
+      printRun: 4025,
+      packOdds: null,
+      popTotal: 0,
+      popGem: 0,
+      matchMode: "set",
+      metadata: {
+        year: "2025-26",
+        sport: "Basketball",
+        brand: "Bowman",
+        product: "",
+        setType: "Insert",
+        setLine: "Greatness Loading",
+        parallel: "Refractor"
+      }
+    }
+  ],
+  upgradeUrl: "https://chasingmajors.com/upgrade"
+});
+
+if (nonAutoComcResponse.title !== "2025-26 Bowman Basketball - Insert - Greatness Loading - Refractor") {
+  failures.push({
+    error: "Non-autograph COMC title should not match autograph rows",
+    actual: nonAutoComcResponse
+  });
+}
+
+const autoComcResponse = buildRarityResponse({
+  query: "2025-26 Bowman Greatness Loading Autograph Refractor Ace Bailey Basketball",
+  source: "comc",
+  pageUrl: "https://www.comc.com",
+  cards: [
+    {
+      canonicalTitle: "2025-26 Bowman Basketball - Autograph - Greatness Loading Autographs - Refractor",
+      aliases: [
+        "2025-26 Bowman Basketball",
+        "2025-26 Bowman Greatness Loading Autographs Refractor",
+        "2025-26 Bowman Autograph"
+      ],
+      requiredTerms: ["2025", "26", "bowman", "basketball", "greatness", "loading", "autographs", "refractor"],
+      serialTerms: [],
+      rarityTier: "Autograph",
+      scarcityScore: 82,
+      printRun: 145,
+      packOdds: null,
+      popTotal: 0,
+      popGem: 0,
+      matchMode: "set",
+      metadata: {
+        year: "2025-26",
+        sport: "Basketball",
+        brand: "Bowman",
+        product: "",
+        setType: "Autograph",
+        setLine: "Greatness Loading Autographs",
+        parallel: "Refractor"
+      }
+    }
+  ],
+  upgradeUrl: "https://chasingmajors.com/upgrade"
+});
+
+if (autoComcResponse.title !== "2025-26 Bowman Basketball - Autograph - Greatness Loading Autographs - Refractor") {
+  failures.push({
+    error: "Autograph query should still match autograph rows",
+    actual: autoComcResponse
+  });
+}
+
 const plainToppsResponse = buildRarityResponse({
   query: "2025-26 Topps NBA Flagship Basketball Cooper Flagg RC Rookie #201 Dallas Mavericks Base",
   source: "ebay",
