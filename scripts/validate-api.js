@@ -77,7 +77,8 @@ function validateSetPrvImportHeaders() {
   const csv = [
     "Code,DisplayName,Keywords,year,sport,manufacturer,product,setType,setLine,parallel,printRun,serial,subSetSize,packOdds",
     "2025_26_topps_chrome_basketball,2025-26 Topps Chrome Basketball,topps chrome gold basketball,2025-26,Basketball,Topps,Chrome,Base - Parallel,Base,Gold,50,50,300,1:120 packs",
-    "2025_26_topps_chrome_basketball_xfractors,2025-26 Topps Chrome Basketball,topps chrome xfractors basketball,2025-26,Basketball,Topps,Chrome,Base - Parallel,Base,X-Fractors,7750,,299,"
+    "2025_26_topps_chrome_basketball_xfractors,2025-26 Topps Chrome Basketball,topps chrome xfractors basketball,2025-26,Basketball,Topps,Chrome,Base - Parallel,Base,X-Fractors,7750,,299,",
+    "2025_26_bowman_basketball_blue_reptilian,2025-26 Bowman Basketball,bowman basketball blue reptilian refractor,2025-26,Basketball,Bowman,,Variation,Chrome,Blue Reptilian Refractor,,#/150,150,"
   ].join("\n");
 
   fs.writeFileSync(inputPath, csv);
@@ -96,6 +97,7 @@ function validateSetPrvImportHeaders() {
 
   const imported = JSON.parse(fs.readFileSync(outputPath, "utf8"))[0];
   const xfractor = JSON.parse(fs.readFileSync(outputPath, "utf8"))[1];
+  const serialOnly = JSON.parse(fs.readFileSync(outputPath, "utf8"))[2];
   if (!imported
     || imported.id !== "2025-26-topps-chrome-basketball-base-parallel-gold"
     || imported.canonicalTitle !== "2025-26 Topps Chrome Basketball - Base - Parallel - Gold"
@@ -118,6 +120,18 @@ function validateSetPrvImportHeaders() {
     failures.push({
       error: "NewPRV parallel aliases should normalize X-Fractors consistently",
       imported: xfractor
+    });
+  }
+
+  if (!serialOnly
+    || serialOnly.printRun !== 150
+    || serialOnly.metadata.serial !== "150"
+    || !serialOnly.serialTerms.includes("/150")
+    || !serialOnly.requiredTerms.includes("blue")
+    || !serialOnly.requiredTerms.includes("reptilian")) {
+    failures.push({
+      error: "NewPRV serial column should import serial-only print runs",
+      imported: serialOnly
     });
   }
 }
@@ -434,6 +448,74 @@ if (autoComcResponse.title !== "2025-26 Bowman Basketball - Autograph - Greatnes
   failures.push({
     error: "Autograph query should still match autograph rows",
     actual: autoComcResponse
+  });
+}
+
+const serialComcResponse = buildRarityResponse({
+  query: "2025-26 Bowman - Chrome - Blue Reptilian Refractor #BCV-5 Ace Bailey #/150 Basketball",
+  source: "comc",
+  pageUrl: "https://www.comc.com",
+  cards: [
+    {
+      canonicalTitle: "2025-26 Bowman Basketball - Variation - Chrome - Reptilian Refractor",
+      aliases: [
+        "2025-26 Bowman Basketball",
+        "2025-26 Bowman Chrome Reptilian Refractor"
+      ],
+      requiredTerms: ["2025", "26", "bowman", "basketball", "chrome", "reptilian", "refractor"],
+      serialTerms: [],
+      rarityTier: "Variation",
+      scarcityScore: 68,
+      printRun: 6050,
+      packOdds: null,
+      popTotal: 0,
+      popGem: 0,
+      matchMode: "set",
+      metadata: {
+        year: "2025-26",
+        sport: "Basketball",
+        brand: "Bowman",
+        product: "",
+        setType: "Variation",
+        setLine: "Chrome",
+        parallel: "Reptilian Refractor"
+      }
+    },
+    {
+      canonicalTitle: "2025-26 Bowman Basketball - Variation - Chrome - Blue Reptilian Refractor",
+      aliases: [
+        "2025-26 Bowman Basketball",
+        "2025-26 Bowman Chrome Blue Reptilian Refractor /150"
+      ],
+      requiredTerms: ["2025", "26", "bowman", "basketball", "chrome", "blue", "reptilian", "refractor"],
+      serialTerms: ["/150", "150"],
+      rarityTier: "Variation",
+      scarcityScore: 82,
+      printRun: 150,
+      packOdds: null,
+      popTotal: 0,
+      popGem: 0,
+      matchMode: "set",
+      metadata: {
+        year: "2025-26",
+        sport: "Basketball",
+        brand: "Bowman",
+        product: "",
+        setType: "Variation",
+        setLine: "Chrome",
+        parallel: "Blue Reptilian Refractor",
+        serial: "150"
+      }
+    }
+  ],
+  upgradeUrl: "https://chasingmajors.com/upgrade"
+});
+
+if (serialComcResponse.title !== "2025-26 Bowman Basketball - Variation - Chrome - Blue Reptilian Refractor"
+  || serialComcResponse.printRun !== 150) {
+  failures.push({
+    error: "COMC serial-numbered query should prefer matching serial row",
+    actual: serialComcResponse
   });
 }
 

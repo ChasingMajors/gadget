@@ -86,6 +86,20 @@ function numberValue(value) {
   return Number.isFinite(number) ? number : null;
 }
 
+function serialValue(value) {
+  const match = String(value || "").match(/([\d,]{1,9})/);
+  if (!match) {
+    return "";
+  }
+
+  return match[1].replace(/,/g, "");
+}
+
+function serialText(value) {
+  const serial = serialValue(value);
+  return serial ? `/${serial}` : "";
+}
+
 function listValue(value) {
   return String(value || "")
     .split(/[|;,]/)
@@ -119,7 +133,9 @@ function hasExplicitTitle(record) {
 }
 
 function hasSetSchema(record) {
-  return Boolean(firstValue(record, ["displayname"]) && firstValue(record, ["printrun"]));
+  return Boolean(firstValue(record, ["displayname"])
+    && (firstValue(record, ["printrun", "prv", "estimatedprintrun", "estimatedprv"])
+      || firstValue(record, ["serial", "serialnumber", "numberedto"])));
 }
 
 function titleTerms(title) {
@@ -184,12 +200,15 @@ function setRowToCard(record) {
   const parallel = firstValue(record, ["parallel", "variation"]);
   const printRun = numberValue(firstValue(record, ["printrun", "prv", "estimatedprintrun", "estimatedprv"]));
   const serial = firstValue(record, ["serial", "serialnumber", "numberedto"]);
+  const normalizedSerial = serialText(serial);
+  const serialPrintRun = numberValue(serialValue(serial));
+  const effectivePrintRun = printRun ?? serialPrintRun;
   const subsetSize = numberValue(firstValue(record, ["subsetsize"]));
   const rawKeywords = listValue(firstValue(record, ["keywords"]));
   const packOdds = firstValue(record, ["packodds", "odds", "notes"]);
   const cmURL = firstValue(record, ["cmurl"]);
 
-  if (!displayName || printRun === null) {
+  if (!displayName || effectivePrintRun === null) {
     return null;
   }
 
@@ -213,16 +232,16 @@ function setRowToCard(record) {
     aliases: Array.from(new Set([
       displayName,
       canonicalTitle,
-      [year, brand, product, setLine, parallel, serial ? `/${serial.replace(/^\/+/, "")}` : ""].filter(Boolean).join(" "),
+      [year, brand, product, setLine, parallel, normalizedSerial].filter(Boolean).join(" "),
       [year, brand, product, setType].filter(Boolean).join(" "),
       [year, brand, product, parallel].filter(Boolean).join(" "),
       ...rawKeywords
     ].filter(Boolean))),
     requiredTerms,
-    serialTerms: serial ? [`/${serial.replace(/^\/+/, "")}`, serial.replace(/^\/+/, "")] : [],
+    serialTerms: normalizedSerial ? [normalizedSerial, normalizedSerial.slice(1)] : [],
     rarityTier: setType || "Product",
-    scarcityScore: printRun <= 1000 ? 82 : printRun <= 10000 ? 68 : 54,
-    printRun,
+    scarcityScore: effectivePrintRun <= 1000 ? 82 : effectivePrintRun <= 10000 ? 68 : 54,
+    printRun: effectivePrintRun,
     packOdds: packOdds || null,
     popTotal: 0,
     popGem: 0,
@@ -237,7 +256,7 @@ function setRowToCard(record) {
       setType,
       setLine,
       parallel,
-      serial,
+      serial: normalizedSerial ? normalizedSerial.slice(1) : "",
       subsetSize
     }
   };

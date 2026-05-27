@@ -260,10 +260,155 @@ vm.runInContext(parserSource, comcContext);
 
 const comcListings = comcContext.window.CMRarityParser.findListings();
 const comcTitle = comcListings[0]?.title;
-const expectedComc = "2025-26 Topps - [Base] #201 Cooper Flagg Basketball";
+const expectedComc = "2025-26 Topps - [Base] #201 Cooper Flagg #/1,265,000 Basketball";
 
 if (comcTitle !== expectedComc) {
   console.error(`COMC parser validation failed. Expected "${expectedComc}" but got "${comcTitle}"`);
+  process.exit(1);
+}
+
+const comcAuctionImage = makeElement({
+  tag: "img",
+  attrs: {
+    width: 220,
+    height: 310,
+    src: "https://img.comc.com/i/Basketball/2025-26/Bowman/GL-5/Ace-Bailey.jpg",
+    title: "2025-26 Bowman - Greatness Loading - Refractor #GL-5"
+  }
+});
+comcAuctionImage.alt = "2025-26 Bowman - Greatness Loading - Refractor #GL-5";
+comcAuctionImage.src = comcAuctionImage.attrs.src;
+comcAuctionImage.currentSrc = comcAuctionImage.attrs.src;
+
+const comcAuctionSetLine = makeElement({
+  tag: "a",
+  className: "card-title",
+  text: "2025-26 Bowman - Greatness Loading - Refractor #GL-5",
+  attrs: {
+    href: "https://www.comc.com/Cards/Basketball/2025-26/Bowman/GL-5/Ace_Bailey"
+  }
+});
+
+const comcAuctionPlayerLine = makeElement({
+  tag: "h3",
+  className: "name",
+  text: "Ace Bailey"
+});
+
+const comcAuctionTime = makeElement({
+  tag: "span",
+  text: "3d left (0) $0.99"
+});
+
+const comcAuctionCard = makeElement({
+  className: "cardItem",
+  children: [comcAuctionImage, comcAuctionSetLine, comcAuctionPlayerLine, comcAuctionTime]
+});
+
+const comcAuctionContext = {
+  URL,
+  window: {
+    URL,
+    location: {
+      hostname: "www.comc.com",
+      href: "https://www.comc.com/Players/Basketball/Ace_Bailey/c555555/Cards/Basketball"
+    },
+    getComputedStyle() {
+      return {
+        position: "relative"
+      };
+    },
+    CMRarityParser: null
+  },
+  document: {
+    body: makeElement({
+      children: [comcAuctionCard]
+    }),
+    documentElement: {
+      dataset: {}
+    },
+    images: [comcAuctionImage]
+  }
+};
+
+vm.createContext(comcAuctionContext);
+vm.runInContext(parserSource, comcAuctionContext);
+
+const comcAuctionTitle = comcAuctionContext.window.CMRarityParser.findListings()[0]?.title;
+const expectedComcAuctionTitle = "2025-26 Bowman - Greatness Loading - Refractor #GL-5 Ace Bailey Basketball";
+
+if (comcAuctionTitle !== expectedComcAuctionTitle) {
+  console.error(`COMC auction parser validation failed. Expected "${expectedComcAuctionTitle}" but got "${comcAuctionTitle}"`);
+  process.exit(1);
+}
+
+const comcSerialImage = makeElement({
+  tag: "img",
+  attrs: {
+    width: 220,
+    height: 310,
+    src: "https://img.comc.com/i/Basketball/2025-26/Bowman/BCV-5/Ace-Bailey.jpg",
+    title: "2025-26 Bowman - Chrome - Blue Reptilian Refractor #BCV-5"
+  }
+});
+comcSerialImage.alt = "2025-26 Bowman - Chrome - Blue Reptilian Refractor #BCV-5";
+comcSerialImage.src = comcSerialImage.attrs.src;
+comcSerialImage.currentSrc = comcSerialImage.attrs.src;
+
+const comcSerialSetLine = makeElement({
+  tag: "a",
+  className: "card-title",
+  text: "2025-26 Bowman - Chrome - Blue Reptilian Refractor #BCV-5",
+  attrs: {
+    href: "https://www.comc.com/Cards/Basketball/2025-26/Bowman/BCV-5/Ace_Bailey"
+  }
+});
+
+const comcSerialPlayerLine = makeElement({
+  tag: "h3",
+  className: "name",
+  text: "Ace Bailey #/150"
+});
+
+const comcSerialCard = makeElement({
+  className: "cardItem",
+  children: [comcSerialImage, comcSerialSetLine, comcSerialPlayerLine]
+});
+
+const comcSerialContext = {
+  URL,
+  window: {
+    URL,
+    location: {
+      hostname: "www.comc.com",
+      href: "https://www.comc.com/Players/Basketball/Ace_Bailey/c555555/Cards/Basketball"
+    },
+    getComputedStyle() {
+      return {
+        position: "relative"
+      };
+    },
+    CMRarityParser: null
+  },
+  document: {
+    body: makeElement({
+      children: [comcSerialCard]
+    }),
+    documentElement: {
+      dataset: {}
+    },
+    images: [comcSerialImage]
+  }
+};
+
+vm.createContext(comcSerialContext);
+vm.runInContext(parserSource, comcSerialContext);
+
+const comcSerialTitle = comcSerialContext.window.CMRarityParser.findListings()[0]?.title;
+const expectedComcSerialTitle = "2025-26 Bowman - Chrome - Blue Reptilian Refractor #BCV-5 Ace Bailey #/150 Basketball";
+
+if (comcSerialTitle !== expectedComcSerialTitle) {
+  console.error(`COMC serial parser validation failed. Expected "${expectedComcSerialTitle}" but got "${comcSerialTitle}"`);
   process.exit(1);
 }
 

@@ -144,6 +144,34 @@
       && !/\b(?:sort by|select|attributes|players|teams)\b/i.test(line);
   }
 
+  function serialTextFromComcLine(line) {
+    const match = String(line || "").match(/#?\s*\/\s*([\d,]{1,9})\b/);
+    return match ? `#/${match[1]}` : "";
+  }
+
+  function mergeComcSetAndDetail(setLine, detailLine) {
+    const cleanSetLine = cleanTitle(setLine);
+    const cleanDetailLine = cleanTitle(detailLine);
+
+    if (!cleanDetailLine) {
+      return cleanSetLine;
+    }
+
+    const serialText = serialTextFromComcLine(cleanDetailLine);
+    const normalizedSet = cleanSetLine.toLowerCase();
+    const detailWithoutSerial = cleanTitle(cleanDetailLine.replace(/#?\s*\/\s*[\d,]{1,9}\b/g, ""));
+
+    if (detailWithoutSerial && !normalizedSet.includes(detailWithoutSerial.toLowerCase())) {
+      return cleanTitle([cleanSetLine, cleanDetailLine].join(" "));
+    }
+
+    if (serialText && !normalizedSet.includes(serialText.toLowerCase())) {
+      return cleanTitle([cleanSetLine, serialText].join(" "));
+    }
+
+    return cleanSetLine;
+  }
+
   function closestTitleFromItemLinks(image) {
     const maxDepth = 9;
     let node = image.parentElement;
@@ -214,12 +242,6 @@
     const imageTitle = cleanComcTitlePart(image.getAttribute("title") || image.alt || image.getAttribute("aria-label") || "");
     const urlTitle = comcTitleFromCardUrl(cardHref || image.closest("a")?.href || image.closest("a")?.getAttribute("href") || "");
 
-    const directTitle = [imageTitle, linkedTitle, urlTitle]
-      .find((title) => isComcSetLine(title));
-    if (directTitle) {
-      return enrichComcTitle(directTitle);
-    }
-
     const selectorText = [
       ".set-name",
       ".setName",
@@ -250,12 +272,19 @@
       ...textLinesFrom(root),
     ].filter(Boolean)));
 
+    const directTitle = [imageTitle, linkedTitle, urlTitle]
+      .find((title) => isComcSetLine(title));
+    if (directTitle) {
+      const detailLine = lines.find((line) => line !== directTitle && isComcDetailLine(line));
+      return enrichComcTitle(mergeComcSetAndDetail(directTitle, detailLine));
+    }
+
     const setLineIndex = lines.findIndex(isComcSetLine);
     if (setLineIndex >= 0) {
       const setLine = lines[setLineIndex];
       const detailLine = lines.slice(setLineIndex + 1).find(isComcDetailLine)
         || lines.find((line, index) => index !== setLineIndex && isComcDetailLine(line));
-      return enrichComcTitle(cleanTitle([setLine, detailLine].filter(Boolean).join(" ")));
+      return enrichComcTitle(mergeComcSetAndDetail(setLine, detailLine));
     }
 
     const fallback = lines.find((line) => !isBadTitle(line)) || "";
