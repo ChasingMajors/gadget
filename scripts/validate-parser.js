@@ -412,6 +412,76 @@ if (comcSerialTitle !== expectedComcSerialTitle) {
   process.exit(1);
 }
 
+const comcGradedSerialImage = makeElement({
+  tag: "img",
+  attrs: {
+    width: 220,
+    height: 310,
+    src: "https://img.comc.com/i/Basketball/2025-26/Topps-Now-Draft/D2/Dylan-Harper.jpg",
+    title: "2025-26 Topps Now Draft - Online Exclusive [Base] - Orange Foil #D2"
+  }
+});
+comcGradedSerialImage.alt = "2025-26 Topps Now Draft - Online Exclusive [Base] - Orange Foil #D2";
+comcGradedSerialImage.src = comcGradedSerialImage.attrs.src;
+comcGradedSerialImage.currentSrc = comcGradedSerialImage.attrs.src;
+
+const comcGradedSerialSetLine = makeElement({
+  tag: "a",
+  className: "card-title",
+  text: "2025-26 Topps Now Draft - Online Exclusive [Base] - Orange Foil #D2",
+  attrs: {
+    href: "https://www.comc.com/Cards/Basketball/2025-26/Topps_Now_Draft/D2/Dylan_Harper"
+  }
+});
+
+const comcGradedSerialPlayerLine = makeElement({
+  tag: "h3",
+  className: "name",
+  text: "Dylan Harper [PSA 9 MINT] #/25"
+});
+
+const comcGradedSerialCard = makeElement({
+  className: "cardItem",
+  children: [comcGradedSerialImage, comcGradedSerialSetLine, comcGradedSerialPlayerLine]
+});
+
+const comcGradedSerialContext = {
+  URL,
+  window: {
+    URL,
+    location: {
+      hostname: "www.comc.com",
+      href: "https://www.comc.com/Players/Basketball/Dylan_Harper/c555556/Cards/Basketball"
+    },
+    getComputedStyle() {
+      return {
+        position: "relative"
+      };
+    },
+    CMRarityParser: null
+  },
+  document: {
+    body: makeElement({
+      children: [comcGradedSerialCard]
+    }),
+    documentElement: {
+      dataset: {}
+    },
+    images: [comcGradedSerialImage]
+  }
+};
+
+vm.createContext(comcGradedSerialContext);
+vm.runInContext(parserSource, comcGradedSerialContext);
+
+const comcGradedSerialTitle = comcGradedSerialContext.window.CMRarityParser.findListings()[0]?.title;
+const expectedComcGradedSerialTitle = "2025-26 Topps Now Draft - Online Exclusive [Base] - Orange Foil #D2 Dylan Harper #/25 Basketball";
+
+if (comcGradedSerialTitle !== expectedComcGradedSerialTitle) {
+  console.error(`COMC graded serial parser validation failed. Expected "${expectedComcGradedSerialTitle}" but got "${comcGradedSerialTitle}"`);
+  process.exit(1);
+}
+
 const comcUrlContext = {
   URL,
   window: {

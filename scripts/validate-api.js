@@ -663,6 +663,38 @@ if (serialFallbackComcResponse.rarityTier !== "Serial Numbered"
   });
 }
 
+const comcMidnightSerialFallback = buildRarityResponse({
+  query: "2025-26 Topps Midnight - [Base] - Morning #62 Dylan Harper #/149 Basketball",
+  source: "comc",
+  pageUrl: "https://www.comc.com",
+  cards,
+  upgradeUrl: "https://chasingmajors.com/upgrade"
+});
+
+if (comcMidnightSerialFallback.printRun !== 149
+  || comcMidnightSerialFallback.rarityTier === "Unknown") {
+  failures.push({
+    error: "COMC explicit serial title should surface #/149 in estimated print run",
+    actual: comcMidnightSerialFallback
+  });
+}
+
+const comcGradedSerialFallback = buildRarityResponse({
+  query: "2025-26 Topps Now Draft - Online Exclusive [Base] - Orange Foil #D2 Dylan Harper [PSA 9 MINT] #/25 Basketball",
+  source: "comc",
+  pageUrl: "https://www.comc.com",
+  cards,
+  upgradeUrl: "https://chasingmajors.com/upgrade"
+});
+
+if (comcGradedSerialFallback.printRun !== 25
+  || comcGradedSerialFallback.rarityTier === "Unknown") {
+  failures.push({
+    error: "COMC graded serial title should ignore grading text and surface #/25",
+    actual: comcGradedSerialFallback
+  });
+}
+
 const plainToppsResponse = buildRarityResponse({
   query: "2025-26 Topps NBA Flagship Basketball Cooper Flagg RC Rookie #201 Dallas Mavericks Base",
   source: "ebay",
