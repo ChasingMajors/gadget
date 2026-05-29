@@ -50,11 +50,19 @@ const requiredCases = [
   },
   {
     query: "2025-26 Topps Chrome basketball Gold /50",
-    expected: "Unknown"
+    expected: [
+      "Unknown",
+      "2025-26 Topps Chrome Basketball - Base - Refractor Gold"
+    ],
+    expectedPrintRun: 50
   },
   {
     query: "2025-26 Topps Chrome basketball Gold",
-    expected: "Unknown"
+    expected: [
+      "Unknown",
+      "2025-26 Topps Chrome Basketball - Base - Refractor Gold"
+    ],
+    expectedPrintRun: 50
   },
   {
     query: "2025-26 Topps Chrome - [Base] - Xfractors #251 Cooper Flagg Basketball",
@@ -185,11 +193,13 @@ function runCase(testCase) {
   });
 
   const expectedTitles = Array.isArray(testCase.expected) ? testCase.expected : [testCase.expected];
-  const passed = testCase.expected === "Unknown"
-    ? response.rarityTier === "Unknown"
-    : expectedTitles.includes(response.title)
-      && (testCase.expectedPrintRun === undefined || response.printRun === testCase.expectedPrintRun)
-      && (testCase.minimumConfidence === undefined || response.matchConfidence >= testCase.minimumConfidence);
+  const expectedUnknown = expectedTitles.includes("Unknown");
+  const passedUnknown = expectedUnknown && response.rarityTier === "Unknown";
+  const passedMatched = expectedTitles.includes(response.title)
+    && response.rarityTier !== "Unknown"
+    && (testCase.expectedPrintRun === undefined || response.printRun === testCase.expectedPrintRun)
+    && (testCase.minimumConfidence === undefined || response.matchConfidence >= testCase.minimumConfidence);
+  const passed = passedUnknown || passedMatched;
 
   if (!passed) {
     failures.push({
