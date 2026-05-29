@@ -23,6 +23,19 @@ if (!worker.includes("export default")) {
   process.exit(1);
 }
 
+[
+  'url.pathname === "/me"',
+  'url.pathname === "/billing/checkout"',
+  "STRIPE_SECRET_KEY",
+  "STRIPE_PRICE_ID",
+  "lockForAccess"
+].forEach((snippet) => {
+  if (!worker.includes(snippet)) {
+    console.error(`backend/worker.js is missing beta auth/billing support: ${snippet}`);
+    process.exit(1);
+  }
+});
+
 if (!wrangler.includes('main = "backend/worker.js"')) {
   console.error("wrangler.toml must point main to backend/worker.js");
   process.exit(1);

@@ -87,6 +87,12 @@ function checkConfig() {
   if (config.includes("MVP_ADMIN_MODE: true")) {
     warnings.push("MVP_ADMIN_MODE is enabled. This is okay for internal trials, but turn it off before Chrome Web Store submission.");
   }
+
+  ["LOGIN_URL", "SIGNUP_URL", "BILLING_URL", "FEEDBACK_URL", "AUTH_ENABLED"].forEach((key) => {
+    if (!config.includes(key)) {
+      errors.push(`config.js is missing beta setting ${key}`);
+    }
+  });
 }
 
 function checkRequiredFiles() {

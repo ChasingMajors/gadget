@@ -221,7 +221,8 @@
 }
 
 .cm-rarity-open,
-.cm-rarity-upgrade {
+.cm-rarity-upgrade,
+.cm-rarity-feedback {
   align-items: center;
   border-radius: 6px;
   box-sizing: border-box;
@@ -242,6 +243,14 @@
 .cm-rarity-upgrade {
   background: #f1f5f9;
   color: #0f172a !important;
+}
+
+.cm-rarity-feedback {
+  background: transparent;
+  color: #475569 !important;
+  font-size: 11px;
+  min-height: 20px;
+  padding: 2px 8px;
 }
 
 .cm-rarity-note {

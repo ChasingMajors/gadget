@@ -52,6 +52,38 @@
     return `${normalizedApiBase()}/rarity?${params.toString()}`;
   }
 
+  function buildApiUrl(path) {
+    return `${normalizedApiBase()}${path}`;
+  }
+
+  function accountUrl(path, params = {}) {
+    const base = (config().APP_URL || "https://app.chasingmajors.com").replace(/\/+$/, "");
+    const url = new URL(path, `${base}/`);
+    Object.entries(params).forEach(([key, value]) => {
+      if (value) {
+        url.searchParams.set(key, value);
+      }
+    });
+    return url.toString();
+  }
+
+  async function authHeaders() {
+    const headers = {
+      "Accept": "application/json"
+    };
+    const session = await window.CMRarityStorage?.getSession?.();
+
+    if (session?.token) {
+      headers.Authorization = `Bearer ${session.token}`;
+    }
+
+    if (config().MVP_ADMIN_MODE) {
+      headers["X-CM-User-State"] = "admin";
+    }
+
+    return headers;
+  }
+
   function fallbackResponse(title) {
     const seed = Array.from(title).reduce((sum, char) => sum + char.charCodeAt(0), 0);
     const response = MOCK_RESPONSES[seed % MOCK_RESPONSES.length];
@@ -108,9 +140,7 @@
   async function fetchDirect(payload) {
     const response = await fetch(buildRarityUrl(payload), {
       method: "GET",
-      headers: {
-        "Accept": "application/json"
-      },
+      headers: await authHeaders(),
       credentials: "omit"
     });
 
@@ -119,6 +149,41 @@
     }
 
     return sanitizeApiResponse(await response.json(), payload.title);
+  }
+
+  async function fetchSession() {
+    const response = await fetch(buildApiUrl("/me"), {
+      method: "GET",
+      headers: await authHeaders(),
+      credentials: "omit"
+    });
+
+    if (!response.ok) {
+      throw new Error(`Session API returned ${response.status}`);
+    }
+
+    return response.json();
+  }
+
+  async function startCheckout() {
+    const response = await fetch(buildApiUrl("/billing/checkout"), {
+      method: "POST",
+      headers: {
+        ...(await authHeaders()),
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        successUrl: accountUrl("/billing/success"),
+        cancelUrl: accountUrl("/billing")
+      }),
+      credentials: "omit"
+    });
+
+    if (!response.ok) {
+      throw new Error(`Checkout API returned ${response.status}`);
+    }
+
+    return response.json();
   }
 
   async function fetchRarity({ title, source, pageUrl }) {
@@ -155,7 +220,10 @@
   }
 
   window.CMRarityApi = {
+    accountUrl,
     buildRarityUrl,
-    fetchRarity
+    fetchRarity,
+    fetchSession,
+    startCheckout
   };
 })();

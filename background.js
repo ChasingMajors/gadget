@@ -20,6 +20,62 @@ function buildRarityUrl({ title, source, pageUrl }) {
   return `${normalizedApiBase()}/rarity?${params.toString()}`;
 }
 
+function buildApiUrl(path) {
+  return `${normalizedApiBase()}${path}`;
+}
+
+function getSession() {
+  return new Promise((resolve) => {
+    chrome.storage.local.get(["cmRaritySession"], (stored) => {
+      resolve({
+        token: "",
+        email: "",
+        status: "anonymous",
+        plan: "free",
+        ...(stored.cmRaritySession || {})
+      });
+    });
+  });
+}
+
+function setSession(session) {
+  const nextSession = {
+    token: "",
+    email: "",
+    status: "anonymous",
+    plan: "free",
+    ...session
+  };
+
+  return new Promise((resolve) => {
+    chrome.storage.local.set({
+      cmRaritySession: nextSession,
+      cmRarityUserState: {
+        email: nextSession.email,
+        status: nextSession.status,
+        plan: nextSession.plan
+      }
+    }, () => resolve(nextSession));
+  });
+}
+
+async function authHeaders() {
+  const headers = {
+    "Accept": "application/json"
+  };
+  const session = await getSession();
+
+  if (session.token) {
+    headers.Authorization = `Bearer ${session.token}`;
+  }
+
+  if (globalThis.CM_RARITY_CONFIG.MVP_ADMIN_MODE) {
+    headers["X-CM-User-State"] = "admin";
+  }
+
+  return headers;
+}
+
 function sanitizeApiResponse(data, title) {
   return {
     title: data.title || title,
@@ -48,9 +104,7 @@ async function fetchRarity(payload) {
 
   const response = await fetch(buildRarityUrl(payload), {
     method: "GET",
-    headers: {
-      "Accept": "application/json"
-    },
+    headers: await authHeaders(),
     credentials: "omit"
   });
 
@@ -68,20 +122,90 @@ async function fetchRarity(payload) {
   return rarity;
 }
 
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  if (message?.type !== "CM_RARITY_LOOKUP") {
-    return false;
+async function fetchSession() {
+  const response = await fetch(buildApiUrl("/me"), {
+    method: "GET",
+    headers: await authHeaders(),
+    credentials: "omit"
+  });
+
+  if (!response.ok) {
+    throw new Error(`Session API returned ${response.status}`);
   }
 
-  fetchRarity(message.payload)
-    .then((rarity) => sendResponse({
-      ok: true,
-      rarity
-    }))
-    .catch((error) => sendResponse({
-      ok: false,
-      error: error.message || "Rarity API unavailable"
-    }));
+  const account = await response.json();
+  return setSession({
+    token: (await getSession()).token,
+    email: account.email || "",
+    status: account.status || "anonymous",
+    plan: account.plan || "free"
+  });
+}
 
-  return true;
+async function startCheckout(payload = {}) {
+  const appUrl = (globalThis.CM_RARITY_CONFIG.APP_URL || "https://app.chasingmajors.com").replace(/\/+$/, "");
+  const response = await fetch(buildApiUrl("/billing/checkout"), {
+    method: "POST",
+    headers: {
+      ...(await authHeaders()),
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      successUrl: payload.successUrl || `${appUrl}/billing/success`,
+      cancelUrl: payload.cancelUrl || `${appUrl}/billing`
+    }),
+    credentials: "omit"
+  });
+
+  if (!response.ok) {
+    throw new Error(`Checkout API returned ${response.status}`);
+  }
+
+  return response.json();
+}
+
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message?.type === "CM_RARITY_LOOKUP") {
+    fetchRarity(message.payload)
+      .then((rarity) => sendResponse({
+        ok: true,
+        rarity
+      }))
+      .catch((error) => sendResponse({
+        ok: false,
+        error: error.message || "Rarity API unavailable"
+      }));
+
+    return true;
+  }
+
+  if (message?.type === "CM_RARITY_SESSION_REFRESH") {
+    fetchSession()
+      .then((session) => sendResponse({
+        ok: true,
+        session
+      }))
+      .catch((error) => sendResponse({
+        ok: false,
+        error: error.message || "Session API unavailable"
+      }));
+
+    return true;
+  }
+
+  if (message?.type === "CM_RARITY_START_CHECKOUT") {
+    startCheckout(message.payload)
+      .then((checkout) => sendResponse({
+        ok: true,
+        checkout
+      }))
+      .catch((error) => sendResponse({
+        ok: false,
+        error: error.message || "Checkout API unavailable"
+      }));
+
+    return true;
+  }
+
+  return false;
 });

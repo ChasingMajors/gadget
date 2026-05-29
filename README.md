@@ -46,12 +46,13 @@ Expected response:
 
 ## User State
 
-The current user state is stored in `chrome.storage.local` under `cmRarityUserState`:
+The current user state is stored in `chrome.storage.local` under `cmRarityUserState` and `cmRaritySession`:
 
 ```json
 {
   "status": "anonymous",
-  "plan": "free"
+  "plan": "free",
+  "email": ""
 }
 ```
 
@@ -62,7 +63,7 @@ Supported states:
 - Paid: `{ "status": "logged_in", "plan": "paid" }`
 - Admin MVP: `{ "status": "admin", "plan": "admin" }`
 
-Admin MVP state is treated as full access for local trials. It does not add real paid rarity values to the extension bundle; it only shows every field returned by the API, or `Unknown` when fallback data has no value.
+Admin MVP state is treated as full access for local trials. It does not add real paid rarity values to the extension bundle; it only shows every field returned by the API, or `Unknown` when fallback data has no value. Once backend locking is enabled, the Worker also needs `CM_ALLOW_CLIENT_ADMIN=true` for this local/admin shortcut to return paid fields.
 
 `config.js` currently has `MVP_ADMIN_MODE: true` so unpacked extension trials show the full field set before production auth is connected. Set it to `false` before Chrome Web Store submission.
 
@@ -76,9 +77,36 @@ Before production submission, point `API_BASE_URL` to `https://api.chasingmajors
 
 `API_CACHE_TTL_MS` is currently `0` so MVP data corrections appear immediately while testing.
 
+## Beta Signup and Billing
+
+The extension is wired for an unlisted Chrome Web Store beta with account and billing CTAs:
+
+- `SIGNUP_URL`: opens account creation.
+- `LOGIN_URL`: opens sign in.
+- `BILLING_URL`: opens account billing.
+- `FEEDBACK_URL`: opens beta issue reporting.
+
+The payment flow is backend-owned. The extension never stores Stripe secrets or paid rarity data. The Worker exposes:
+
+```txt
+GET /me
+POST /billing/checkout
+```
+
+`POST /billing/checkout` creates a Stripe subscription Checkout Session when Cloudflare secrets are configured:
+
+```txt
+STRIPE_SECRET_KEY
+STRIPE_PRICE_ID
+```
+
+Stripe Checkout is configured for subscription mode and `allow_promotion_codes=true`, so first-month free or discounted beta codes can be shared with newsletter testers.
+
 ## Chrome Web Store Notes
 
 This scaffold avoids bundled paid rarity data. Free users only see limited fields, paid users can see all fields returned by the backend when they are not marked locked by `lockedFields`.
+
+For the Chrome Web Store beta, keep the listing unlisted at first, turn `MVP_ADMIN_MODE` off, and use the signup/billing flow to unlock paid fields.
 
 ## Local Harness
 

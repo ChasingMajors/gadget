@@ -17,6 +17,10 @@
     return (window.CM_RARITY_CONFIG.APP_URL || "https://app.chasingmajors.com").replace(/\/+$/, "") + path;
   }
 
+  function configUrl(key, fallbackPath = "") {
+    return window.CM_RARITY_CONFIG[key] || appUrl(fallbackPath);
+  }
+
   function vaultUrl(rarity, listing) {
     const url = new URL("/vault", appUrl());
     const query = vaultQuery(rarity, listing);
@@ -141,7 +145,7 @@
 
   function renderPanel(panel, listing, rarity, accessState) {
     const fields = ["rarityTier", "scarcityScore", "printRun", "packOdds"];
-    const upgradeUrl = rarity.upgradeUrl || `${window.CM_RARITY_CONFIG.APP_URL}/upgrade`;
+    const upgradeUrl = rarity.upgradeUrl || configUrl("SIGNUP_URL", "/signup");
     const hasLockedFields = !accessState.isPaid && fields.some((field) => !canShowField(field, rarity, accessState));
 
     panel.textContent = "";
@@ -178,12 +182,14 @@
     if (hasLockedFields) {
       const upgrade = document.createElement("a");
       upgrade.className = "cm-rarity-upgrade";
-      upgrade.href = upgradeUrl;
+      upgrade.href = accessState.userState.status === "anonymous"
+        ? configUrl("SIGNUP_URL", "/signup")
+        : upgradeUrl;
       upgrade.target = "_blank";
       upgrade.rel = "noopener noreferrer";
       upgrade.textContent = accessState.userState.status === "anonymous"
-        ? "Sign in to unlock more rarity data"
-        : "Upgrade to unlock full rarity data";
+        ? "Create account for full rarity data"
+        : "Start $5/mo plan";
       actions.append(upgrade);
     }
 
@@ -194,6 +200,14 @@
     openApp.rel = "noopener noreferrer";
     openApp.textContent = "Open CM Vault";
     actions.append(openApp);
+
+    const feedback = document.createElement("a");
+    feedback.className = "cm-rarity-feedback";
+    feedback.href = configUrl("FEEDBACK_URL", "/feedback");
+    feedback.target = "_blank";
+    feedback.rel = "noopener noreferrer";
+    feedback.textContent = "Report issue";
+    actions.append(feedback);
 
     if (rarity.isFallback) {
       const fallback = document.createElement("p");
@@ -220,12 +234,14 @@
 
     const upgrade = document.createElement("a");
     upgrade.className = "cm-rarity-upgrade";
-    upgrade.href = `${window.CM_RARITY_CONFIG.APP_URL}/upgrade`;
+    upgrade.href = accessState.userState.status === "anonymous"
+      ? configUrl("SIGNUP_URL", "/signup")
+      : configUrl("BILLING_URL", "/billing");
     upgrade.target = "_blank";
     upgrade.rel = "noopener noreferrer";
     upgrade.textContent = accessState.userState.status === "anonymous"
-      ? "Sign in to continue"
-      : "Upgrade for unlimited rarity";
+      ? "Create account"
+      : "Start $5/mo plan";
 
     const openApp = document.createElement("a");
     openApp.className = "cm-rarity-open";
@@ -234,7 +250,14 @@
     openApp.rel = "noopener noreferrer";
     openApp.textContent = "Open CM Vault";
 
-    actions.append(upgrade, openApp);
+    const login = document.createElement("a");
+    login.className = "cm-rarity-feedback";
+    login.href = configUrl("LOGIN_URL", "/login");
+    login.target = "_blank";
+    login.rel = "noopener noreferrer";
+    login.textContent = "Already have an account?";
+
+    actions.append(upgrade, openApp, login);
     panel.append(title, message, actions);
   }
 

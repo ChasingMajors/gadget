@@ -1,10 +1,19 @@
 (function () {
   const STORAGE_KEYS = Object.freeze({
     USER_STATE: "cmRarityUserState",
-    DAILY_USAGE: "cmRarityDailyUsage"
+    DAILY_USAGE: "cmRarityDailyUsage",
+    SESSION: "cmRaritySession"
   });
 
   const DEFAULT_USER_STATE = Object.freeze({
+    status: "anonymous",
+    plan: "free",
+    email: ""
+  });
+
+  const DEFAULT_SESSION = Object.freeze({
+    token: "",
+    email: "",
     status: "anonymous",
     plan: "free"
   });
@@ -36,10 +45,18 @@
   }
 
   async function getUserState() {
-    const stored = await getChromeStorage([STORAGE_KEYS.USER_STATE]);
+    const stored = await getChromeStorage([STORAGE_KEYS.USER_STATE, STORAGE_KEYS.SESSION]);
+    const session = {
+      ...DEFAULT_SESSION,
+      ...(stored[STORAGE_KEYS.SESSION] || {})
+    };
+
     return {
       ...DEFAULT_USER_STATE,
-      ...(stored[STORAGE_KEYS.USER_STATE] || {})
+      ...(stored[STORAGE_KEYS.USER_STATE] || {}),
+      email: session.email || stored[STORAGE_KEYS.USER_STATE]?.email || "",
+      plan: session.plan || stored[STORAGE_KEYS.USER_STATE]?.plan || "free",
+      status: session.status || stored[STORAGE_KEYS.USER_STATE]?.status || "anonymous"
     };
   }
 
@@ -54,6 +71,36 @@
     });
 
     return nextState;
+  }
+
+  async function getSession() {
+    const stored = await getChromeStorage([STORAGE_KEYS.SESSION]);
+    return {
+      ...DEFAULT_SESSION,
+      ...(stored[STORAGE_KEYS.SESSION] || {})
+    };
+  }
+
+  async function setSession(session) {
+    const nextSession = {
+      ...DEFAULT_SESSION,
+      ...session
+    };
+
+    await setChromeStorage({
+      [STORAGE_KEYS.SESSION]: nextSession,
+      [STORAGE_KEYS.USER_STATE]: {
+        status: nextSession.status,
+        plan: nextSession.plan,
+        email: nextSession.email
+      }
+    });
+
+    return nextSession;
+  }
+
+  async function clearSession() {
+    return setSession(DEFAULT_SESSION);
   }
 
   async function getDailyUsage() {
@@ -86,9 +133,10 @@
   }
 
   async function getAccessState() {
-    const [userState, dailyUsage] = await Promise.all([
+    const [userState, dailyUsage, session] = await Promise.all([
       getUserState(),
-      getDailyUsage()
+      getDailyUsage(),
+      getSession()
     ]);
     const config = window.CM_RARITY_CONFIG;
     const isAdmin = Boolean(config.MVP_ADMIN_MODE) || userState.plan === "admin" || userState.status === "admin";
@@ -97,6 +145,7 @@
 
     return {
       userState,
+      session,
       dailyUsage,
       isAdmin,
       isPaid,
@@ -109,8 +158,11 @@
   window.CMRarityStorage = {
     getAccessState,
     getDailyUsage,
+    getSession,
     getUserState,
     incrementDailyUsage,
+    clearSession,
+    setSession,
     setUserState,
     STORAGE_KEYS
   };
