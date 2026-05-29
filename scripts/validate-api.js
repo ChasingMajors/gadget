@@ -695,6 +695,55 @@ if (comcGradedSerialFallback.printRun !== 25
   });
 }
 
+const comcChromeSerialFallback = buildRarityResponse({
+  query: "2025-26 Bowman - Chrome - Refractor #BCV-5 Ace Bailey #240/499 Basketball",
+  source: "comc",
+  pageUrl: "https://www.comc.com",
+  cards,
+  upgradeUrl: "https://chasingmajors.com/upgrade"
+});
+
+if (comcChromeSerialFallback.printRun !== 499
+  || comcChromeSerialFallback.rarityTier !== "Serial Numbered") {
+  failures.push({
+    error: "COMC explicit serial title should surface #/499 even without exact PRV row",
+    actual: comcChromeSerialFallback
+  });
+}
+
+const comcPlainChromeResponse = buildRarityResponse({
+  query: "2025-26 Bowman - Chrome #BCV-5 Ace Bailey Basketball",
+  source: "comc",
+  pageUrl: "https://www.comc.com",
+  cards,
+  upgradeUrl: "https://chasingmajors.com/upgrade"
+});
+
+if (comcPlainChromeResponse.rarityTier !== "Unknown"
+  || comcPlainChromeResponse.matchMode !== "set"
+  || /Chrome Rookie Red RC Logo|Geometric|Bowman Verified/i.test(comcPlainChromeResponse.title)) {
+  failures.push({
+    error: "COMC plain Chrome listing should not match unrelated specific Bowman rows",
+    actual: comcPlainChromeResponse
+  });
+}
+
+const comcHobbyStarsResponse = buildRarityResponse({
+  query: "2025-26 Bowman - Hobby Stars #HS-9 Ace Bailey Basketball",
+  source: "comc",
+  pageUrl: "https://www.comc.com",
+  cards,
+  upgradeUrl: "https://chasingmajors.com/upgrade"
+});
+
+if (comcHobbyStarsResponse.title !== "2025-26 Bowman Basketball - Insert - Hobby Stars"
+  || comcHobbyStarsResponse.printRun !== 27000) {
+  failures.push({
+    error: "COMC Hobby Stars listing should match the basketball insert row",
+    actual: comcHobbyStarsResponse
+  });
+}
+
 const plainToppsResponse = buildRarityResponse({
   query: "2025-26 Topps NBA Flagship Basketball Cooper Flagg RC Rookie #201 Dallas Mavericks Base",
   source: "ebay",

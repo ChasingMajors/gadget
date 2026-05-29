@@ -160,6 +160,18 @@ function comcStructuredParts(query) {
     .filter((tokens) => tokens.length);
 }
 
+function comcCardPartGroups(card) {
+  const metadata = card.metadata || {};
+  return [
+    metadata.product,
+    metadata.setType,
+    metadata.setLine,
+    metadata.parallel
+  ]
+    .map(metadataTokens)
+    .filter((tokens) => tokens.length);
+}
+
 function comcStructuredScore(query, queryTokens, card) {
   if (card.matchMode !== "set") {
     return 0;
@@ -178,9 +190,39 @@ function comcStructuredScore(query, queryTokens, card) {
     card.metadata?.parallel,
     ...(card.aliases || [])
   ].filter(Boolean).join(" "));
+  const cardPartGroups = comcCardPartGroups(card);
 
+  const hasStructuredParts = parts.every((partTokens) => cardPartGroups
+    .some((groupTokens) => partTokens.every((token) => groupTokens.includes(token))));
   const hasAllParts = parts.every((partTokens) => partTokens.every((token) => cardTokens.has(token)));
+  if (!hasStructuredParts && hasAllParts) {
+    return -0.95;
+  }
+
   if (hasAllParts) {
+    const extraSpecificTokens = parts.flatMap((partTokens) => {
+      const matchingGroup = cardPartGroups
+        .filter((groupTokens) => partTokens.every((token) => groupTokens.includes(token)))
+        .sort((a, b) => a.length - b.length)[0];
+
+      if (!matchingGroup) {
+        return [];
+      }
+
+      return matchingGroup
+        .filter((token) => !partTokens.includes(token))
+        .filter((token) => !NOISE_TERMS.has(token));
+    });
+
+    if (extraSpecificTokens.length) {
+      return -0.45;
+    }
+
+    const parallelTokens = metadataTokens(card.metadata?.parallel);
+    if (parallelTokens.length && parallelTokens.some((token) => !queryTokens.has(token))) {
+      return -0.45;
+    }
+
     return 0.18;
   }
 
@@ -188,7 +230,7 @@ function comcStructuredScore(query, queryTokens, card) {
     .filter((partTokens) => partTokens.some((token) => !cardTokens.has(token)))
     .filter((partTokens) => partTokens.some((token) => queryTokens.has(token)));
 
-  return missingSpecificParts.length ? -0.5 : 0;
+  return missingSpecificParts.length ? -0.95 : 0;
 }
 
 function missingTokens(queryTokens, tokens) {
@@ -502,7 +544,10 @@ export function buildRarityResponse({ query, source, pageUrl, cards, upgradeUrl 
       popTotal: null,
       popGem: null,
       lockedFields: [],
-      upgradeUrl
+      upgradeUrl,
+      source,
+      inspectedUrl: pageUrl,
+      matchMode: source === "comc" ? "set" : "card"
     };
   }
 
