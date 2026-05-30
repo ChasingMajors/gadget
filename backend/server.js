@@ -8,7 +8,7 @@ const PORT = Number(process.env.PORT || 8787);
 const HOST = process.env.HOST || "0.0.0.0";
 const DATA_FILE = process.env.CM_RARITY_DATA_FILE || path.join(__dirname, "data", "cards.json");
 const UPGRADE_URL = process.env.CM_UPGRADE_URL || "https://chasingmajors.com/upgrade";
-const APP_URL = process.env.CM_APP_URL || "https://app.chasingmajors.com";
+const APP_URL = process.env.CM_APP_URL || "https://chasingmajors.com";
 const ALLOWED_ORIGIN = process.env.CM_ALLOWED_ORIGIN || "*";
 const PAID_FIELDS = new Set(["printRun", "packOdds"]);
 
@@ -25,6 +25,14 @@ function sendJson(response, statusCode, body) {
     "Content-Type": "application/json; charset=utf-8"
   });
   response.end(JSON.stringify(body));
+}
+
+function sendRedirect(response, url, statusCode = 303) {
+  response.writeHead(statusCode, {
+    "Cache-Control": "no-store",
+    "Location": url
+  });
+  response.end();
 }
 
 function bearerToken(request) {
@@ -102,23 +110,21 @@ function readJsonBody(request) {
   });
 }
 
-async function handleCheckout(request, response) {
+async function createCheckoutSession(request, body = {}) {
   if (!process.env.STRIPE_SECRET_KEY || !process.env.STRIPE_PRICE_ID) {
-    sendJson(response, 501, {
+    return {
       error: "Stripe checkout is not configured"
-    });
-    return;
+    };
   }
 
   const account = accountFromRequest(request);
-  const body = await readJsonBody(request);
   const params = new URLSearchParams({
     mode: "subscription",
     "line_items[0][price]": process.env.STRIPE_PRICE_ID,
     "line_items[0][quantity]": "1",
     allow_promotion_codes: "true",
-    success_url: body.successUrl || `${APP_URL}/billing/success`,
-    cancel_url: body.cancelUrl || `${APP_URL}/billing`,
+    success_url: body.successUrl || `${APP_URL}/?cm_checkout=success`,
+    cancel_url: body.cancelUrl || `${APP_URL}/?cm_checkout=cancel`,
     client_reference_id: account.email || "cm-extension-beta"
   });
 
@@ -137,16 +143,42 @@ async function handleCheckout(request, response) {
   const checkout = await stripeResponse.json();
 
   if (!stripeResponse.ok) {
-    sendJson(response, 502, {
+    return {
       error: checkout.error?.message || "Unable to create checkout session"
+    };
+  }
+
+  return {
+    url: checkout.url,
+    id: checkout.id
+  };
+}
+
+async function handleCheckout(request, response) {
+  const body = await readJsonBody(request);
+  const checkout = await createCheckoutSession(request, body);
+
+  if (checkout.error) {
+    sendJson(response, checkout.error === "Stripe checkout is not configured" ? 501 : 502, {
+      error: checkout.error
     });
     return;
   }
 
-  sendJson(response, 200, {
-    url: checkout.url,
-    id: checkout.id
-  });
+  sendJson(response, 200, checkout);
+}
+
+async function handleCheckoutStart(request, response) {
+  const checkout = await createCheckoutSession(request);
+
+  if (checkout.error) {
+    sendJson(response, checkout.error === "Stripe checkout is not configured" ? 501 : 502, {
+      error: checkout.error
+    });
+    return;
+  }
+
+  sendRedirect(response, checkout.url);
 }
 
 function handleRarity(request, response, url) {
@@ -208,6 +240,11 @@ function createServer() {
 
     if (url.pathname === "/billing/checkout" && request.method === "POST") {
       handleCheckout(request, response);
+      return;
+    }
+
+    if (url.pathname === "/billing/start" && request.method === "GET") {
+      handleCheckoutStart(request, response);
       return;
     }
 

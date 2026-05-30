@@ -9,11 +9,14 @@ GET /health
 GET /me
 GET /rarity?q={card title}&source={ebay|comc}&url={page url}
 POST /billing/checkout
+GET /billing/start
 ```
 
 `/rarity` now locks paid-only fields for anonymous/free users. Paid/admin access receives full backend values.
 
 `/billing/checkout` creates a Stripe Checkout Session for the $5/month beta subscription when Stripe environment values are present. Promotion codes are enabled for beta discount/free-month codes.
+
+`/billing/start` is a browser-friendly redirect endpoint for extension CTAs. It creates a Checkout Session and redirects the tester to Stripe Checkout.
 
 ## Run
 

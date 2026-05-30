@@ -26,6 +26,7 @@ if (!worker.includes("export default")) {
 [
   'url.pathname === "/me"',
   'url.pathname === "/billing/checkout"',
+  'url.pathname === "/billing/start"',
   "STRIPE_SECRET_KEY",
   "STRIPE_PRICE_ID",
   "lockForAccess"

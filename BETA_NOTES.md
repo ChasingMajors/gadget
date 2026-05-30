@@ -10,6 +10,7 @@ Validate whether collectors understand and value Chasing Majors rarity intellige
 - Public beta mode: `MVP_ADMIN_MODE` is off.
 - API target: `https://cm-rarity-api.johndownard.workers.dev`.
 - Billing: Stripe Checkout subscription at $5/month.
+- Signup/billing CTAs: Worker-powered `/billing/start` redirect into Stripe Checkout.
 - Promo codes: enabled in Stripe Checkout.
 - Feedback: routed through `FEEDBACK_URL` in `config.js`.
 

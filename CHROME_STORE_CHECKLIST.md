@@ -6,6 +6,7 @@
 - Confirm `API_BASE_URL` points to the production Chasing Majors API.
 - Confirm `/rarity` is hosted with HTTPS and returns the documented response shape.
 - Confirm `/me` and `/billing/checkout` are hosted with HTTPS.
+- Confirm `/billing/start` redirects a browser click to Stripe Checkout.
 - Confirm Stripe Checkout opens with the intended recurring $5/month price.
 - Confirm the beta promo code works in Stripe Checkout.
 - Add a Chasing Majors privacy policy URL.

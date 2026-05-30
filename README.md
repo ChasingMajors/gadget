@@ -91,6 +91,7 @@ The payment flow is backend-owned. The extension never stores Stripe secrets or 
 ```txt
 GET /me
 POST /billing/checkout
+GET /billing/start
 ```
 
 `POST /billing/checkout` creates a Stripe subscription Checkout Session when Cloudflare secrets are configured:
@@ -101,6 +102,8 @@ STRIPE_PRICE_ID
 ```
 
 Stripe Checkout is configured for subscription mode and `allow_promotion_codes=true`, so first-month free or discounted beta codes can be shared with newsletter testers.
+
+`GET /billing/start` is used by extension links. It redirects a normal browser click into Stripe Checkout, avoiding dead beta pages while the full Chasing Majors app signup flow is still being built.
 
 ## Chrome Web Store Notes
 
@@ -115,6 +118,8 @@ Current public beta defaults:
 - `MVP_ADMIN_MODE: false`
 - `AUTH_ENABLED: true`
 - `API_BASE_URL: https://cm-rarity-api.johndownard.workers.dev`
+- `SIGNUP_URL` and `BILLING_URL` point to Worker-powered Stripe Checkout redirects.
+- `APP_URL` points to the public Chasing Majors site.
 - Public testers unlock paid fields through signup/billing, not through the admin shortcut.
 - Internal admin testing can still be done by temporarily setting `MVP_ADMIN_MODE: true` locally and keeping `CM_ALLOW_CLIENT_ADMIN=true` in the Worker runtime environment.
 
