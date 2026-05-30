@@ -31,10 +31,10 @@ GET /rarity?q={encoded card title}&source={ebay|comc}&url={current page url}
 
 The repo now includes a minimal Node implementation in `backend/`. It is intended to be hosted behind `https://api.chasingmajors.com` or a staging API domain for MVP trials.
 
-Current MVP API:
+Current API:
 
 ```txt
-https://cm-rarity-api.johndownard.workers.dev
+https://api.chasingmajors.com
 ```
 
 Response:

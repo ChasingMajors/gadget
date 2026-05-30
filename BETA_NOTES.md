@@ -8,7 +8,7 @@ Validate whether collectors understand and value Chasing Majors rarity intellige
 
 - Distribution target: unlisted Chrome Web Store listing.
 - Public beta mode: `MVP_ADMIN_MODE` is off.
-- API target: `https://cm-rarity-api.johndownard.workers.dev`.
+- API target: `https://api.chasingmajors.com`.
 - Billing: Stripe Checkout subscription at $5/month.
 - Signup/billing CTAs: Worker-powered `/billing/start` redirect into Stripe Checkout.
 - Account activation: checkout success page issues an access token that testers paste into the extension toolbar popup.

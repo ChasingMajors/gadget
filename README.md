@@ -67,13 +67,11 @@ Admin MVP state is treated as full access for private internal trials only. It d
 
 `config.js` has `MVP_ADMIN_MODE: false` for public beta builds so newsletter testers see the real free/paid behavior.
 
-`config.js` currently points `API_BASE_URL` at the MVP Cloudflare Worker:
+`config.js` points `API_BASE_URL` at the Chasing Majors API custom domain:
 
 ```txt
-https://cm-rarity-api.johndownard.workers.dev
+https://api.chasingmajors.com
 ```
-
-Before production submission, point `API_BASE_URL` to `https://api.chasingmajors.com`.
 
 `API_CACHE_TTL_MS` is currently `0` so MVP data corrections appear immediately while testing.
 
@@ -129,7 +127,7 @@ Current limited rollout defaults:
 
 - `MVP_ADMIN_MODE: false`
 - `AUTH_ENABLED: true`
-- `API_BASE_URL: https://cm-rarity-api.johndownard.workers.dev`
+- `API_BASE_URL: https://api.chasingmajors.com`
 - `SIGNUP_URL` and `BILLING_URL` point to Worker-powered Stripe Checkout redirects.
 - `APP_URL` points to the public Chasing Majors site.
 - Public testers unlock paid fields through signup/billing, not through the admin shortcut.

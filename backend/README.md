@@ -85,7 +85,7 @@ Set `STRIPE_PRICE_ID` as a runtime text variable or secret. It is not sensitive,
 Create a Stripe webhook endpoint pointing to:
 
 ```txt
-https://cm-rarity-api.johndownard.workers.dev/stripe/webhook
+https://api.chasingmajors.com/stripe/webhook
 ```
 
 Subscribe it to:

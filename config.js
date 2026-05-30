@@ -1,5 +1,5 @@
 (function () {
-  const API_BASE_URL = "https://cm-rarity-api.johndownard.workers.dev";
+  const API_BASE_URL = "https://api.chasingmajors.com";
 
   const config = Object.freeze({
     API_BASE_URL,
