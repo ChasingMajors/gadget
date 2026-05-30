@@ -63,9 +63,9 @@ Supported states:
 - Paid: `{ "status": "logged_in", "plan": "paid" }`
 - Admin MVP: `{ "status": "admin", "plan": "admin" }`
 
-Admin MVP state is treated as full access for local trials. It does not add real paid rarity values to the extension bundle; it only shows every field returned by the API, or `Unknown` when fallback data has no value. Once backend locking is enabled, the Worker also needs `CM_ALLOW_CLIENT_ADMIN=true` for this local/admin shortcut to return paid fields.
+Admin MVP state is treated as full access for private internal trials only. It does not add real paid rarity values to the extension bundle; it only shows every field returned by the API, or `Unknown` when fallback data has no value. Once backend locking is enabled, the Worker also needs `CM_ALLOW_CLIENT_ADMIN=true` for this local/admin shortcut to return paid fields.
 
-`config.js` currently has `MVP_ADMIN_MODE: true` so unpacked extension trials show the full field set before production auth is connected. Set it to `false` before Chrome Web Store submission.
+`config.js` has `MVP_ADMIN_MODE: false` for public beta builds so newsletter testers see the real free/paid behavior.
 
 `config.js` currently points `API_BASE_URL` at the MVP Cloudflare Worker:
 
@@ -106,7 +106,17 @@ Stripe Checkout is configured for subscription mode and `allow_promotion_codes=t
 
 This scaffold avoids bundled paid rarity data. Free users only see limited fields, paid users can see all fields returned by the backend when they are not marked locked by `lockedFields`.
 
-For the Chrome Web Store beta, keep the listing unlisted at first, turn `MVP_ADMIN_MODE` off, and use the signup/billing flow to unlock paid fields.
+For the Chrome Web Store beta, keep the listing unlisted at first, keep `MVP_ADMIN_MODE` off, and use the signup/billing flow to unlock paid fields.
+
+## Public Beta Defaults
+
+Current public beta defaults:
+
+- `MVP_ADMIN_MODE: false`
+- `AUTH_ENABLED: true`
+- `API_BASE_URL: https://cm-rarity-api.johndownard.workers.dev`
+- Public testers unlock paid fields through signup/billing, not through the admin shortcut.
+- Internal admin testing can still be done by temporarily setting `MVP_ADMIN_MODE: true` locally and keeping `CM_ALLOW_CLIENT_ADMIN=true` in the Worker runtime environment.
 
 ## Local Harness
 
@@ -144,5 +154,3 @@ npm run validate:all
 ```
 
 This checks the Manifest V3 wiring, required files, icon references, host permissions, MVP/admin config warnings, and seed API matching.
-
-Before production or Chrome Web Store submission, turn `MVP_ADMIN_MODE` off.

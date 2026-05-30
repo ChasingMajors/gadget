@@ -98,6 +98,7 @@ function checkConfig() {
 function checkRequiredFiles() {
   [
     "README.md",
+    "BETA_NOTES.md",
     "MVP_TRIAL_PLAN.md",
     "background.js",
     "config.js",

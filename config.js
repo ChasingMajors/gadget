@@ -10,7 +10,7 @@
     FEEDBACK_URL: "https://app.chasingmajors.com/feedback",
     API_CACHE_TTL_MS: 0,
     AUTH_ENABLED: true,
-    MVP_ADMIN_MODE: true
+    MVP_ADMIN_MODE: false
   });
 
   globalThis.CM_RARITY_CONFIG = config;
