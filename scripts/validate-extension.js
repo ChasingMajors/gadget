@@ -33,6 +33,10 @@ function collectManifestFiles(manifest) {
     files.add(manifest.background.service_worker);
   }
 
+  if (manifest.action?.default_popup) {
+    files.add(manifest.action.default_popup);
+  }
+
   (manifest.content_scripts || []).forEach((script) => {
     (script.js || []).forEach((file) => files.add(file));
     (script.css || []).forEach((file) => files.add(file));
@@ -102,6 +106,9 @@ function checkRequiredFiles() {
     "MVP_TRIAL_PLAN.md",
     "background.js",
     "config.js",
+    "popup.html",
+    "popup.css",
+    "popup.js",
     "api.js",
     "content.js",
     "parser.js",

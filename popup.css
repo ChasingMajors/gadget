@@ -1,0 +1,109 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: #f8fafc;
+  color: #111827;
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  min-width: 320px;
+}
+
+.cm-popup {
+  padding: 14px;
+}
+
+.cm-popup-header {
+  align-items: center;
+  display: flex;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.cm-popup-logo {
+  height: 38px;
+  width: 38px;
+}
+
+.cm-popup h1 {
+  font-size: 15px;
+  line-height: 1.2;
+  margin: 0 0 3px;
+}
+
+.cm-popup p {
+  color: #64748b;
+  font-size: 12px;
+  line-height: 1.35;
+  margin: 0;
+}
+
+.cm-popup-card {
+  background: #ffffff;
+  border: 1px solid rgba(15, 23, 42, 0.1);
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.cm-popup-card label {
+  color: #334155;
+  display: block;
+  font-size: 12px;
+  font-weight: 800;
+  margin-bottom: 6px;
+}
+
+.cm-popup textarea {
+  border: 1px solid rgba(15, 23, 42, 0.18);
+  border-radius: 6px;
+  color: #111827;
+  font: 12px Arial, Helvetica, sans-serif;
+  margin: 0 0 8px;
+  padding: 8px;
+  resize: vertical;
+  width: 100%;
+}
+
+.cm-popup button,
+.cm-popup-actions a,
+.cm-popup-actions button {
+  align-items: center;
+  border-radius: 6px;
+  display: inline-flex;
+  font-size: 12px;
+  font-weight: 800;
+  justify-content: center;
+  min-height: 34px;
+  text-decoration: none;
+}
+
+.cm-popup button {
+  background: #111827;
+  border: 0;
+  color: #ffffff;
+  cursor: pointer;
+  width: 100%;
+}
+
+.cm-popup-message {
+  margin-top: 8px !important;
+  min-height: 16px;
+}
+
+.cm-popup-actions {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: 1fr;
+  margin-top: 10px;
+}
+
+.cm-popup-actions a,
+.cm-popup-actions button {
+  background: #e2e8f0;
+  border: 0;
+  color: #0f172a;
+  cursor: pointer;
+  padding: 8px 10px;
+  width: 100%;
+}

@@ -4,6 +4,7 @@ const required = [
   "wrangler.toml",
   "backend/worker.js",
   "backend/worker-matcher.js",
+  "backend/schema.sql",
   "backend/data/cards.json"
 ];
 
@@ -27,9 +28,15 @@ if (!worker.includes("export default")) {
   'url.pathname === "/me"',
   'url.pathname === "/billing/checkout"',
   'url.pathname === "/billing/start"',
+  'url.pathname === "/billing/success"',
+  'url.pathname === "/billing/portal"',
+  'url.pathname === "/stripe/webhook"',
+  'url.pathname === "/signup"',
   "STRIPE_SECRET_KEY",
   "STRIPE_PRICE_ID",
-  "lockForAccess"
+  "STRIPE_WEBHOOK_SECRET",
+  "lockForAccess",
+  "CM_DB"
 ].forEach((snippet) => {
   if (!worker.includes(snippet)) {
     console.error(`backend/worker.js is missing beta auth/billing support: ${snippet}`);

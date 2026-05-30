@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CM Rarity Gadget</title>
+    <link rel="stylesheet" href="popup.css">
+  </head>
+  <body>
+    <main class="cm-popup">
+      <header class="cm-popup-header">
+        <img src="icons/cm-logo.png" alt="Chasing Majors" class="cm-popup-logo">
+        <div>
+          <h1>CM Rarity Gadget</h1>
+          <p id="cm-status">Checking account...</p>
+        </div>
+      </header>
+
+      <section class="cm-popup-card">
+        <label for="cm-token">Access token</label>
+        <textarea id="cm-token" rows="3" spellcheck="false" placeholder="Paste your token after checkout"></textarea>
+        <button id="cm-save-token" type="button">Activate extension</button>
+        <p id="cm-message" class="cm-popup-message" role="status"></p>
+      </section>
+
+      <nav class="cm-popup-actions" aria-label="Account actions">
+        <a id="cm-create-account" href="#" target="_blank" rel="noopener noreferrer">Create account</a>
+        <button id="cm-open-billing" type="button">Billing</button>
+        <a id="cm-report-issue" href="#" target="_blank" rel="noopener noreferrer">Report issue</a>
+      </nav>
+    </main>
+
+    <script src="config.js"></script>
+    <script src="storage.js"></script>
+    <script src="popup.js"></script>
+  </body>
+</html>

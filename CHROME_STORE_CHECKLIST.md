@@ -7,6 +7,10 @@
 - Confirm `/rarity` is hosted with HTTPS and returns the documented response shape.
 - Confirm `/me` and `/billing/checkout` are hosted with HTTPS.
 - Confirm `/billing/start` redirects a browser click to Stripe Checkout.
+- Confirm `/billing/success` issues an extension access token after checkout.
+- Confirm `/stripe/webhook` is configured in Stripe and receiving subscription events.
+- Confirm `/billing/portal` opens Stripe Customer Portal for an activated paid user.
+- Confirm the toolbar popup accepts the token and `/me` returns paid.
 - Confirm Stripe Checkout opens with the intended recurring $5/month price.
 - Confirm the beta promo code works in Stripe Checkout.
 - Add a Chasing Majors privacy policy URL.

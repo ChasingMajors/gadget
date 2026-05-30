@@ -2,7 +2,7 @@
 
 ## Beta Goal
 
-Validate whether collectors understand and value Chasing Majors rarity intelligence while browsing eBay and COMC.
+Validate whether collectors understand and value Chasing Majors rarity intelligence while browsing eBay and COMC. This is a limited production rollout: billing, entitlement, and support paths should behave like the live product even while access is restricted to selected testers.
 
 ## Current Beta Build
 
@@ -11,6 +11,8 @@ Validate whether collectors understand and value Chasing Majors rarity intellige
 - API target: `https://cm-rarity-api.johndownard.workers.dev`.
 - Billing: Stripe Checkout subscription at $5/month.
 - Signup/billing CTAs: Worker-powered `/billing/start` redirect into Stripe Checkout.
+- Account activation: checkout success page issues an access token that testers paste into the extension toolbar popup.
+- Entitlement sync: Stripe webhooks update paid/free status after checkout, subscription updates, or cancellation.
 - Promo codes: enabled in Stripe Checkout.
 - Feedback: routed through `FEEDBACK_URL` in `config.js`.
 

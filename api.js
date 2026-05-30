@@ -57,7 +57,7 @@
   }
 
   function accountUrl(path, params = {}) {
-    const base = (config().APP_URL || "https://app.chasingmajors.com").replace(/\/+$/, "");
+    const base = normalizedApiBase();
     const url = new URL(path, `${base}/`);
     Object.entries(params).forEach(([key, value]) => {
       if (value) {
@@ -172,10 +172,7 @@
         ...(await authHeaders()),
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({
-        successUrl: accountUrl("/billing/success"),
-        cancelUrl: accountUrl("/billing")
-      }),
+      body: JSON.stringify({}),
       credentials: "omit"
     });
 

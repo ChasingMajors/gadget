@@ -77,9 +77,9 @@ Before production submission, point `API_BASE_URL` to `https://api.chasingmajors
 
 `API_CACHE_TTL_MS` is currently `0` so MVP data corrections appear immediately while testing.
 
-## Beta Signup and Billing
+## Signup and Billing
 
-The extension is wired for an unlisted Chrome Web Store beta with account and billing CTAs:
+The extension is wired for a limited production rollout with account and billing CTAs:
 
 - `SIGNUP_URL`: opens account creation.
 - `LOGIN_URL`: opens sign in.
@@ -89,9 +89,14 @@ The extension is wired for an unlisted Chrome Web Store beta with account and bi
 The payment flow is backend-owned. The extension never stores Stripe secrets or paid rarity data. The Worker exposes:
 
 ```txt
+GET /signup
+POST /signup
 GET /me
 POST /billing/checkout
 GET /billing/start
+GET /billing/success
+POST /billing/portal
+POST /stripe/webhook
 ```
 
 `POST /billing/checkout` creates a Stripe subscription Checkout Session when Cloudflare secrets are configured:
@@ -99,21 +104,28 @@ GET /billing/start
 ```txt
 STRIPE_SECRET_KEY
 STRIPE_PRICE_ID
+STRIPE_WEBHOOK_SECRET
 ```
 
 Stripe Checkout is configured for subscription mode and `allow_promotion_codes=true`, so first-month free or discounted beta codes can be shared with newsletter testers.
 
-`GET /billing/start` is used by extension links. It redirects a normal browser click into Stripe Checkout, avoiding dead beta pages while the full Chasing Majors app signup flow is still being built.
+`GET /billing/start` is used by extension links. It redirects a normal browser click into Stripe Checkout.
+
+`GET /billing/success` verifies the Stripe Checkout Session, creates or updates the account in D1, issues an extension access token, and shows activation instructions for the toolbar popup.
+
+`POST /stripe/webhook` keeps entitlement current when Stripe sends checkout and subscription events. `POST /billing/portal` opens Stripe Customer Portal for activated paid users.
+
+Production entitlement requires a Cloudflare D1 database bound as `CM_DB`; see [backend/README.md](backend/README.md).
 
 ## Chrome Web Store Notes
 
 This scaffold avoids bundled paid rarity data. Free users only see limited fields, paid users can see all fields returned by the backend when they are not marked locked by `lockedFields`.
 
-For the Chrome Web Store beta, keep the listing unlisted at first, keep `MVP_ADMIN_MODE` off, and use the signup/billing flow to unlock paid fields.
+For the first Chrome Web Store rollout, keep the listing unlisted at first, keep `MVP_ADMIN_MODE` off, and use the signup/billing flow to unlock paid fields.
 
 ## Public Beta Defaults
 
-Current public beta defaults:
+Current limited rollout defaults:
 
 - `MVP_ADMIN_MODE: false`
 - `AUTH_ENABLED: true`
@@ -121,6 +133,7 @@ Current public beta defaults:
 - `SIGNUP_URL` and `BILLING_URL` point to Worker-powered Stripe Checkout redirects.
 - `APP_URL` points to the public Chasing Majors site.
 - Public testers unlock paid fields through signup/billing, not through the admin shortcut.
+- Paid users activate the extension by pasting the access token from the checkout success page into the toolbar popup.
 - Internal admin testing can still be done by temporarily setting `MVP_ADMIN_MODE: true` locally and keeping `CM_ALLOW_CLIENT_ADMIN=true` in the Worker runtime environment.
 
 ## Local Harness

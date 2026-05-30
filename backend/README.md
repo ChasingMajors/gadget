@@ -6,10 +6,15 @@ Minimal hosted API for the CM Rarity Gadget MVP.
 
 ```txt
 GET /health
+GET /signup
+POST /signup
 GET /me
 GET /rarity?q={card title}&source={ebay|comc}&url={page url}
 POST /billing/checkout
 GET /billing/start
+GET /billing/success
+POST /billing/portal
+POST /stripe/webhook
 ```
 
 `/rarity` now locks paid-only fields for anonymous/free users. Paid/admin access receives full backend values.
@@ -17,6 +22,34 @@ GET /billing/start
 `/billing/checkout` creates a Stripe Checkout Session for the $5/month beta subscription when Stripe environment values are present. Promotion codes are enabled for beta discount/free-month codes.
 
 `/billing/start` is a browser-friendly redirect endpoint for extension CTAs. It creates a Checkout Session and redirects the tester to Stripe Checkout.
+
+`/billing/success` verifies the Stripe Checkout Session, upserts the account in D1, creates an extension session token, and renders activation instructions.
+
+`/billing/portal` creates a Stripe Customer Portal session for activated users. `/stripe/webhook` verifies Stripe signatures and keeps subscription status in sync when checkout completes or a subscription changes.
+
+## Required Cloudflare Storage
+
+Production entitlement requires Cloudflare D1.
+
+Create the database:
+
+```bash
+wrangler d1 create cm-rarity-prod
+```
+
+Copy the returned `database_id` into `wrangler.toml`, uncomment the `[[d1_databases]]` block, then run:
+
+```bash
+wrangler d1 execute cm-rarity-prod --remote --file=backend/schema.sql
+```
+
+The Worker expects this binding:
+
+```txt
+CM_DB
+```
+
+Without `CM_DB`, Stripe Checkout can open, but the success page cannot persist paid entitlement or issue durable extension tokens.
 
 ## Run
 
@@ -37,13 +70,31 @@ Environment:
 - `CM_BETA_PAID_EMAIL`: optional email associated with the temporary beta token.
 - `STRIPE_SECRET_KEY`: Stripe secret key. Keep this server-side only.
 - `STRIPE_PRICE_ID`: Stripe recurring $5/month price ID.
+- `STRIPE_WEBHOOK_SECRET`: Stripe webhook signing secret. Required for production entitlement sync.
 
 Cloudflare secret setup:
 
 ```bash
 wrangler secret put STRIPE_SECRET_KEY
-wrangler secret put STRIPE_PRICE_ID
+wrangler secret put STRIPE_WEBHOOK_SECRET
 wrangler secret put CM_BETA_PAID_TOKEN
+```
+
+Set `STRIPE_PRICE_ID` as a runtime text variable or secret. It is not sensitive, but it must match the same Stripe mode as `STRIPE_SECRET_KEY`.
+
+Create a Stripe webhook endpoint pointing to:
+
+```txt
+https://cm-rarity-api.johndownard.workers.dev/stripe/webhook
+```
+
+Subscribe it to:
+
+```txt
+checkout.session.completed
+customer.subscription.created
+customer.subscription.updated
+customer.subscription.deleted
 ```
 
 Cloudflare variables for internal testing:

@@ -143,17 +143,13 @@ async function fetchSession() {
 }
 
 async function startCheckout(payload = {}) {
-  const appUrl = (globalThis.CM_RARITY_CONFIG.APP_URL || "https://app.chasingmajors.com").replace(/\/+$/, "");
   const response = await fetch(buildApiUrl("/billing/checkout"), {
     method: "POST",
     headers: {
       ...(await authHeaders()),
       "Content-Type": "application/json"
     },
-    body: JSON.stringify({
-      successUrl: payload.successUrl || `${appUrl}/billing/success`,
-      cancelUrl: payload.cancelUrl || `${appUrl}/billing`
-    }),
+    body: JSON.stringify(payload),
     credentials: "omit"
   });
 
