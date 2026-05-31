@@ -211,6 +211,14 @@ function bearerToken(request) {
   return match ? match[1].trim() : "";
 }
 
+function adminSecret(request) {
+  return request.headers.get("X-CM-Admin-Secret") || "";
+}
+
+function canUseAdminTools(request, env) {
+  return Boolean(env.CM_ADMIN_SECRET) && constantTimeEqual(adminSecret(request), env.CM_ADMIN_SECRET);
+}
+
 async function accountFromRequest(request, env = {}) {
   const token = bearerToken(request);
   const requestedState = request.headers.get("X-CM-User-State") || "";
@@ -590,6 +598,42 @@ async function handleBillingPortal(request, env) {
   return json({ url: portal.url });
 }
 
+async function handleAdminIssueToken(request, env) {
+  if (!canUseAdminTools(request, env)) {
+    return json({ error: "Unauthorized" }, 401);
+  }
+
+  const database = db(env);
+  if (!database) {
+    return json({ error: "D1 database is not configured" }, 501);
+  }
+
+  const body = await request.json().catch(() => ({}));
+  const email = String(body.email || "").trim().toLowerCase();
+  const plan = ["admin", "paid"].includes(body.plan) ? body.plan : "admin";
+
+  if (!email || !email.includes("@")) {
+    return json({ error: "Valid email is required" }, 400);
+  }
+
+  const user = await upsertUser(env, {
+    email,
+    subscription_status: plan === "admin" ? "active" : "active",
+    plan
+  });
+  const token = user ? await createSession(env, user.id) : "";
+
+  if (!token) {
+    return json({ error: "Unable to issue token" }, 500);
+  }
+
+  return json({
+    email: user.email,
+    plan: user.plan,
+    token
+  });
+}
+
 async function handleBillingSuccess(request, env) {
   const url = new URL(request.url);
   const sessionId = url.searchParams.get("session_id");
@@ -662,6 +706,10 @@ export default {
 
     if (url.pathname === "/stripe/webhook" && request.method === "POST") {
       return handleStripeWebhook(request, env);
+    }
+
+    if (url.pathname === "/admin/issue-token" && request.method === "POST") {
+      return handleAdminIssueToken(request, env);
     }
 
     if (url.pathname === "/signup" && request.method === "GET") {

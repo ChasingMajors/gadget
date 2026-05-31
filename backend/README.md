@@ -66,6 +66,7 @@ Environment:
 - `CM_ALLOWED_ORIGIN`: CORS origin, defaults to `*` for MVP.
 - `CM_APP_URL`: Chasing Majors app URL for billing redirects.
 - `CM_ALLOW_CLIENT_ADMIN`: set to `true` only for internal unpacked-extension trials with `MVP_ADMIN_MODE`.
+- `CM_ADMIN_SECRET`: private support/admin secret for issuing a new activation token without Stripe checkout.
 - `CM_BETA_PAID_TOKEN`: temporary beta bearer token that unlocks paid access.
 - `CM_BETA_PAID_EMAIL`: optional email associated with the temporary beta token.
 - `STRIPE_SECRET_KEY`: Stripe secret key. Keep this server-side only.
@@ -77,6 +78,7 @@ Cloudflare secret setup:
 ```bash
 wrangler secret put STRIPE_SECRET_KEY
 wrangler secret put STRIPE_WEBHOOK_SECRET
+wrangler secret put CM_ADMIN_SECRET
 wrangler secret put CM_BETA_PAID_TOKEN
 ```
 
@@ -104,6 +106,17 @@ wrangler secret put CM_ALLOW_CLIENT_ADMIN
 ```
 
 Set `CM_ALLOW_CLIENT_ADMIN` to `true` only while `config.js` has `MVP_ADMIN_MODE: true`. Disable both before Chrome Web Store beta.
+
+Issue a support/admin activation token:
+
+```bash
+curl -X POST https://api.chasingmajors.com/admin/issue-token \
+  -H "Content-Type: application/json" \
+  -H "X-CM-Admin-Secret: YOUR_ADMIN_SECRET" \
+  -d '{"email":"cm@chasingmajors.com","plan":"admin"}'
+```
+
+The response includes a new `cm_live_...` token that can be pasted into the extension toolbar popup.
 
 ## Deploy
 
