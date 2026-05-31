@@ -1,0 +1,616 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#070707" />
+  <title>Chasing Majors | Sports Card Search Engine</title>
+  <meta name="description" content="Search sports card checklists, rookies, parallels, print runs, SSPs, autographs, inserts, and release data with Chasing Majors." />
+  <link rel="canonical" href="https://www.chasingmajors.com/" />
+  <meta property="og:title" content="Chasing Majors | Sports Card Search Engine" />
+  <meta property="og:description" content="Search checklists, print runs, rookies, parallels, SSPs, autographs, inserts, and release data." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.chasingmajors.com/" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Oswald:wght@600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#070707;
+      --text:#fff;
+      --muted:rgba(255,255,255,.70);
+      --line:rgba(255,255,255,.13);
+      --line2:rgba(255,255,255,.22);
+      --gold:#f5c542;
+      --blue:#1e90ff;
+      --blue2:#1479db;
+      --green:#29d17d;
+      --max:1180px;
+      --shadow:0 22px 70px rgba(0,0,0,.38);
+      color-scheme:dark;
+    }
+
+    *{box-sizing:border-box}
+    html{min-height:100%;scroll-behavior:smooth}
+    body{
+      min-height:100%;
+      margin:0;
+      font-family:Inter,Arial,sans-serif;
+      background:
+        radial-gradient(circle at 16% 0%, rgba(245,197,66,.18), transparent 31rem),
+        radial-gradient(circle at 84% 0%, rgba(30,144,255,.20), transparent 34rem),
+        linear-gradient(180deg,#070707,#111 48rem,#080808);
+      color:var(--text);
+    }
+
+    a{color:inherit}
+    button,input{font:inherit}
+
+    .page{position:relative;overflow:hidden}
+    .cardWall{
+      position:absolute;
+      inset:0 0 auto 0;
+      height:590px;
+      pointer-events:none;
+      opacity:.28;
+      background-image:
+        linear-gradient(90deg, rgba(255,255,255,.10) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(255,255,255,.10) 1px, transparent 1px);
+      background-size:78px 108px;
+      mask-image:linear-gradient(180deg,#000 0%,rgba(0,0,0,.78) 52%,transparent 100%);
+    }
+
+    .cardWall:after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        radial-gradient(circle at 38% 16%, rgba(245,197,66,.22), transparent 15rem),
+        radial-gradient(circle at 68% 10%, rgba(30,144,255,.20), transparent 17rem);
+    }
+
+    .wrap{
+      position:relative;
+      width:min(var(--max), calc(100% - 32px));
+      margin:0 auto;
+      padding:20px 0 42px;
+    }
+
+    .topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      min-height:54px;
+      margin-bottom:6px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      text-decoration:none;
+      min-width:0;
+    }
+
+    .brandMark{
+      width:38px;
+      height:38px;
+      border-radius:8px;
+      display:grid;
+      place-items:center;
+      background:linear-gradient(135deg,rgba(245,197,66,.24),rgba(30,144,255,.22));
+      border:1px solid var(--line2);
+      font-family:Oswald,Impact,sans-serif;
+      font-weight:700;
+      text-transform:uppercase;
+      font-size:24px;
+      letter-spacing:.02em;
+      color:var(--gold);
+      flex:0 0 auto;
+    }
+
+    .brandName{
+      font-family:Oswald,Impact,sans-serif;
+      font-weight:700;
+      text-transform:uppercase;
+      font-size:34px;
+      line-height:1;
+      letter-spacing:.02em;
+      white-space:nowrap;
+    }
+
+    .topLinks{display:flex;align-items:center;gap:10px;min-width:0}
+    .topLink{
+      height:38px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:0 12px;
+      border:1px solid var(--line);
+      border-radius:8px;
+      background:rgba(255,255,255,.06);
+      color:var(--text);
+      text-decoration:none;
+      font-size:13px;
+      font-weight:900;
+      white-space:nowrap;
+    }
+
+    .topLink.primary{
+      background:var(--blue);
+      border-color:rgba(30,144,255,.42);
+    }
+
+    .hero{
+      min-height:auto;
+      display:grid;
+      align-content:start;
+      padding:10px 0 44px;
+    }
+
+    .heroInner{
+      display:grid;
+      grid-template-columns:minmax(0,1.12fr) minmax(330px,.88fr);
+      gap:18px;
+      align-items:stretch;
+    }
+
+    .heroCopy{padding:18px 0 28px;min-width:0}
+    .kicker{
+      display:inline-flex;
+      align-items:center;
+      gap:9px;
+      padding:8px 12px;
+      border:1px solid rgba(245,197,66,.30);
+      border-radius:999px;
+      color:var(--gold);
+      font-size:12px;
+      font-weight:900;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      background:rgba(245,197,66,.08);
+      margin-bottom:18px;
+    }
+
+    .liveDot{
+      width:8px;
+      height:8px;
+      border-radius:50%;
+      background:var(--green);
+      box-shadow:0 0 18px rgba(41,209,125,.85);
+    }
+
+    h1{
+      font-family:Oswald,Impact,sans-serif;
+      font-weight:700;
+      text-transform:uppercase;
+      font-size:clamp(52px,8.8vw,104px);
+      line-height:.9;
+      letter-spacing:.02em;
+      margin:0 0 18px;
+      max-width:840px;
+      text-wrap:balance;
+    }
+
+    h1 span{color:var(--gold)}
+    .sub{
+      max-width:740px;
+      margin:0 0 24px;
+      color:var(--muted);
+      font-size:clamp(17px,2.1vw,22px);
+      line-height:1.5;
+    }
+
+    .searchBox{
+      max-width:790px;
+      padding:10px;
+      border:1px solid var(--line);
+      border-radius:18px;
+      background:rgba(255,255,255,.09);
+      box-shadow:var(--shadow);
+    }
+
+    .searchModes{
+      display:flex;
+      gap:8px;
+      margin-bottom:10px;
+      overflow:auto;
+      scrollbar-width:none;
+    }
+    .searchModes::-webkit-scrollbar{display:none}
+
+    .modeBtn{
+      height:36px;
+      padding:0 12px;
+      border:1px solid var(--line);
+      border-radius:10px;
+      background:rgba(255,255,255,.07);
+      color:var(--text);
+      font-size:13px;
+      font-weight:900;
+      cursor:pointer;
+      white-space:nowrap;
+    }
+
+    .modeBtn.active{background:var(--blue);border-color:rgba(255,255,255,.24)}
+    .searchRow{
+      display:grid;
+      grid-template-columns:minmax(0,1fr) 150px;
+      gap:10px;
+    }
+
+    .searchRow input{
+      width:100%;
+      height:54px;
+      border:0;
+      outline:0;
+      border-radius:12px;
+      background:#fff;
+      color:#101010;
+      padding:0 16px;
+      font-size:16px;
+      min-width:0;
+    }
+
+    .searchRow button,.btn{
+      height:54px;
+      border:0;
+      cursor:pointer;
+      background:var(--blue);
+      color:white;
+      font-weight:900;
+      border-radius:12px;
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:0 18px;
+      white-space:nowrap;
+      transition:transform .16s ease,filter .16s ease,background .16s ease;
+    }
+    .searchRow button:hover,.btn:hover{transform:translateY(-1px);filter:brightness(1.08)}
+    .btn.secondary{background:rgba(255,255,255,.09);border:1px solid var(--line2)}
+
+    .chips{display:flex;flex-wrap:wrap;gap:9px;margin-top:16px}
+    .chip{
+      border:1px solid var(--line);
+      border-radius:999px;
+      background:rgba(255,255,255,.07);
+      color:var(--text);
+      text-decoration:none;
+      padding:9px 12px;
+      font-size:13px;
+      font-weight:900;
+    }
+
+    .toolDock{
+      align-self:center;
+      border:1px solid var(--line);
+      border-radius:22px;
+      background:linear-gradient(180deg,rgba(255,255,255,.10),rgba(255,255,255,.045));
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      min-width:0;
+    }
+
+    .dockHead{padding:18px;border-bottom:1px solid var(--line);background:rgba(255,255,255,.05)}
+    .dockHead h2{font-size:20px;line-height:1.15;margin:0 0 6px}
+    .dockHead p{margin:0;color:var(--muted);line-height:1.45;font-size:14px}
+    .toolList{display:grid;gap:0}
+    .toolItem{
+      display:grid;
+      grid-template-columns:42px minmax(0,1fr) auto;
+      gap:12px;
+      align-items:center;
+      padding:16px 18px;
+      border-bottom:1px solid var(--line);
+      color:var(--text);
+      text-decoration:none;
+      background:rgba(255,255,255,.025);
+      transition:background .16s ease;
+    }
+    .toolItem:last-child{border-bottom:0}
+    .toolItem:hover{background:rgba(255,255,255,.08)}
+    .toolIcon{
+      width:42px;
+      height:42px;
+      border-radius:11px;
+      display:grid;
+      place-items:center;
+      background:rgba(245,197,66,.12);
+      border:1px solid rgba(245,197,66,.22);
+      font-weight:900;
+      color:var(--gold);
+    }
+    .toolItem strong{display:block;font-size:15px;margin-bottom:3px}
+    .toolItem span span{display:block;color:var(--muted);font-size:13px;line-height:1.35}
+    .arrow{color:var(--muted);font-size:22px;line-height:1}
+
+    .section{margin-top:30px}
+    .sectionHead{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-end;
+      gap:18px;
+      margin-bottom:14px;
+    }
+
+    .section h2,.panel h2,.footerCta h2{
+      font-family:Oswald,Impact,sans-serif;
+      font-weight:700;
+      text-transform:uppercase;
+      font-size:clamp(34px,4.8vw,48px);
+      line-height:.98;
+      letter-spacing:.02em;
+      margin:0;
+    }
+
+    .section p,.panel p,.footerCta p{color:var(--muted);line-height:1.5}
+    .sectionHead p{margin:7px 0 0}
+    .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+    .card,.panel,.footerCta{
+      border:1px solid var(--line);
+      border-radius:18px;
+      background:linear-gradient(180deg,rgba(255,255,255,.085),rgba(255,255,255,.035));
+      box-shadow:0 12px 36px rgba(0,0,0,.25);
+      min-width:0;
+    }
+
+    .card{padding:18px;min-height:178px}
+    .card small{
+      display:inline-block;
+      color:var(--gold);
+      font-weight:900;
+      text-transform:uppercase;
+      letter-spacing:.06em;
+      margin-bottom:10px;
+      font-size:11px;
+    }
+    .card h3{margin:0 0 8px;font-size:20px;line-height:1.18}
+    .card p{margin:0 0 14px;font-size:14px}
+    .card a{color:white;font-weight:900;text-decoration:none}
+    .wide{display:grid;grid-template-columns:1.05fr .95fr;gap:14px;align-items:stretch}
+    .panel{padding:22px}
+    .prompt{
+      display:block;
+      padding:13px 14px;
+      border-radius:12px;
+      margin:9px 0;
+      background:rgba(255,255,255,.07);
+      border:1px solid var(--line);
+      color:white;
+      text-decoration:none;
+      font-weight:850;
+      font-size:14px;
+      line-height:1.35;
+    }
+    .buttonRow{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+    .footerCta{
+      margin-top:30px;
+      text-align:center;
+      padding:30px 18px;
+      border-color:rgba(245,197,66,.25);
+      background:linear-gradient(135deg,rgba(245,197,66,.16),rgba(30,144,255,.12)),rgba(255,255,255,.04);
+    }
+    .footerCta p{max-width:760px;margin:10px auto 0}
+    .footer{
+      margin-top:26px;
+      padding-top:20px;
+      border-top:1px solid var(--line);
+      display:flex;
+      justify-content:space-between;
+      gap:16px;
+      color:var(--muted);
+      font-size:13px;
+    }
+    .footer a{color:var(--muted);text-decoration:none;font-weight:800}
+
+    @media(max-width:900px){
+      .hero{min-height:auto;padding-top:8px}
+      .heroInner{grid-template-columns:1fr}
+      .heroCopy{padding:20px 0 0}
+      .toolDock{align-self:stretch}
+      .grid{grid-template-columns:1fr}
+      .wide{grid-template-columns:1fr}
+      .sectionHead{display:block}
+    }
+
+    @media(max-width:650px){
+      .wrap{width:min(100% - 24px,var(--max));padding-top:12px}
+      .topbar{align-items:flex-start}
+      .topLinks{display:none}
+      .brandName{font-size:30px}
+      .searchRow{grid-template-columns:1fr}
+      .searchRow button{width:100%}
+      .chip{font-size:12px}
+      .toolItem{grid-template-columns:38px minmax(0,1fr)}
+      .arrow{display:none}
+      .footer{display:block}
+      .footer div + div{margin-top:8px}
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"WebSite",
+    "name":"Chasing Majors",
+    "url":"https://www.chasingmajors.com/",
+    "potentialAction":{
+      "@type":"SearchAction",
+      "target":"https://app.chasingmajors.com/ChatBot/?q={search_term_string}",
+      "query-input":"required name=search_term_string"
+    }
+  }
+  </script>
+</head>
+
+<body>
+  <div class="page">
+    <div class="cardWall" aria-hidden="true"></div>
+    <div class="wrap">
+      <header class="topbar">
+        <a class="brand" href="https://www.chasingmajors.com/" aria-label="Chasing Majors home">
+          <span class="brandMark">CM</span>
+          <span class="brandName">Chasing Majors</span>
+        </a>
+        <nav class="topLinks" aria-label="Primary tools">
+          <a class="topLink" href="https://app.chasingmajors.com/checklists/">Checklist Vault</a>
+          <a class="topLink" href="https://app.chasingmajors.com/vault/">Print Run Vault</a>
+          <a class="topLink" href="https://app.chasingmajors.com/schedule/">Release Schedule</a>
+          <a class="topLink" href="https://www.chasingmajors.com/gadget.html">CM Gadget</a>
+          <a class="topLink primary" href="https://app.chasingmajors.com/ChatBot/">Chatbot</a>
+        </nav>
+      </header>
+
+      <main>
+        <section class="hero" aria-labelledby="hero-title">
+          <div class="heroInner">
+            <div class="heroCopy">
+              <div class="kicker"><span class="liveDot" aria-hidden="true"></span> Sports Card Search Engine</div>
+              <h1 id="hero-title">Find the Cards.<br><span>Chase Smarter.</span></h1>
+              <p class="sub">Search checklists, rookies, parallels, print runs, SSPs, autographs, inserts, and release data, then jump into the right Chasing Majors tool.</p>
+
+              <form class="searchBox" id="cmSearchForm">
+                <div class="searchModes" role="tablist" aria-label="Search destination">
+                  <button class="modeBtn active" type="button" data-mode="chat">Ask Chatbot</button>
+                  <button class="modeBtn" type="button" data-mode="checklists">Checklist Vault</button>
+                  <button class="modeBtn" type="button" data-mode="vault">Print Run Vault</button>
+                </div>
+                <div class="searchRow">
+                  <input id="cmQuery" name="q" type="search" autocomplete="off" placeholder="Try: What are the rarest parallels in 2025 Topps Chrome Baseball?" />
+                  <button type="submit">Search</button>
+                </div>
+              </form>
+
+              <div class="chips" aria-label="Quick searches">
+                <a class="chip" href="https://app.chasingmajors.com/schedule/">Release Schedule</a>
+              </div>
+            </div>
+
+            <aside class="toolDock" aria-label="Chasing Majors tools">
+              <div class="dockHead">
+                <h2>Start With the Right Tool</h2>
+                <p>Use search when you know the product. Use the chatbot when you know the question.</p>
+              </div>
+              <div class="toolList">
+                <a class="toolItem" href="https://www.chasingmajors.com/gadget.html"><span class="toolIcon">CM</span><span><strong>CM Rarity Gadget</strong><span>Rarity intelligence while browsing eBay and COMC.</span></span><span class="arrow" aria-hidden="true">&rsaquo;</span></a>
+                <a class="toolItem" href="https://app.chasingmajors.com/checklists/"><span class="toolIcon">CV</span><span><strong>Checklist Vault</strong><span>Products, players, rookies, autos, inserts, and parallels.</span></span><span class="arrow" aria-hidden="true">&rsaquo;</span></a>
+                <a class="toolItem" href="https://app.chasingmajors.com/vault/"><span class="toolIcon">PR</span><span><strong>Print Run Vault</strong><span>Production estimates, rarity signals, and print run research.</span></span><span class="arrow" aria-hidden="true">&rsaquo;</span></a>
+                <a class="toolItem" href="https://app.chasingmajors.com/schedule/"><span class="toolIcon">RS</span><span><strong>Release Schedule</strong><span>Upcoming sports card releases by sport and product.</span></span><span class="arrow" aria-hidden="true">&rsaquo;</span></a>
+                <a class="toolItem" href="https://app.chasingmajors.com/ChatBot/"><span class="toolIcon">AI</span><span><strong>Collector Chatbot</strong><span>Ask natural questions and get routed to the best data.</span></span><span class="arrow" aria-hidden="true">&rsaquo;</span></a>
+              </div>
+            </aside>
+          </div>
+        </section>
+
+        <section class="section" aria-labelledby="trending-title">
+          <div class="sectionHead">
+            <div>
+              <h2 id="trending-title">Trending Hobby Searches</h2>
+              <p>Start with the questions collectors are already asking.</p>
+            </div>
+          </div>
+          <div class="grid">
+            <article class="card"><small>Extension</small><h3>CM Rarity Gadget</h3><p>Bring print run and rarity signals onto eBay and COMC listings.</p><a href="https://www.chasingmajors.com/gadget.html">Install Gadget &rarr;</a></article>
+            <article class="card"><small>Checklist</small><h3>2025 Topps Chrome Baseball Checklist</h3><p>Base cards, inserts, autos, rookies, and parallels.</p><a href="https://app.chasingmajors.com/checklists/?q=2025%20Topps%20Chrome%20Baseball">Open Checklist &rarr;</a></article>
+            <article class="card"><small>Print Runs</small><h3>Topps Chrome Print Run Data</h3><p>Move from product research into estimated production and rarity data.</p><a href="https://app.chasingmajors.com/vault/?q=Topps%20Chrome%20Baseball">Open Vault &rarr;</a></article>
+          </div>
+        </section>
+
+        <section class="section wide" aria-label="Chatbot and collector research">
+          <div class="panel">
+            <h2>Ask the Chatbot</h2>
+            <p>The Chasing Majors chatbot is built for sports card collectors, not generic search. Try questions like:</p>
+            <a class="prompt" href="https://app.chasingmajors.com/ChatBot/?q=Show%20me%20all%20the%20rookie%20autos%20in%202025%20Topps%20Chrome%20Baseball.">Show me all the rookie autos in 2025 Topps Chrome Baseball.</a>
+            <a class="prompt" href="https://app.chasingmajors.com/ChatBot/?q=What%20are%20the%20rarest%20parallels%20in%202025%20Topps%20Chrome%20Baseball%3F">What are the rarest parallels in 2025 Topps Chrome Baseball?</a>
+            <a class="prompt" href="https://app.chasingmajors.com/ChatBot/?q=Show%20me%20serial%20numbered%20parallels%20only%20for%202025%20Topps%20Chrome%20Baseball.">Show me serial numbered parallels only.</a>
+            <a class="prompt" href="https://app.chasingmajors.com/ChatBot/?q=What%20are%20the%20chase%20cards%20in%202025%20Topps%20Chrome%20Baseball%3F">What are the chase cards in this release?</a>
+          </div>
+          <div class="panel">
+            <h2>Built for Collectors</h2>
+            <p>Chasing Majors is designed around the searches collectors actually make: checklist searches, rookie searches, parallel searches, SSP searches, odds questions, and product research before release day.</p>
+            <div class="buttonRow">
+              <a class="btn" href="https://app.chasingmajors.com/ChatBot/">Launch Chatbot</a>
+              <a class="btn secondary" href="https://app.chasingmajors.com/checklists/">Open Checklist Vault</a>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" aria-labelledby="explore-title">
+          <div class="sectionHead">
+            <div>
+              <h2 id="explore-title">Explore the Hobby Faster</h2>
+              <p>Turn scattered checklist data into a modern collector research experience.</p>
+            </div>
+          </div>
+          <div class="grid">
+            <article class="card"><small>Parallels</small><h3>Understand Rarity</h3><p>Search refractors, numbered parallels, case hits, short prints, and 1-of-1s.</p><a href="https://app.chasingmajors.com/ChatBot/?q=What%20are%20the%20rarest%20parallels%20in%202025%20Topps%20Chrome%20Baseball%3F">Ask About Parallels &rarr;</a></article>
+            <article class="card"><small>Products</small><h3>Research Releases</h3><p>Quickly move from product discovery into checklist and print run data.</p><a href="https://app.chasingmajors.com/schedule/">View Releases &rarr;</a></article>
+            <article class="card"><small>Direction</small><h3>The Hobby Data Layer</h3><p>Checklists, print runs, rookies, stats, POP data, trends, and AI search.</p><a href="https://app.chasingmajors.com/ChatBot/?q=How%20should%20I%20search%3F">See Search Help &rarr;</a></article>
+          </div>
+        </section>
+
+        <section class="footerCta">
+          <h2>The Modern Sports Card Search Engine</h2>
+          <p>Stop digging through PDFs, spreadsheets, and stale articles. Start searching like the hobby finally caught up.</p>
+          <div class="buttonRow" style="justify-content:center">
+            <a class="btn" href="https://app.chasingmajors.com/ChatBot/">Try the Chatbot</a>
+            <a class="btn secondary" href="https://www.chasingmajors.com/gadget.html">Install CM Gadget</a>
+            <a class="btn secondary" href="https://app.chasingmajors.com/checklists/">Browse Tools</a>
+          </div>
+        </section>
+      </main>
+
+      <footer class="footer">
+        <div>&copy; <span id="year"></span> Chasing Majors. Built for collectors.</div>
+        <div><a href="https://www.chasingmajors.com/gadget.html">CM Rarity Gadget</a> / <a href="https://app.chasingmajors.com/checklists/">Checklist Vault</a> / <a href="https://app.chasingmajors.com/vault/">Print Run Vault</a> / <a href="https://app.chasingmajors.com/schedule/">Release Schedule</a> / <a href="https://app.chasingmajors.com/ChatBot/">Chatbot</a></div>
+      </footer>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      var activeMode = "chat";
+      var modeButtons = Array.prototype.slice.call(document.querySelectorAll(".modeBtn"));
+      var form = document.getElementById("cmSearchForm");
+      var input = document.getElementById("cmQuery");
+      var year = document.getElementById("year");
+      if (year) year.textContent = String(new Date().getFullYear());
+
+      function pathForMode(mode, query){
+        var q = String(query || "").trim();
+        var encoded = encodeURIComponent(q);
+        if (mode === "checklists") return q ? "https://app.chasingmajors.com/checklists/?q=" + encoded : "https://app.chasingmajors.com/checklists/";
+        if (mode === "vault") return q ? "https://app.chasingmajors.com/vault/?q=" + encoded : "https://app.chasingmajors.com/vault/";
+        return q ? "https://app.chasingmajors.com/ChatBot/?q=" + encoded : "https://app.chasingmajors.com/ChatBot/";
+      }
+
+      modeButtons.forEach(function(button){
+        button.addEventListener("click", function(){
+          activeMode = button.getAttribute("data-mode") || "chat";
+          modeButtons.forEach(function(btn){ btn.classList.toggle("active", btn === button); });
+          if (input) {
+            input.placeholder = activeMode === "vault"
+              ? "Try: 2025 Topps Chrome Baseball print run"
+              : activeMode === "checklists"
+                ? "Try: 2025 Topps Chrome Baseball checklist"
+                : "Try: What are the rarest parallels in 2025 Topps Chrome Baseball?";
+            input.focus();
+          }
+        });
+      });
+
+      if (form) {
+        form.addEventListener("submit", function(event){
+          event.preventDefault();
+          window.location.href = pathForMode(activeMode, input ? input.value : "");
+        });
+      }
+    })();
+  </script>
+</body>
+</html>

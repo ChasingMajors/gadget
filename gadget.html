@@ -1,0 +1,521 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#070707" />
+  <title>CM Rarity Gadget | Chasing Majors</title>
+  <meta name="description" content="Install the CM Rarity Gadget Chrome extension for Chasing Majors rarity intelligence on eBay and COMC sports card listings." />
+  <link rel="canonical" href="https://www.chasingmajors.com/gadget.html" />
+  <meta property="og:title" content="CM Rarity Gadget | Chasing Majors" />
+  <meta property="og:description" content="Rarity intelligence for eBay and COMC sports card listings." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.chasingmajors.com/gadget.html" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Oswald:wght@600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#070707;
+      --text:#fff;
+      --muted:rgba(255,255,255,.70);
+      --line:rgba(255,255,255,.13);
+      --line2:rgba(255,255,255,.22);
+      --gold:#f5c542;
+      --blue:#1e90ff;
+      --green:#29d17d;
+      --red:#ff4d4d;
+      --max:1180px;
+      --shadow:0 22px 70px rgba(0,0,0,.38);
+      color-scheme:dark;
+    }
+
+    *{box-sizing:border-box}
+    html{min-height:100%;scroll-behavior:smooth}
+    body{
+      min-height:100%;
+      margin:0;
+      font-family:Inter,Arial,sans-serif;
+      background:
+        radial-gradient(circle at 16% 0%, rgba(245,197,66,.18), transparent 31rem),
+        radial-gradient(circle at 84% 0%, rgba(30,144,255,.20), transparent 34rem),
+        linear-gradient(180deg,#070707,#111 48rem,#080808);
+      color:var(--text);
+    }
+
+    a{color:inherit}
+    button{font:inherit}
+
+    .page{position:relative;overflow:hidden}
+    .cardWall{
+      position:absolute;
+      inset:0 0 auto 0;
+      height:620px;
+      pointer-events:none;
+      opacity:.28;
+      background-image:
+        linear-gradient(90deg, rgba(255,255,255,.10) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(255,255,255,.10) 1px, transparent 1px);
+      background-size:78px 108px;
+      mask-image:linear-gradient(180deg,#000 0%,rgba(0,0,0,.78) 52%,transparent 100%);
+    }
+    .cardWall:after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        radial-gradient(circle at 38% 16%, rgba(245,197,66,.22), transparent 15rem),
+        radial-gradient(circle at 68% 10%, rgba(30,144,255,.20), transparent 17rem);
+    }
+
+    .wrap{
+      position:relative;
+      width:min(var(--max), calc(100% - 32px));
+      margin:0 auto;
+      padding:20px 0 42px;
+    }
+
+    .topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      min-height:54px;
+      margin-bottom:18px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      text-decoration:none;
+      min-width:0;
+    }
+
+    .brandMark{
+      width:38px;
+      height:38px;
+      border-radius:8px;
+      display:grid;
+      place-items:center;
+      background:linear-gradient(135deg,rgba(245,197,66,.24),rgba(30,144,255,.22));
+      border:1px solid var(--line2);
+      font-family:Oswald,Impact,sans-serif;
+      font-weight:700;
+      text-transform:uppercase;
+      font-size:24px;
+      letter-spacing:.02em;
+      color:var(--gold);
+      flex:0 0 auto;
+    }
+
+    .brandName{
+      font-family:Oswald,Impact,sans-serif;
+      font-weight:700;
+      text-transform:uppercase;
+      font-size:34px;
+      line-height:1;
+      letter-spacing:.02em;
+      white-space:nowrap;
+    }
+
+    .topLinks{display:flex;align-items:center;gap:10px;min-width:0}
+    .topLink{
+      height:38px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:0 12px;
+      border:1px solid var(--line);
+      border-radius:8px;
+      background:rgba(255,255,255,.06);
+      color:var(--text);
+      text-decoration:none;
+      font-size:13px;
+      font-weight:900;
+      white-space:nowrap;
+    }
+    .topLink.primary{
+      background:var(--blue);
+      border-color:rgba(30,144,255,.42);
+    }
+
+    .hero{
+      min-height:calc(100vh - 92px);
+      display:grid;
+      align-content:center;
+      padding:28px 0 44px;
+    }
+
+    .heroInner{
+      display:grid;
+      grid-template-columns:minmax(0,1.02fr) minmax(340px,.98fr);
+      gap:18px;
+      align-items:stretch;
+    }
+
+    .heroCopy{padding:28px 0;min-width:0}
+    .kicker{
+      display:inline-flex;
+      align-items:center;
+      gap:9px;
+      padding:8px 12px;
+      border:1px solid rgba(245,197,66,.30);
+      border-radius:999px;
+      color:var(--gold);
+      font-size:12px;
+      font-weight:900;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      background:rgba(245,197,66,.08);
+      margin-bottom:18px;
+    }
+    .liveDot{
+      width:8px;
+      height:8px;
+      border-radius:50%;
+      background:var(--green);
+      box-shadow:0 0 18px rgba(41,209,125,.85);
+    }
+
+    h1{
+      font-family:Oswald,Impact,sans-serif;
+      font-weight:700;
+      text-transform:uppercase;
+      font-size:clamp(50px,8.3vw,98px);
+      line-height:.91;
+      letter-spacing:.02em;
+      margin:0 0 18px;
+      max-width:820px;
+      text-wrap:balance;
+    }
+    h1 span{color:var(--gold)}
+
+    .sub{
+      max-width:760px;
+      margin:0 0 24px;
+      color:var(--muted);
+      font-size:clamp(17px,2.1vw,22px);
+      line-height:1.5;
+    }
+
+    .buttonRow{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+    .btn{
+      min-height:54px;
+      border:0;
+      cursor:pointer;
+      background:var(--blue);
+      color:white;
+      font-weight:900;
+      border-radius:12px;
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:0 18px;
+      white-space:nowrap;
+      transition:transform .16s ease,filter .16s ease,background .16s ease;
+    }
+    .btn:hover{transform:translateY(-1px);filter:brightness(1.08)}
+    .btn.secondary{background:rgba(255,255,255,.09);border:1px solid var(--line2)}
+    .btn.pending{background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28)}
+
+    .note{
+      margin-top:14px;
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.5;
+      max-width:680px;
+    }
+
+    .productPanel{
+      align-self:center;
+      border:1px solid var(--line);
+      border-radius:22px;
+      background:linear-gradient(180deg,rgba(255,255,255,.10),rgba(255,255,255,.045));
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      min-width:0;
+    }
+
+    .panelTop{
+      padding:18px;
+      border-bottom:1px solid var(--line);
+      background:rgba(255,255,255,.05);
+    }
+    .panelTop h2{font-size:20px;line-height:1.15;margin:0 0 6px}
+    .panelTop p{margin:0;color:var(--muted);line-height:1.45;font-size:14px}
+
+    .listingMock{padding:18px}
+    .marketRow{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:14px;
+      color:var(--muted);
+      font-size:12px;
+      font-weight:900;
+      text-transform:uppercase;
+      letter-spacing:.06em;
+    }
+    .marketPill{
+      padding:7px 9px;
+      border-radius:999px;
+      background:rgba(41,209,125,.10);
+      color:var(--green);
+      border:1px solid rgba(41,209,125,.28);
+    }
+    .cardPreview{
+      display:grid;
+      grid-template-columns:116px minmax(0,1fr);
+      gap:14px;
+      align-items:stretch;
+      padding:12px;
+      border-radius:16px;
+      background:rgba(255,255,255,.07);
+      border:1px solid var(--line);
+    }
+    .cardArt{
+      position:relative;
+      min-height:162px;
+      border-radius:13px;
+      overflow:hidden;
+      background:
+        linear-gradient(135deg,rgba(245,197,66,.95),rgba(30,144,255,.88) 48%,rgba(255,255,255,.20)),
+        repeating-linear-gradient(90deg,rgba(0,0,0,.15) 0 6px,transparent 6px 13px);
+      box-shadow:inset 0 0 0 1px rgba(255,255,255,.28);
+    }
+    .cardArt:before{
+      content:"";
+      position:absolute;
+      inset:12px;
+      border-radius:10px;
+      border:2px solid rgba(255,255,255,.72);
+      background:linear-gradient(180deg,rgba(0,0,0,.06),rgba(0,0,0,.30));
+    }
+    .badge{
+      position:absolute;
+      left:8px;
+      bottom:8px;
+      width:40px;
+      height:40px;
+      border-radius:50%;
+      display:grid;
+      place-items:center;
+      background:#111827;
+      border:2px solid rgba(255,255,255,.88);
+      box-shadow:0 10px 24px rgba(0,0,0,.34);
+      font-size:20px;
+    }
+    .cardInfo{min-width:0}
+    .cardInfo h3{margin:0 0 9px;font-size:18px;line-height:1.2}
+    .price{font-size:26px;font-weight:900;margin-bottom:10px}
+    .rarityBox{
+      border-top:1px solid var(--line);
+      padding-top:12px;
+      display:grid;
+      gap:9px;
+      font-size:13px;
+    }
+    .dataRow{display:flex;justify-content:space-between;gap:12px;color:var(--muted)}
+    .dataRow strong{color:white}
+
+    .section{margin-top:30px}
+    .sectionHead{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-end;
+      gap:18px;
+      margin-bottom:14px;
+    }
+    .section h2,.panel h2,.footerCta h2{
+      font-family:Oswald,Impact,sans-serif;
+      font-weight:700;
+      text-transform:uppercase;
+      font-size:clamp(34px,4.8vw,48px);
+      line-height:.98;
+      letter-spacing:.02em;
+      margin:0;
+    }
+    .section p,.panel p,.footerCta p{color:var(--muted);line-height:1.5}
+    .sectionHead p{margin:7px 0 0}
+    .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+    .card,.panel,.footerCta{
+      border:1px solid var(--line);
+      border-radius:18px;
+      background:linear-gradient(180deg,rgba(255,255,255,.085),rgba(255,255,255,.035));
+      box-shadow:0 12px 36px rgba(0,0,0,.25);
+      min-width:0;
+    }
+    .card{padding:18px;min-height:178px}
+    .card small{
+      display:inline-block;
+      color:var(--gold);
+      font-weight:900;
+      text-transform:uppercase;
+      letter-spacing:.06em;
+      margin-bottom:10px;
+      font-size:11px;
+    }
+    .card h3{margin:0 0 8px;font-size:20px;line-height:1.18}
+    .card p{margin:0 0 14px;font-size:14px}
+    .card a{color:white;font-weight:900;text-decoration:none}
+    .panel{padding:22px}
+    .footerCta{
+      margin-top:30px;
+      text-align:center;
+      padding:30px 18px;
+      border-color:rgba(245,197,66,.25);
+      background:linear-gradient(135deg,rgba(245,197,66,.16),rgba(30,144,255,.12)),rgba(255,255,255,.04);
+    }
+    .footerCta p{max-width:760px;margin:10px auto 0}
+    .footer{
+      margin-top:26px;
+      padding-top:20px;
+      border-top:1px solid var(--line);
+      display:flex;
+      justify-content:space-between;
+      gap:16px;
+      color:var(--muted);
+      font-size:13px;
+    }
+    .footer a{color:var(--muted);text-decoration:none;font-weight:800}
+
+    @media(max-width:900px){
+      .hero{min-height:auto;padding-top:8px}
+      .heroInner{grid-template-columns:1fr}
+      .heroCopy{padding:20px 0 0}
+      .productPanel{align-self:stretch}
+      .grid{grid-template-columns:1fr}
+      .sectionHead{display:block}
+    }
+
+    @media(max-width:650px){
+      .wrap{width:min(100% - 24px,var(--max));padding-top:12px}
+      .topbar{align-items:flex-start}
+      .topLinks{display:none}
+      .brandName{font-size:30px}
+      .buttonRow .btn{width:100%}
+      .cardPreview{grid-template-columns:96px minmax(0,1fr)}
+      .cardArt{min-height:144px}
+      .footer{display:block}
+      .footer div + div{margin-top:8px}
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+    <div class="cardWall" aria-hidden="true"></div>
+    <div class="wrap">
+      <header class="topbar">
+        <a class="brand" href="https://www.chasingmajors.com/" aria-label="Chasing Majors home">
+          <span class="brandMark">CM</span>
+          <span class="brandName">Chasing Majors</span>
+        </a>
+        <nav class="topLinks" aria-label="Primary tools">
+          <a class="topLink" href="https://app.chasingmajors.com/checklists/">Checklist Vault</a>
+          <a class="topLink" href="https://app.chasingmajors.com/vault/">Print Run Vault</a>
+          <a class="topLink" href="https://www.chasingmajors.com/gadget.html">CM Rarity Gadget</a>
+          <a class="topLink primary" href="https://api.chasingmajors.com/signup">Start Membership</a>
+        </nav>
+      </header>
+
+      <main>
+        <section class="hero" aria-labelledby="hero-title">
+          <div class="heroInner">
+            <div class="heroCopy">
+              <div class="kicker"><span class="liveDot" aria-hidden="true"></span> Chrome Extension for eBay and COMC</div>
+              <h1 id="hero-title">Rarity Data,<br><span>While You Shop.</span></h1>
+              <p class="sub">CM Rarity Gadget brings Chasing Majors print run and rarity intelligence directly onto sports card listings, so collectors can spot scarcity before they bid or buy.</p>
+              <div class="buttonRow">
+                <a class="btn pending" href="#chrome-store">Install Chrome Extension</a>
+                <a class="btn secondary" href="https://api.chasingmajors.com/signup">Create Account</a>
+              </div>
+              <p class="note">Chrome Web Store listing URL drops in here when the unlisted listing is approved. Membership and activation are already powered by Chasing Majors at api.chasingmajors.com.</p>
+            </div>
+
+            <aside class="productPanel" aria-label="CM Rarity Gadget preview">
+              <div class="panelTop">
+                <h2>On-Page Rarity Signal</h2>
+                <p>A small CM badge opens the product or card recognition panel on supported marketplaces.</p>
+              </div>
+              <div class="listingMock">
+                <div class="marketRow">
+                  <span>COMC listing preview</span>
+                  <span class="marketPill">Paid unlocked</span>
+                </div>
+                <div class="cardPreview">
+                  <div class="cardArt" aria-hidden="true"><span class="badge">🧠</span></div>
+                  <div class="cardInfo">
+                    <h3>2025-26 Bowman Chrome Refractor</h3>
+                    <div class="price">$8.50</div>
+                    <div class="rarityBox">
+                      <div class="dataRow"><span>Product Type</span><strong>Base Parallel</strong></div>
+                      <div class="dataRow"><span>Scarcity Score</span><strong>74/100</strong></div>
+                      <div class="dataRow"><span>Est. Print Run</span><strong>499</strong></div>
+                      <div class="dataRow"><span>Pack Odds</span><strong>Available when known</strong></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </section>
+
+        <section class="section" aria-labelledby="how-title">
+          <div class="sectionHead">
+            <div>
+              <h2 id="how-title">Live Rollout Flow</h2>
+              <p>A production account path with a limited collector audience.</p>
+            </div>
+          </div>
+          <div class="grid">
+            <article class="card"><small>Step 1</small><h3>Install the Gadget</h3><p>Add the Chrome extension from the unlisted Chrome Web Store page once approved.</p><a id="chrome-store" href="#">Chrome Web Store link pending</a></article>
+            <article class="card"><small>Step 2</small><h3>Create Your Account</h3><p>Start the $5/month plan or apply a Chasing Majors promo code in Stripe Checkout.</p><a href="https://api.chasingmajors.com/signup">Open Signup &rarr;</a></article>
+            <article class="card"><small>Step 3</small><h3>Activate Paid Data</h3><p>Paste the access token from checkout into the CM toolbar popup to unlock available rarity fields.</p><a href="https://api.chasingmajors.com/signup">Get Access &rarr;</a></article>
+          </div>
+        </section>
+
+        <section class="section" aria-labelledby="markets-title">
+          <div class="sectionHead">
+            <div>
+              <h2 id="markets-title">Built Around Real Card Searches</h2>
+              <p>COMC structured titles and eBay search pages feed the same Chasing Majors rarity API.</p>
+            </div>
+          </div>
+          <div class="grid">
+            <article class="card"><small>COMC</small><h3>Structured Listing Recognition</h3><p>Reads year, product, set line, parallel, serial numbering, and grading text from COMC-style titles.</p></article>
+            <article class="card"><small>eBay</small><h3>Search-Level Intelligence</h3><p>Uses a master badge for specific searches and listing badges when the search is broad.</p></article>
+            <article class="card"><small>PRV</small><h3>Print Run Source of Truth</h3><p>Connects marketplace browsing to the Chasing Majors PRV data layer as it gets cleaner and deeper.</p></article>
+          </div>
+        </section>
+
+        <section class="footerCta">
+          <h2>Install Once. Research Everywhere.</h2>
+          <p>CM Rarity Gadget turns marketplace browsing into a smarter rarity workflow for collectors who care about print run, scarcity, and chase context.</p>
+          <div class="buttonRow" style="justify-content:center">
+            <a class="btn pending" href="#chrome-store">Install Chrome Extension</a>
+            <a class="btn secondary" href="https://api.chasingmajors.com/signup">Create Account</a>
+          </div>
+        </section>
+      </main>
+
+      <footer class="footer">
+        <div>&copy; <span id="year"></span> Chasing Majors. Built for collectors.</div>
+        <div><a href="https://app.chasingmajors.com/checklists/">Checklist Vault</a> / <a href="https://app.chasingmajors.com/vault/">Print Run Vault</a> / <a href="https://app.chasingmajors.com/ChatBot/">Chatbot</a></div>
+      </footer>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      var year = document.getElementById("year");
+      if (year) year.textContent = String(new Date().getFullYear());
+    })();
+  </script>
+</body>
+</html>
