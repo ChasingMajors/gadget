@@ -195,7 +195,7 @@
         <button type="button" data-state="anonymous">Anonymous/free</button>
         <button type="button" data-state="logged_in">Logged in/free</button>
         <button type="button" data-state="paid">Paid</button>
-        <button type="button" data-state="admin">Admin MVP</button>
+        <button type="button" data-state="admin">Admin UI state</button>
         <button type="button" id="reset">Reset usage</button>
       </div>
     </header>
@@ -286,7 +286,15 @@
           : state === "paid"
           ? { status: "logged_in", plan: "paid" }
           : { status: state, plan: "free" };
-        await window.CMRarityStorage.setUserState(next);
+        if (state === "paid" || state === "admin") {
+          await window.CMRarityStorage.setSession({
+            ...next,
+            token: "harness-ui-token"
+          });
+        } else {
+          await window.CMRarityStorage.clearSession();
+          await window.CMRarityStorage.setUserState(next);
+        }
         status.textContent = `${next.status}/${next.plan}`;
       }
 

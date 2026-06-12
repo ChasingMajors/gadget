@@ -106,8 +106,8 @@ async function createCheckoutSession(request, body = {}) {
     "line_items[0][price]": process.env.STRIPE_PRICE_ID,
     "line_items[0][quantity]": "1",
     allow_promotion_codes: "true",
-    success_url: body.successUrl || `${APP_URL}/?cm_checkout=success`,
-    cancel_url: body.cancelUrl || `${APP_URL}/?cm_checkout=cancel`,
+    success_url: `${APP_URL}/?cm_checkout=success`,
+    cancel_url: `${APP_URL}/?cm_checkout=cancel`,
     client_reference_id: account.email || "cm-extension-beta"
   });
 
