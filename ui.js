@@ -212,7 +212,7 @@
     if (rarity.isFallback) {
       const fallback = document.createElement("p");
       fallback.className = "cm-rarity-note";
-      fallback.textContent = "Showing limited fallback data while CM rarity service is unavailable.";
+      fallback.textContent = "CM rarity service is unavailable. No rarity estimate is being shown.";
       panel.append(header, matchedTitle, matchMode, rows, actions, fallback);
       return;
     }
