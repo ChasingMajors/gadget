@@ -18,7 +18,7 @@
 
       <section class="cm-popup-card">
         <label for="cm-token">Access token</label>
-        <textarea id="cm-token" rows="3" spellcheck="false" placeholder="Paste your token after checkout"></textarea>
+        <input id="cm-token" type="password" spellcheck="false" autocomplete="off" placeholder="Paste your token after checkout">
         <button id="cm-save-token" type="button">Activate extension</button>
         <p id="cm-message" class="cm-popup-message" role="status"></p>
       </section>
@@ -26,6 +26,7 @@
       <nav class="cm-popup-actions" aria-label="Account actions">
         <a id="cm-create-account" href="#" target="_blank" rel="noopener noreferrer">Create account</a>
         <button id="cm-open-billing" type="button">Billing</button>
+        <button id="cm-disconnect" type="button">Disconnect</button>
         <a id="cm-report-issue" href="#" target="_blank" rel="noopener noreferrer">Report issue</a>
       </nav>
     </main>
