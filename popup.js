@@ -5,6 +5,7 @@
   const message = document.getElementById("cm-message");
   const createAccount = document.getElementById("cm-create-account");
   const openBilling = document.getElementById("cm-open-billing");
+  const disconnect = document.getElementById("cm-disconnect");
   const reportIssue = document.getElementById("cm-report-issue");
 
   function configUrl(key) {
@@ -63,6 +64,15 @@
     status.textContent = plan === "paid" || plan === "admin"
       ? `Active ${plan} account.${email}`
       : "Free account. Paid rarity fields remain locked.";
+    openBilling.disabled = false;
+    disconnect.disabled = false;
+  }
+
+  function renderDisconnected() {
+    tokenInput.value = "";
+    status.textContent = "No account connected.";
+    openBilling.disabled = false;
+    disconnect.disabled = true;
   }
 
   async function refresh() {
@@ -70,7 +80,7 @@
     tokenInput.value = session.token || "";
 
     if (!session.token) {
-      status.textContent = "No account connected.";
+      renderDisconnected();
       return;
     }
 
@@ -85,6 +95,7 @@
       renderAccount(account);
     } catch (error) {
       status.textContent = "Saved token could not be verified.";
+      disconnect.disabled = false;
     }
   }
 
@@ -134,6 +145,12 @@
     } catch (error) {
       message.textContent = "Token was not accepted.";
     }
+  });
+
+  disconnect.addEventListener("click", async () => {
+    await window.CMRarityStorage.clearSession();
+    renderDisconnected();
+    message.textContent = "Account disconnected.";
   });
 
   refresh();
