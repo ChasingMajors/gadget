@@ -321936,6 +321936,408 @@
     }
   },
   {
+    "id": "1992-93-fleer-basketball-insert-all-stars",
+    "canonicalTitle": "1992-93 Fleer Basketball - Insert - All Stars",
+    "aliases": [
+      "1992-93 Fleer Basketball",
+      "1992-93 Fleer Basketball - Insert - All Stars",
+      "1992-93 Fleer All Stars",
+      "1992-93 Fleer Insert",
+      "1992-93 Fleer"
+    ],
+    "requiredTerms": [
+      "1992",
+      "93",
+      "fleer",
+      "basketball",
+      "all",
+      "stars"
+    ],
+    "serialTerms": [],
+    "rarityTier": "Insert",
+    "scarcityScore": 62,
+    "printRun": null,
+    "packOdds": "1:9",
+    "popTotal": 0,
+    "popGem": 0,
+    "matchMode": "set",
+    "sourceUrl": null,
+    "metadata": {
+      "year": "1992-93",
+      "code": "1992_93_fleer_basketball",
+      "sport": "Basketball",
+      "brand": "Fleer",
+      "product": "",
+      "setType": "Insert",
+      "setLine": "All Stars",
+      "parallel": "",
+      "serial": "",
+      "subsetSize": null
+    }
+  },
+  {
+    "id": "1992-93-fleer-basketball-insert-sharpshooters",
+    "canonicalTitle": "1992-93 Fleer Basketball - Insert - Sharpshooters",
+    "aliases": [
+      "1992-93 Fleer Basketball",
+      "1992-93 Fleer Basketball - Insert - Sharpshooters",
+      "1992-93 Fleer Sharpshooters",
+      "1992-93 Fleer Insert",
+      "1992-93 Fleer"
+    ],
+    "requiredTerms": [
+      "1992",
+      "93",
+      "fleer",
+      "basketball",
+      "sharpshooters"
+    ],
+    "serialTerms": [],
+    "rarityTier": "Insert",
+    "scarcityScore": 62,
+    "printRun": null,
+    "packOdds": "1:3",
+    "popTotal": 0,
+    "popGem": 0,
+    "matchMode": "set",
+    "sourceUrl": null,
+    "metadata": {
+      "year": "1992-93",
+      "code": "1992_93_fleer_basketball",
+      "sport": "Basketball",
+      "brand": "Fleer",
+      "product": "",
+      "setType": "Insert",
+      "setLine": "Sharpshooters",
+      "parallel": "",
+      "serial": "",
+      "subsetSize": null
+    }
+  },
+  {
+    "id": "1992-93-fleer-basketball-insert-total-d",
+    "canonicalTitle": "1992-93 Fleer Basketball - Insert - Total D",
+    "aliases": [
+      "1992-93 Fleer Basketball",
+      "1992-93 Fleer Basketball - Insert - Total D",
+      "1992-93 Fleer Total D",
+      "1992-93 Fleer Insert",
+      "1992-93 Fleer"
+    ],
+    "requiredTerms": [
+      "1992",
+      "93",
+      "fleer",
+      "basketball",
+      "total"
+    ],
+    "serialTerms": [],
+    "rarityTier": "Insert",
+    "scarcityScore": 62,
+    "printRun": null,
+    "packOdds": "1:5",
+    "popTotal": 0,
+    "popGem": 0,
+    "matchMode": "set",
+    "sourceUrl": null,
+    "metadata": {
+      "year": "1992-93",
+      "code": "1992_93_fleer_basketball",
+      "sport": "Basketball",
+      "brand": "Fleer",
+      "product": "",
+      "setType": "Insert",
+      "setLine": "Total D",
+      "parallel": "",
+      "serial": "",
+      "subsetSize": null
+    }
+  },
+  {
+    "id": "1992-93-hoops-basketball-insert-ultimate-game",
+    "canonicalTitle": "1992-93 Hoops Basketball - Insert - Ultimate Game",
+    "aliases": [
+      "1992-93 Hoops Basketball",
+      "1992-93 Hoops Basketball - Insert - Ultimate Game",
+      "1992-93 Hoops Ultimate Game",
+      "1992-93 Hoops Insert",
+      "1992-93 Hoops"
+    ],
+    "requiredTerms": [
+      "1992",
+      "93",
+      "hoops",
+      "basketball",
+      "ultimate",
+      "game"
+    ],
+    "serialTerms": [],
+    "rarityTier": "Insert",
+    "scarcityScore": 62,
+    "printRun": null,
+    "packOdds": "1:92",
+    "popTotal": 0,
+    "popGem": 0,
+    "matchMode": "set",
+    "sourceUrl": null,
+    "metadata": {
+      "year": "1992-93",
+      "code": "1992_93_hoops_basketball",
+      "sport": "Basketball",
+      "brand": "Hoops",
+      "product": "",
+      "setType": "Insert",
+      "setLine": "Ultimate Game",
+      "parallel": "",
+      "serial": "",
+      "subsetSize": null
+    }
+  },
+  {
+    "id": "1992-93-hoops-basketball-insert-supreme-court",
+    "canonicalTitle": "1992-93 Hoops Basketball - Insert - Supreme Court",
+    "aliases": [
+      "1992-93 Hoops Basketball",
+      "1992-93 Hoops Basketball - Insert - Supreme Court",
+      "1992-93 Hoops Supreme Court",
+      "1992-93 Hoops Insert",
+      "1992-93 Hoops"
+    ],
+    "requiredTerms": [
+      "1992",
+      "93",
+      "hoops",
+      "basketball",
+      "supreme",
+      "court"
+    ],
+    "serialTerms": [],
+    "rarityTier": "Insert",
+    "scarcityScore": 62,
+    "printRun": null,
+    "packOdds": "1:11",
+    "popTotal": 0,
+    "popGem": 0,
+    "matchMode": "set",
+    "sourceUrl": null,
+    "metadata": {
+      "year": "1992-93",
+      "code": "1992_93_hoops_basketball",
+      "sport": "Basketball",
+      "brand": "Hoops",
+      "product": "",
+      "setType": "Insert",
+      "setLine": "Supreme Court",
+      "parallel": "",
+      "serial": "",
+      "subsetSize": null
+    }
+  },
+  {
+    "id": "1992-93-skybox-basketball-insert-olympic-team",
+    "canonicalTitle": "1992-93 Skybox Basketball - Insert - Olympic Team",
+    "aliases": [
+      "1992-93 Skybox Basketball",
+      "1992-93 Skybox Basketball - Insert - Olympic Team",
+      "1992-93 Skybox Olympic Team",
+      "1992-93 Skybox Insert",
+      "1992-93 Skybox"
+    ],
+    "requiredTerms": [
+      "1992",
+      "93",
+      "skybox",
+      "basketball",
+      "olympic",
+      "team"
+    ],
+    "serialTerms": [],
+    "rarityTier": "Insert",
+    "scarcityScore": 62,
+    "printRun": null,
+    "packOdds": "1:6",
+    "popTotal": 0,
+    "popGem": 0,
+    "matchMode": "set",
+    "sourceUrl": null,
+    "metadata": {
+      "year": "1992-93",
+      "code": "1992_93_skybox_basketball",
+      "sport": "Basketball",
+      "brand": "Skybox",
+      "product": "",
+      "setType": "Insert",
+      "setLine": "Olympic Team",
+      "parallel": "",
+      "serial": "",
+      "subsetSize": null
+    }
+  },
+  {
+    "id": "1992-93-topps-staidum-club-basketball-insert-beam-team",
+    "canonicalTitle": "1992-93 Topps Staidum Club Basketball - Insert - Beam Team",
+    "aliases": [
+      "1992-93 Topps Staidum Club Basketball",
+      "1992-93 Topps Staidum Club Basketball - Insert - Beam Team",
+      "1992-93 Topps Staidum Club Beam Team",
+      "1992-93 Topps Staidum Club Insert",
+      "1992-93 Topps Staidum Club"
+    ],
+    "requiredTerms": [
+      "1992",
+      "93",
+      "topps",
+      "staidum",
+      "club",
+      "basketball",
+      "beam",
+      "team"
+    ],
+    "serialTerms": [],
+    "rarityTier": "Insert",
+    "scarcityScore": 62,
+    "printRun": null,
+    "packOdds": "1:36",
+    "popTotal": 0,
+    "popGem": 0,
+    "matchMode": "set",
+    "sourceUrl": null,
+    "metadata": {
+      "year": "1992-93",
+      "code": "1992_93_topps_staidum_club_basketball",
+      "sport": "Basketball",
+      "brand": "Topps",
+      "product": "Staidum Club",
+      "setType": "Insert",
+      "setLine": "Beam Team",
+      "parallel": "",
+      "serial": "",
+      "subsetSize": null
+    }
+  },
+  {
+    "id": "1993-94-topps-finest-basketball-base-refractor",
+    "canonicalTitle": "1993-94 Topps Finest Basketball - Base - Refractor",
+    "aliases": [
+      "1993-94 Topps Finest Basketball",
+      "1993-94 Topps Finest Basketball - Base - Refractor",
+      "1993-94 Topps Finest Base Refractor",
+      "1993-94 Topps Finest Base",
+      "1993-94 Topps Finest Refractor"
+    ],
+    "requiredTerms": [
+      "1993",
+      "94",
+      "topps",
+      "finest",
+      "basketball",
+      "refractor"
+    ],
+    "serialTerms": [],
+    "rarityTier": "Base",
+    "scarcityScore": 62,
+    "printRun": null,
+    "packOdds": "1:9*",
+    "popTotal": 0,
+    "popGem": 0,
+    "matchMode": "set",
+    "sourceUrl": null,
+    "metadata": {
+      "year": "1993-94",
+      "code": "1993_94_topps_finest_basketball",
+      "sport": "Basketball",
+      "brand": "Topps",
+      "product": "Finest",
+      "setType": "Base",
+      "setLine": "Base",
+      "parallel": "Refractor",
+      "serial": "",
+      "subsetSize": null
+    }
+  },
+  {
+    "id": "1993-94-fleer-basketball-insert-all-stars",
+    "canonicalTitle": "1993-94 Fleer Basketball - Insert - All Stars",
+    "aliases": [
+      "1993-94 Fleer Basketball",
+      "1993-94 Fleer Basketball - Insert - All Stars",
+      "1993-94 Fleer All Stars",
+      "1993-94 Fleer Insert",
+      "1993-94 Fleer"
+    ],
+    "requiredTerms": [
+      "1993",
+      "94",
+      "fleer",
+      "basketball",
+      "all",
+      "stars"
+    ],
+    "serialTerms": [],
+    "rarityTier": "Insert",
+    "scarcityScore": 62,
+    "printRun": null,
+    "packOdds": "1:10",
+    "popTotal": 0,
+    "popGem": 0,
+    "matchMode": "set",
+    "sourceUrl": null,
+    "metadata": {
+      "year": "1993-94",
+      "code": "1993_94_fleer_basketball",
+      "sport": "Basketball",
+      "brand": "Fleer",
+      "product": "",
+      "setType": "Insert",
+      "setLine": "All Stars",
+      "parallel": "",
+      "serial": "",
+      "subsetSize": null
+    }
+  },
+  {
+    "id": "1993-94-topps-staidum-club-basketball-insert-beam-team",
+    "canonicalTitle": "1993-94 Topps Staidum Club Basketball - Insert - Beam Team",
+    "aliases": [
+      "1993-94 Topps Staidum Club Basketball",
+      "1993-94 Topps Staidum Club Basketball - Insert - Beam Team",
+      "1993-94 Topps Staidum Club Beam Team",
+      "1993-94 Topps Staidum Club Insert",
+      "1993-94 Topps Staidum Club"
+    ],
+    "requiredTerms": [
+      "1993",
+      "94",
+      "topps",
+      "staidum",
+      "club",
+      "basketball",
+      "beam",
+      "team"
+    ],
+    "serialTerms": [],
+    "rarityTier": "Insert",
+    "scarcityScore": 62,
+    "printRun": null,
+    "packOdds": "1:24",
+    "popTotal": 0,
+    "popGem": 0,
+    "matchMode": "set",
+    "sourceUrl": null,
+    "metadata": {
+      "year": "1993-94",
+      "code": "1993_94_topps_staidum_club_basketball",
+      "sport": "Basketball",
+      "brand": "Topps",
+      "product": "Staidum Club",
+      "setType": "Insert",
+      "setLine": "Beam Team",
+      "parallel": "",
+      "serial": "",
+      "subsetSize": null
+    }
+  },
+  {
     "id": "1993-94-topps-staidum-club-basketball-base-first-day-issue",
     "canonicalTitle": "1993-94 Topps Staidum Club Basketball - Base - First Day Issue",
     "aliases": [
@@ -321976,6 +322378,675 @@
       "parallel": "First Day Issue",
       "serial": "",
       "subsetSize": null
+    }
+  },
+  {
+    "id": "1993-94-upper-deck-special-edition-basketball-base-electric-court",
+    "canonicalTitle": "1993-94 Upper Deck Special Edition Basketball - Base - Electric Court",
+    "aliases": [
+      "1993-94 Upper Deck Special Edition Basketball",
+      "1993-94 Upper Deck Special Edition Basketball - Base - Electric Court",
+      "1993-94 Upper Deck Special Edition Base Electric Court",
+      "1993-94 Upper Deck Special Edition Base",
+      "1993-94 Upper Deck Special Edition Electric Court"
+    ],
+    "requiredTerms": [
+      "1993",
+      "94",
+      "upper",
+      "deck",
+      "special",
+      "edition",
+      "basketball",
+      "electric",
+      "court"
+    ],
+    "serialTerms": [],
+    "rarityTier": "Base",
+    "scarcityScore": 62,
+    "printRun": null,
+    "packOdds": "1:1*",
+    "popTotal": 0,
+    "popGem": 0,
+    "matchMode": "set",
+    "sourceUrl": null,
+    "metadata": {
+      "year": "1993-94",
+      "code": "1993_94_upper_deck_special_edition_basketball",
+      "sport": "Basketball",
+      "brand": "Upper Deck",
+      "product": "Special Edition",
+      "setType": "Base",
+      "setLine": "Base",
+      "parallel": "Electric Court",
+      "serial": "",
+      "subsetSize": null
+    }
+  },
+  {
+    "id": "1993-94-upper-deck-special-edition-basketball-base-electric-court-gold",
+    "canonicalTitle": "1993-94 Upper Deck Special Edition Basketball - Base - Electric Court Gold",
+    "aliases": [
+      "1993-94 Upper Deck Special Edition Basketball",
+      "1993-94 Upper Deck Special Edition Basketball - Base - Electric Court Gold",
+      "1993-94 Upper Deck Special Edition Base Electric Court Gold",
+      "1993-94 Upper Deck Special Edition Base",
+      "1993-94 Upper Deck Special Edition Electric Court Gold"
+    ],
+    "requiredTerms": [
+      "1993",
+      "94",
+      "upper",
+      "deck",
+      "special",
+      "edition",
+      "basketball",
+      "electric",
+      "court",
+      "gold"
+    ],
+    "serialTerms": [],
+    "rarityTier": "Base",
+    "scarcityScore": 62,
+    "printRun": null,
+    "packOdds": "1:36",
+    "popTotal": 0,
+    "popGem": 0,
+    "matchMode": "set",
+    "sourceUrl": null,
+    "metadata": {
+      "year": "1993-94",
+      "code": "1993_94_upper_deck_special_edition_basketball",
+      "sport": "Basketball",
+      "brand": "Upper Deck",
+      "product": "Special Edition",
+      "setType": "Base",
+      "setLine": "Base",
+      "parallel": "Electric Court Gold",
+      "serial": "",
+      "subsetSize": null
+    }
+  },
+  {
+    "id": "1994-95-upper-deck-collectors-choice-basketball-base-gold-signature",
+    "canonicalTitle": "1994-95 Upper Deck Collectors Choice Basketball - Base - Gold Signature",
+    "aliases": [
+      "1994-95 Upper Deck Collectors Choice Basketball",
+      "1994-95 Upper Deck Collectors Choice Basketball - Base - Gold Signature",
+      "1994-95 Upper Deck Collectors Choice Base Gold Signature",
+      "1994-95 Upper Deck Collectors Choice Base",
+      "1994-95 Upper Deck Collectors Choice Gold Signature"
+    ],
+    "requiredTerms": [
+      "1994",
+      "95",
+      "upper",
+      "deck",
+      "collectors",
+      "choice",
+      "basketball",
+      "gold",
+      "signature"
+    ],
+    "serialTerms": [],
+    "rarityTier": "Base",
+    "scarcityScore": 62,
+    "printRun": null,
+    "packOdds": "1:35*",
+    "popTotal": 0,
+    "popGem": 0,
+    "matchMode": "set",
+    "sourceUrl": null,
+    "metadata": {
+      "year": "1994-95",
+      "code": "1994_95_upper_deck_collectors_choice_basketball",
+      "sport": "Basketball",
+      "brand": "Upper Deck",
+      "product": "Collectors Choice",
+      "setType": "Base",
+      "setLine": "Base",
+      "parallel": "Gold Signature",
+      "serial": "",
+      "subsetSize": null
+    }
+  },
+  {
+    "id": "1994-95-topps-finest-basketball-insert-conerstone",
+    "canonicalTitle": "1994-95 Topps Finest Basketball - Insert - Conerstone",
+    "aliases": [
+      "1994-95 Topps Finest Basketball",
+      "1994-95 Topps Finest Basketball - Insert - Conerstone",
+      "1994-95 Topps Finest Conerstone",
+      "1994-95 Topps Finest Insert",
+      "1994-95 Topps Finest"
+    ],
+    "requiredTerms": [
+      "1994",
+      "95",
+      "topps",
+      "finest",
+      "basketball",
+      "conerstone"
+    ],
+    "serialTerms": [],
+    "rarityTier": "Insert",
+    "scarcityScore": 62,
+    "printRun": null,
+    "packOdds": "1:24",
+    "popTotal": 0,
+    "popGem": 0,
+    "matchMode": "set",
+    "sourceUrl": null,
+    "metadata": {
+      "year": "1994-95",
+      "code": "1994_95_topps_finest_basketball",
+      "sport": "Basketball",
+      "brand": "Topps",
+      "product": "Finest",
+      "setType": "Insert",
+      "setLine": "Conerstone",
+      "parallel": "",
+      "serial": "",
+      "subsetSize": null
+    }
+  },
+  {
+    "id": "1994-95-topps-finest-basketball-base-refractor",
+    "canonicalTitle": "1994-95 Topps Finest Basketball - Base - Refractor",
+    "aliases": [
+      "1994-95 Topps Finest Basketball",
+      "1994-95 Topps Finest Basketball - Base - Refractor",
+      "1994-95 Topps Finest Base Refractor",
+      "1994-95 Topps Finest Base",
+      "1994-95 Topps Finest Refractor"
+    ],
+    "requiredTerms": [
+      "1994",
+      "95",
+      "topps",
+      "finest",
+      "basketball",
+      "refractor"
+    ],
+    "serialTerms": [],
+    "rarityTier": "Base",
+    "scarcityScore": 62,
+    "printRun": null,
+    "packOdds": "1:12",
+    "popTotal": 0,
+    "popGem": 0,
+    "matchMode": "set",
+    "sourceUrl": null,
+    "metadata": {
+      "year": "1994-95",
+      "code": "1994_95_topps_finest_basketball",
+      "sport": "Basketball",
+      "brand": "Topps",
+      "product": "Finest",
+      "setType": "Base",
+      "setLine": "Base",
+      "parallel": "Refractor",
+      "serial": "",
+      "subsetSize": null
+    }
+  },
+  {
+    "id": "1994-95-fleer-flair-basketball-insert-hot-numbers",
+    "canonicalTitle": "1994-95 Fleer Flair Basketball - Insert - Hot Numbers",
+    "aliases": [
+      "1994-95 Fleer Flair Basketball",
+      "1994-95 Fleer Flair Basketball - Insert - Hot Numbers",
+      "1994-95 Fleer Flair Hot Numbers",
+      "1994-95 Fleer Flair Insert",
+      "1994-95 Fleer Flair"
+    ],
+    "requiredTerms": [
+      "1994",
+      "95",
+      "fleer",
+      "flair",
+      "basketball",
+      "hot",
+      "numbers"
+    ],
+    "serialTerms": [],
+    "rarityTier": "Insert",
+    "scarcityScore": 62,
+    "printRun": null,
+    "packOdds": "1:6",
+    "popTotal": 0,
+    "popGem": 0,
+    "matchMode": "set",
+    "sourceUrl": null,
+    "metadata": {
+      "year": "1994-95",
+      "code": "1994_95_fleer_flair_basketball",
+      "sport": "Basketball",
+      "brand": "Fleer",
+      "product": "Flair",
+      "setType": "Insert",
+      "setLine": "Hot Numbers",
+      "parallel": "",
+      "serial": "",
+      "subsetSize": null
+    }
+  },
+  {
+    "id": "1994-95-fleer-flair-basketball-insert-play-maker",
+    "canonicalTitle": "1994-95 Fleer Flair Basketball - Insert - Play Maker",
+    "aliases": [
+      "1994-95 Fleer Flair Basketball",
+      "1994-95 Fleer Flair Basketball - Insert - Play Maker",
+      "1994-95 Fleer Flair Play Maker",
+      "1994-95 Fleer Flair Insert",
+      "1994-95 Fleer Flair"
+    ],
+    "requiredTerms": [
+      "1994",
+      "95",
+      "fleer",
+      "flair",
+      "basketball",
+      "play",
+      "maker"
+    ],
+    "serialTerms": [],
+    "rarityTier": "Insert",
+    "scarcityScore": 62,
+    "printRun": null,
+    "packOdds": "1:4",
+    "popTotal": 0,
+    "popGem": 0,
+    "matchMode": "set",
+    "sourceUrl": null,
+    "metadata": {
+      "year": "1994-95",
+      "code": "1994_95_fleer_flair_basketball",
+      "sport": "Basketball",
+      "brand": "Fleer",
+      "product": "Flair",
+      "setType": "Insert",
+      "setLine": "Play Maker",
+      "parallel": "",
+      "serial": "",
+      "subsetSize": null
+    }
+  },
+  {
+    "id": "1994-95-upper-deck-sp-basketball-base-die-cut",
+    "canonicalTitle": "1994-95 Upper Deck SP Basketball - Base - Die-Cut",
+    "aliases": [
+      "1994-95 Upper Deck SP Basketball",
+      "1994-95 Upper Deck SP Basketball - Base - Die-Cut",
+      "1994-95 Upper Deck SP Base Die-Cut",
+      "1994-95 Upper Deck SP Base",
+      "1994-95 Upper Deck SP Die-Cut"
+    ],
+    "requiredTerms": [
+      "1994",
+      "95",
+      "upper",
+      "deck",
+      "sp",
+      "basketball",
+      "die",
+      "cut"
+    ],
+    "serialTerms": [],
+    "rarityTier": "Base",
+    "scarcityScore": 62,
+    "printRun": null,
+    "packOdds": "1:1",
+    "popTotal": 0,
+    "popGem": 0,
+    "matchMode": "set",
+    "sourceUrl": null,
+    "metadata": {
+      "year": "1994-95",
+      "code": "1994_95_upper_deck_sp_basketball",
+      "sport": "Basketball",
+      "brand": "Upper Deck",
+      "product": "SP",
+      "setType": "Base",
+      "setLine": "Base",
+      "parallel": "Die-Cut",
+      "serial": "",
+      "subsetSize": null
+    }
+  },
+  {
+    "id": "1994-95-upper-deck-sp-championship-basketball-insert-playoff-heroes-die-cut",
+    "canonicalTitle": "1994-95 Upper Deck SP Championship Basketball - Insert - Playoff Heroes - Die-Cut",
+    "aliases": [
+      "1994-95 Upper Deck SP Championship Basketball",
+      "1994-95 Upper Deck SP Championship Basketball - Insert - Playoff Heroes - Die-Cut",
+      "1994-95 Upper Deck SP Championship Playoff Heroes Die-Cut",
+      "1994-95 Upper Deck SP Championship Insert",
+      "1994-95 Upper Deck SP Championship Die-Cut"
+    ],
+    "requiredTerms": [
+      "1994",
+      "95",
+      "upper",
+      "deck",
+      "sp",
+      "championship",
+      "basketball",
+      "playoff",
+      "heroes",
+      "die",
+      "cut"
+    ],
+    "serialTerms": [],
+    "rarityTier": "Insert",
+    "scarcityScore": 62,
+    "printRun": null,
+    "packOdds": "1:225",
+    "popTotal": 0,
+    "popGem": 0,
+    "matchMode": "set",
+    "sourceUrl": null,
+    "metadata": {
+      "year": "1994-95",
+      "code": "1994_95_upper_deck_sp_championship_basketball",
+      "sport": "Basketball",
+      "brand": "Upper Deck",
+      "product": "SP Championship",
+      "setType": "Insert",
+      "setLine": "Playoff Heroes",
+      "parallel": "Die-Cut",
+      "serial": "",
+      "subsetSize": null
+    }
+  },
+  {
+    "id": "1994-95-upper-deck-sp-championship-basketball-insert-playoff-heroes",
+    "canonicalTitle": "1994-95 Upper Deck SP Championship Basketball - Insert - Playoff Heroes",
+    "aliases": [
+      "1994-95 Upper Deck SP Championship Basketball",
+      "1994-95 Upper Deck SP Championship Basketball - Insert - Playoff Heroes",
+      "1994-95 Upper Deck SP Championship Playoff Heroes",
+      "1994-95 Upper Deck SP Championship Insert",
+      "1994-95 Upper Deck SP Championship"
+    ],
+    "requiredTerms": [
+      "1994",
+      "95",
+      "upper",
+      "deck",
+      "sp",
+      "championship",
+      "basketball",
+      "playoff",
+      "heroes"
+    ],
+    "serialTerms": [],
+    "rarityTier": "Insert",
+    "scarcityScore": 62,
+    "printRun": null,
+    "packOdds": "1:15",
+    "popTotal": 0,
+    "popGem": 0,
+    "matchMode": "set",
+    "sourceUrl": null,
+    "metadata": {
+      "year": "1994-95",
+      "code": "1994_95_upper_deck_sp_championship_basketball",
+      "sport": "Basketball",
+      "brand": "Upper Deck",
+      "product": "SP Championship",
+      "setType": "Insert",
+      "setLine": "Playoff Heroes",
+      "parallel": "",
+      "serial": "",
+      "subsetSize": null
+    }
+  },
+  {
+    "id": "1994-95-topps-staidum-club-basketball-base-first-day-issue",
+    "canonicalTitle": "1994-95 Topps Staidum Club Basketball - Base - First Day Issue",
+    "aliases": [
+      "1994-95 Topps Staidum Club Basketball",
+      "1994-95 Topps Staidum Club Basketball - Base - First Day Issue",
+      "1994-95 Topps Staidum Club Base First Day Issue",
+      "1994-95 Topps Staidum Club Base",
+      "1994-95 Topps Staidum Club First Day Issue"
+    ],
+    "requiredTerms": [
+      "1994",
+      "95",
+      "topps",
+      "staidum",
+      "club",
+      "basketball",
+      "first",
+      "day",
+      "issue"
+    ],
+    "serialTerms": [],
+    "rarityTier": "Base",
+    "scarcityScore": 62,
+    "printRun": null,
+    "packOdds": "1:24",
+    "popTotal": 0,
+    "popGem": 0,
+    "matchMode": "set",
+    "sourceUrl": null,
+    "metadata": {
+      "year": "1994-95",
+      "code": "1994_95_topps_staidum_club_basketball",
+      "sport": "Basketball",
+      "brand": "Topps",
+      "product": "Staidum Club",
+      "setType": "Base",
+      "setLine": "Base",
+      "parallel": "First Day Issue",
+      "serial": "",
+      "subsetSize": null
+    }
+  },
+  {
+    "id": "1994-95-upper-deck-basketball-insert-special-edition-gold",
+    "canonicalTitle": "1994-95 Upper Deck Basketball - Insert - Special Edition - Gold",
+    "aliases": [
+      "1994-95 Upper Deck Basketball",
+      "1994-95 Upper Deck Basketball - Insert - Special Edition - Gold",
+      "1994-95 Upper Deck Special Edition Gold",
+      "1994-95 Upper Deck Insert",
+      "1994-95 Upper Deck Gold"
+    ],
+    "requiredTerms": [
+      "1994",
+      "95",
+      "upper",
+      "deck",
+      "basketball",
+      "special",
+      "edition",
+      "gold"
+    ],
+    "serialTerms": [],
+    "rarityTier": "Insert",
+    "scarcityScore": 62,
+    "printRun": null,
+    "packOdds": "1:35",
+    "popTotal": 0,
+    "popGem": 0,
+    "matchMode": "set",
+    "sourceUrl": null,
+    "metadata": {
+      "year": "1994-95",
+      "code": "1994_95_upper_deck_basketball",
+      "sport": "Basketball",
+      "brand": "Upper Deck",
+      "product": "",
+      "setType": "Insert",
+      "setLine": "Special Edition",
+      "parallel": "Gold",
+      "serial": "",
+      "subsetSize": null
+    }
+  },
+  {
+    "id": "1998-99-fleer-tradition-basketball-insert-timeless-memories",
+    "canonicalTitle": "1998-99 Fleer Tradition Basketball - Insert - Timeless Memories",
+    "aliases": [
+      "1998-99 Fleer Tradition Basketball",
+      "1998-99 Fleer Tradition Basketball - Insert - Timeless Memories",
+      "1998-99 Fleer Tradition Timeless Memories",
+      "1998-99 Fleer Tradition Insert",
+      "1998-99 Fleer Tradition"
+    ],
+    "requiredTerms": [
+      "1998",
+      "99",
+      "fleer",
+      "tradition",
+      "basketball",
+      "timeless",
+      "memories"
+    ],
+    "serialTerms": [],
+    "rarityTier": "Insert",
+    "scarcityScore": 62,
+    "printRun": null,
+    "packOdds": "1:12",
+    "popTotal": 0,
+    "popGem": 0,
+    "matchMode": "set",
+    "sourceUrl": null,
+    "metadata": {
+      "year": "1998-99",
+      "code": "1998_99_fleer_tradition_basketball",
+      "sport": "Basketball",
+      "brand": "Fleer",
+      "product": "Tradition",
+      "setType": "Insert",
+      "setLine": "Timeless Memories",
+      "parallel": "",
+      "serial": "",
+      "subsetSize": 10
+    }
+  },
+  {
+    "id": "1998-99-fleer-tradition-basketball-insert-great-expecations",
+    "canonicalTitle": "1998-99 Fleer Tradition Basketball - Insert - Great Expecations",
+    "aliases": [
+      "1998-99 Fleer Tradition Basketball",
+      "1998-99 Fleer Tradition Basketball - Insert - Great Expecations",
+      "1998-99 Fleer Tradition Great Expecations",
+      "1998-99 Fleer Tradition Insert",
+      "1998-99 Fleer Tradition"
+    ],
+    "requiredTerms": [
+      "1998",
+      "99",
+      "fleer",
+      "tradition",
+      "basketball",
+      "great",
+      "expecations"
+    ],
+    "serialTerms": [],
+    "rarityTier": "Insert",
+    "scarcityScore": 62,
+    "printRun": null,
+    "packOdds": "1:20",
+    "popTotal": 0,
+    "popGem": 0,
+    "matchMode": "set",
+    "sourceUrl": null,
+    "metadata": {
+      "year": "1998-99",
+      "code": "1998_99_fleer_tradition_basketball",
+      "sport": "Basketball",
+      "brand": "Fleer",
+      "product": "Tradition",
+      "setType": "Insert",
+      "setLine": "Great Expecations",
+      "parallel": "",
+      "serial": "",
+      "subsetSize": 10
+    }
+  },
+  {
+    "id": "1998-99-fleer-tradition-basketball-insert-rookie-rewind",
+    "canonicalTitle": "1998-99 Fleer Tradition Basketball - Insert - Rookie Rewind",
+    "aliases": [
+      "1998-99 Fleer Tradition Basketball",
+      "1998-99 Fleer Tradition Basketball - Insert - Rookie Rewind",
+      "1998-99 Fleer Tradition Rookie Rewind",
+      "1998-99 Fleer Tradition Insert",
+      "1998-99 Fleer Tradition"
+    ],
+    "requiredTerms": [
+      "1998",
+      "99",
+      "fleer",
+      "tradition",
+      "basketball",
+      "rewind"
+    ],
+    "serialTerms": [],
+    "rarityTier": "Insert",
+    "scarcityScore": 62,
+    "printRun": null,
+    "packOdds": "1:36",
+    "popTotal": 0,
+    "popGem": 0,
+    "matchMode": "set",
+    "sourceUrl": null,
+    "metadata": {
+      "year": "1998-99",
+      "code": "1998_99_fleer_tradition_basketball",
+      "sport": "Basketball",
+      "brand": "Fleer",
+      "product": "Tradition",
+      "setType": "Insert",
+      "setLine": "Rookie Rewind",
+      "parallel": "",
+      "serial": "",
+      "subsetSize": 10
+    }
+  },
+  {
+    "id": "1998-99-fleer-tradition-basketball-insert-electrifying",
+    "canonicalTitle": "1998-99 Fleer Tradition Basketball - Insert - Electrifying",
+    "aliases": [
+      "1998-99 Fleer Tradition Basketball",
+      "1998-99 Fleer Tradition Basketball - Insert - Electrifying",
+      "1998-99 Fleer Tradition Electrifying",
+      "1998-99 Fleer Tradition Insert",
+      "1998-99 Fleer Tradition"
+    ],
+    "requiredTerms": [
+      "1998",
+      "99",
+      "fleer",
+      "tradition",
+      "basketball",
+      "electrifying"
+    ],
+    "serialTerms": [],
+    "rarityTier": "Insert",
+    "scarcityScore": 62,
+    "printRun": null,
+    "packOdds": "1:72",
+    "popTotal": 0,
+    "popGem": 0,
+    "matchMode": "set",
+    "sourceUrl": null,
+    "metadata": {
+      "year": "1998-99",
+      "code": "1998_99_fleer_tradition_basketball",
+      "sport": "Basketball",
+      "brand": "Fleer",
+      "product": "Tradition",
+      "setType": "Insert",
+      "setLine": "Electrifying",
+      "parallel": "",
+      "serial": "",
+      "subsetSize": 10
     }
   },
   {
@@ -322023,6 +323094,47 @@
     }
   },
   {
+    "id": "1998-99-fleer-tradition-basketball-insert-lucky-13",
+    "canonicalTitle": "1998-99 Fleer Tradition Basketball - Insert - Lucky 13",
+    "aliases": [
+      "1998-99 Fleer Tradition Basketball",
+      "1998-99 Fleer Tradition Basketball - Insert - Lucky 13",
+      "1998-99 Fleer Tradition Lucky 13",
+      "1998-99 Fleer Tradition Insert",
+      "1998-99 Fleer Tradition"
+    ],
+    "requiredTerms": [
+      "1998",
+      "99",
+      "fleer",
+      "tradition",
+      "basketball",
+      "lucky",
+      "13"
+    ],
+    "serialTerms": [],
+    "rarityTier": "Insert",
+    "scarcityScore": 62,
+    "printRun": null,
+    "packOdds": "1:96",
+    "popTotal": 0,
+    "popGem": 0,
+    "matchMode": "set",
+    "sourceUrl": null,
+    "metadata": {
+      "year": "1998-99",
+      "code": "1998_99_fleer_tradition_basketball",
+      "sport": "Basketball",
+      "brand": "Fleer",
+      "product": "Tradition",
+      "setType": "Insert",
+      "setLine": "Lucky 13",
+      "parallel": "",
+      "serial": "",
+      "subsetSize": 13
+    }
+  },
+  {
     "id": "1998-99-fleer-tradition-basketball-parallel-classic-61",
     "canonicalTitle": "1998-99 Fleer Tradition Basketball - Parallel - Classic '61",
     "aliases": [
@@ -322064,6 +323176,360 @@
       "parallel": "",
       "serial": "61",
       "subsetSize": 147
+    }
+  },
+  {
+    "id": "1998-99-fleer-tradition-basketball-parallel-vintage-61",
+    "canonicalTitle": "1998-99 Fleer Tradition Basketball - Parallel - Vintage '61",
+    "aliases": [
+      "1998-99 Fleer Tradition Basketball",
+      "1998-99 Fleer Tradition Basketball - Parallel - Vintage '61",
+      "1998-99 Fleer Tradition Vintage '61",
+      "1998-99 Fleer Tradition Parallel",
+      "1998-99 Fleer Tradition"
+    ],
+    "requiredTerms": [
+      "1998",
+      "99",
+      "fleer",
+      "tradition",
+      "basketball",
+      "vintage",
+      "61"
+    ],
+    "serialTerms": [],
+    "rarityTier": "Parallel",
+    "scarcityScore": 62,
+    "printRun": null,
+    "packOdds": "1:1",
+    "popTotal": 0,
+    "popGem": 0,
+    "matchMode": "set",
+    "sourceUrl": null,
+    "metadata": {
+      "year": "1998-99",
+      "code": "1998_99_fleer_tradition_basketball",
+      "sport": "Basketball",
+      "brand": "Fleer",
+      "product": "Tradition",
+      "setType": "Parallel",
+      "setLine": "Vintage '61",
+      "parallel": "",
+      "serial": "",
+      "subsetSize": 147
+    }
+  },
+  {
+    "id": "1993-topps-finest-baseball-base-refractor",
+    "canonicalTitle": "1993 Topps Finest Baseball - Base - Refractor",
+    "aliases": [
+      "1993 Topps Finest Baseball",
+      "1993 Topps Finest Baseball - Base - Refractor",
+      "1993 Topps Finest Base Refractor",
+      "1993 Topps Finest Base",
+      "1993 Topps Finest Refractor"
+    ],
+    "requiredTerms": [
+      "1993",
+      "topps",
+      "finest",
+      "baseball",
+      "refractor"
+    ],
+    "serialTerms": [],
+    "rarityTier": "Base",
+    "scarcityScore": 62,
+    "printRun": null,
+    "packOdds": "1:15",
+    "popTotal": 0,
+    "popGem": 0,
+    "matchMode": "set",
+    "sourceUrl": null,
+    "metadata": {
+      "year": "1993",
+      "code": "1993_topps_finest_baseball",
+      "sport": "Baseball",
+      "brand": "Topps",
+      "product": "Finest",
+      "setType": "Base",
+      "setLine": "Base",
+      "parallel": "Refractor",
+      "serial": "",
+      "subsetSize": 199
+    }
+  },
+  {
+    "id": "1994-bowmans-best-baseball-base-refractor",
+    "canonicalTitle": "1994 Bowmans Best Baseball - Base - Refractor",
+    "aliases": [
+      "1994 Bowmans Best Baseball",
+      "1994 Bowmans Best Baseball - Base - Refractor",
+      "1994 Bowmans Best Base Refractor",
+      "1994 Bowmans Best Base",
+      "1994 Bowmans Best Refractor"
+    ],
+    "requiredTerms": [
+      "1994",
+      "bowmans",
+      "best",
+      "baseball",
+      "refractor"
+    ],
+    "serialTerms": [],
+    "rarityTier": "Base",
+    "scarcityScore": 62,
+    "printRun": null,
+    "packOdds": "1:9",
+    "popTotal": 0,
+    "popGem": 0,
+    "matchMode": "set",
+    "sourceUrl": null,
+    "metadata": {
+      "year": "1994",
+      "code": "1994_bowmans_best_baseball",
+      "sport": "Baseball",
+      "brand": "Bowmans",
+      "product": "Best",
+      "setType": "Base",
+      "setLine": "Base",
+      "parallel": "Refractor",
+      "serial": "",
+      "subsetSize": 200
+    }
+  },
+  {
+    "id": "1994-topps-finest-baseball-base-refractor",
+    "canonicalTitle": "1994 Topps Finest Baseball - Base - Refractor",
+    "aliases": [
+      "1994 Topps Finest Baseball",
+      "1994 Topps Finest Baseball - Base - Refractor",
+      "1994 Topps Finest Base Refractor",
+      "1994 Topps Finest Base",
+      "1994 Topps Finest Refractor"
+    ],
+    "requiredTerms": [
+      "1994",
+      "topps",
+      "finest",
+      "baseball",
+      "refractor"
+    ],
+    "serialTerms": [],
+    "rarityTier": "Base",
+    "scarcityScore": 62,
+    "printRun": null,
+    "packOdds": "1:9",
+    "popTotal": 0,
+    "popGem": 0,
+    "matchMode": "set",
+    "sourceUrl": null,
+    "metadata": {
+      "year": "1994",
+      "code": "1994_topps_finest_baseball",
+      "sport": "Baseball",
+      "brand": "Topps",
+      "product": "Finest",
+      "setType": "Base",
+      "setLine": "Base",
+      "parallel": "Refractor",
+      "serial": "",
+      "subsetSize": 440
+    }
+  },
+  {
+    "id": "1995-topps-finest-baseball-base-refractor",
+    "canonicalTitle": "1995 Topps Finest Baseball - Base - Refractor",
+    "aliases": [
+      "1995 Topps Finest Baseball",
+      "1995 Topps Finest Baseball - Base - Refractor",
+      "1995 Topps Finest Base Refractor",
+      "1995 Topps Finest Base",
+      "1995 Topps Finest Refractor"
+    ],
+    "requiredTerms": [
+      "1995",
+      "topps",
+      "finest",
+      "baseball",
+      "refractor"
+    ],
+    "serialTerms": [],
+    "rarityTier": "Base",
+    "scarcityScore": 62,
+    "printRun": null,
+    "packOdds": "1:12",
+    "popTotal": 0,
+    "popGem": 0,
+    "matchMode": "set",
+    "sourceUrl": null,
+    "metadata": {
+      "year": "1995",
+      "code": "1995_topps_finest_baseball",
+      "sport": "Baseball",
+      "brand": "Topps",
+      "product": "Finest",
+      "setType": "Base",
+      "setLine": "Base",
+      "parallel": "Refractor",
+      "serial": "",
+      "subsetSize": 330
+    }
+  },
+  {
+    "id": "1994-topps-finest-football-base-refractor",
+    "canonicalTitle": "1994 Topps Finest Football - Base - Refractor",
+    "aliases": [
+      "1994 Topps Finest Football",
+      "1994 Topps Finest Football - Base - Refractor",
+      "1994 Topps Finest Base Refractor",
+      "1994 Topps Finest Base",
+      "1994 Topps Finest Refractor"
+    ],
+    "requiredTerms": [
+      "1994",
+      "topps",
+      "finest",
+      "football",
+      "refractor"
+    ],
+    "serialTerms": [],
+    "rarityTier": "Base",
+    "scarcityScore": 62,
+    "printRun": null,
+    "packOdds": "1:9",
+    "popTotal": 0,
+    "popGem": 0,
+    "matchMode": "set",
+    "sourceUrl": null,
+    "metadata": {
+      "year": "1994",
+      "code": "1994_topps_finest_football",
+      "sport": "Football",
+      "brand": "Topps",
+      "product": "Finest",
+      "setType": "Base",
+      "setLine": "Base",
+      "parallel": "Refractor",
+      "serial": "",
+      "subsetSize": 220
+    }
+  },
+  {
+    "id": "1994-bowmans-best-football-base-refractor",
+    "canonicalTitle": "1994 Bowmans Best Football - Base - Refractor",
+    "aliases": [
+      "1994 Bowmans Best Football",
+      "1994 Bowmans Best Football - Base - Refractor",
+      "1995 Bowmans Best Base Refractor",
+      "1995 Bowmans Best Base",
+      "1995 Bowmans Best Refractor"
+    ],
+    "requiredTerms": [
+      "1994",
+      "bowmans",
+      "best",
+      "football",
+      "refractor"
+    ],
+    "serialTerms": [],
+    "rarityTier": "Base",
+    "scarcityScore": 62,
+    "printRun": null,
+    "packOdds": "1:6",
+    "popTotal": 0,
+    "popGem": 0,
+    "matchMode": "set",
+    "sourceUrl": null,
+    "metadata": {
+      "year": "1995",
+      "code": "1994_bowmans_best_football",
+      "sport": "Football",
+      "brand": "Bowmans",
+      "product": "Best",
+      "setType": "Base",
+      "setLine": "Base",
+      "parallel": "Refractor",
+      "serial": "",
+      "subsetSize": 180
+    }
+  },
+  {
+    "id": "1995-topps-finest-football-base-refractor",
+    "canonicalTitle": "1995 Topps Finest Football - Base - Refractor",
+    "aliases": [
+      "1995 Topps Finest Football",
+      "1995 Topps Finest Football - Base - Refractor",
+      "1995 Topps Finest Base Refractor",
+      "1995 Topps Finest Base",
+      "1995 Topps Finest Refractor"
+    ],
+    "requiredTerms": [
+      "1995",
+      "topps",
+      "finest",
+      "football",
+      "refractor"
+    ],
+    "serialTerms": [],
+    "rarityTier": "Base",
+    "scarcityScore": 62,
+    "printRun": null,
+    "packOdds": "1:12",
+    "popTotal": 0,
+    "popGem": 0,
+    "matchMode": "set",
+    "sourceUrl": null,
+    "metadata": {
+      "year": "1995",
+      "code": "1995_topps_finest_football",
+      "sport": "Football",
+      "brand": "Topps",
+      "product": "Finest",
+      "setType": "Base",
+      "setLine": "Base",
+      "parallel": "Refractor",
+      "serial": "",
+      "subsetSize": 275
+    }
+  },
+  {
+    "id": "1995-topps-finest-football-insert-booster-refractor",
+    "canonicalTitle": "1995 Topps Finest Football - Insert - Booster - Refractor",
+    "aliases": [
+      "1995 Topps Finest Football",
+      "1995 Topps Finest Football - Insert - Booster - Refractor",
+      "1995 Topps Finest Booster Refractor",
+      "1995 Topps Finest Insert",
+      "1995 Topps Finest Refractor"
+    ],
+    "requiredTerms": [
+      "1995",
+      "topps",
+      "finest",
+      "football",
+      "booster",
+      "refractor"
+    ],
+    "serialTerms": [],
+    "rarityTier": "Insert",
+    "scarcityScore": 62,
+    "printRun": null,
+    "packOdds": "1:12",
+    "popTotal": 0,
+    "popGem": 0,
+    "matchMode": "set",
+    "sourceUrl": null,
+    "metadata": {
+      "year": "1995",
+      "code": "1995_topps_finest_football",
+      "sport": "Football",
+      "brand": "Topps",
+      "product": "Finest",
+      "setType": "Insert",
+      "setLine": "Booster",
+      "parallel": "Refractor",
+      "serial": "",
+      "subsetSize": 275
     }
   },
   {
