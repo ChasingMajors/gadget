@@ -5,11 +5,7 @@ compatibility_date = "2026-05-22"
 [observability]
 enabled = true
 
-# Create with:
-# wrangler d1 create cm-rarity-prod
-# Then replace database_id and run:
-# wrangler d1 execute cm-rarity-prod --remote --file=backend/schema.sql
-# [[d1_databases]]
-# binding = "CM_DB"
-# database_name = "cm-rarity-prod"
-# database_id = "REPLACE_WITH_CLOUDFLARE_D1_DATABASE_ID"
+[[d1_databases]]
+binding = "CM_DB"
+database_name = "cm-rarity-prod"
+database_id = "5a66493d-f2e7-4ee5-8ebb-62eb1fb497ef"
