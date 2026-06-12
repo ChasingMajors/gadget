@@ -67,6 +67,12 @@ Local equivalent:
 CM_PRV_CSV_URL="https://docs.google.com/spreadsheets/d/.../export?format=csv&gid=0" node scripts/sync-prv-from-url.js
 ```
 
+## Operator Console
+
+Open `prv-sync.html` for a guided page that can trigger the GitHub `Sync PRV data` workflow, show recent workflow runs, check the live Worker health endpoint, and test a live `/rarity` lookup.
+
+The page does not store private tokens. Paste a GitHub token with workflow permission only when you need to run or inspect the sync.
+
 ## Trial Loop
 
 1. Search eBay for a player/product.

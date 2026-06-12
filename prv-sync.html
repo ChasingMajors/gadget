@@ -1,0 +1,823 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PRV Sync Console | Chasing Majors</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f6f7f9;
+      --panel: #ffffff;
+      --ink: #18202f;
+      --muted: #667085;
+      --line: #d9dee8;
+      --soft: #eef2f6;
+      --good: #147447;
+      --warn: #966514;
+      --bad: #b42318;
+      --brand: #174f63;
+      --accent: #8b5a2b;
+      --focus: #2563eb;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      margin: 0;
+    }
+
+    a {
+      color: var(--brand);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    button,
+    input,
+    textarea {
+      font: inherit;
+    }
+
+    button {
+      align-items: center;
+      background: var(--ink);
+      border: 1px solid var(--ink);
+      border-radius: 7px;
+      color: white;
+      cursor: pointer;
+      display: inline-flex;
+      font-weight: 700;
+      gap: 8px;
+      min-height: 40px;
+      padding: 0 14px;
+    }
+
+    button.secondary {
+      background: var(--panel);
+      border-color: var(--line);
+      color: var(--ink);
+    }
+
+    button.ghost {
+      background: transparent;
+      border-color: transparent;
+      color: var(--brand);
+      min-height: 34px;
+      padding: 0 8px;
+    }
+
+    button:disabled {
+      cursor: not-allowed;
+      opacity: 0.55;
+    }
+
+    input,
+    textarea {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      color: var(--ink);
+      min-height: 40px;
+      outline: none;
+      padding: 9px 10px;
+      width: 100%;
+    }
+
+    textarea {
+      min-height: 86px;
+      resize: vertical;
+    }
+
+    input:focus,
+    textarea:focus,
+    button:focus-visible {
+      border-color: var(--focus);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.14);
+    }
+
+    header {
+      background: #121923;
+      color: white;
+      padding: 18px 24px;
+    }
+
+    .headerInner,
+    main {
+      margin: 0 auto;
+      max-width: 1160px;
+    }
+
+    .headerInner {
+      align-items: center;
+      display: flex;
+      gap: 18px;
+      justify-content: space-between;
+    }
+
+    .brand {
+      min-width: 0;
+    }
+
+    .brand small {
+      color: #b9c4d2;
+      display: block;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      font-size: 24px;
+      line-height: 1.2;
+      margin: 4px 0 0;
+    }
+
+    .topLinks {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: flex-end;
+    }
+
+    .topLinks a {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 7px;
+      color: white;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 8px 10px;
+      text-decoration: none;
+    }
+
+    main {
+      padding: 22px 24px 42px;
+    }
+
+    .statusGrid {
+      display: grid;
+      gap: 12px;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      margin-bottom: 18px;
+    }
+
+    .metric {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      min-height: 88px;
+      padding: 14px;
+    }
+
+    .metric span {
+      color: var(--muted);
+      display: block;
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+
+    .metric strong {
+      display: block;
+      font-size: 15px;
+      line-height: 1.35;
+      overflow-wrap: anywhere;
+    }
+
+    .layout {
+      display: grid;
+      gap: 18px;
+      grid-template-columns: minmax(0, 1fr) 360px;
+    }
+
+    section,
+    aside {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+
+    section {
+      margin-bottom: 18px;
+    }
+
+    .sectionHead {
+      align-items: center;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      gap: 12px;
+      justify-content: space-between;
+      padding: 14px 16px;
+    }
+
+    h2 {
+      font-size: 16px;
+      line-height: 1.25;
+      margin: 0;
+    }
+
+    .body {
+      padding: 16px;
+    }
+
+    .grid2 {
+      display: grid;
+      gap: 14px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .field {
+      display: grid;
+      gap: 7px;
+    }
+
+    label {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .note {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+      margin: 10px 0 0;
+    }
+
+    .result {
+      background: #101826;
+      border-radius: 8px;
+      color: #dbe7ff;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size: 12px;
+      line-height: 1.45;
+      margin-top: 14px;
+      max-height: 320px;
+      overflow: auto;
+      padding: 12px;
+      white-space: pre-wrap;
+    }
+
+    .runList {
+      display: grid;
+      gap: 10px;
+    }
+
+    .runItem {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      display: grid;
+      gap: 8px;
+      padding: 12px;
+    }
+
+    .runMeta {
+      align-items: center;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: space-between;
+    }
+
+    .pill {
+      border-radius: 999px;
+      display: inline-flex;
+      font-size: 12px;
+      font-weight: 800;
+      line-height: 1;
+      padding: 6px 8px;
+      text-transform: uppercase;
+    }
+
+    .pill.good {
+      background: #dcfce7;
+      color: var(--good);
+    }
+
+    .pill.warn {
+      background: #fef3c7;
+      color: var(--warn);
+    }
+
+    .pill.bad {
+      background: #fee4e2;
+      color: var(--bad);
+    }
+
+    .pill.neutral {
+      background: var(--soft);
+      color: var(--muted);
+    }
+
+    aside {
+      align-self: start;
+      overflow: hidden;
+    }
+
+    .checklist {
+      counter-reset: step;
+      display: grid;
+      gap: 0;
+      margin: 0;
+      padding: 0;
+    }
+
+    .checklist li {
+      align-items: start;
+      border-bottom: 1px solid var(--line);
+      display: grid;
+      gap: 4px;
+      grid-template-columns: 28px 1fr;
+      list-style: none;
+      padding: 13px 16px;
+    }
+
+    .checklist li::before {
+      align-items: center;
+      background: var(--soft);
+      border-radius: 50%;
+      color: var(--brand);
+      content: counter(step);
+      counter-increment: step;
+      display: inline-flex;
+      font-size: 12px;
+      font-weight: 800;
+      height: 24px;
+      justify-content: center;
+      width: 24px;
+    }
+
+    .checklist strong {
+      display: block;
+      font-size: 14px;
+      line-height: 1.3;
+    }
+
+    .checklist span {
+      color: var(--muted);
+      display: block;
+      font-size: 12px;
+      line-height: 1.4;
+      margin-top: 2px;
+    }
+
+    .inline {
+      align-items: center;
+      display: flex;
+      gap: 10px;
+    }
+
+    .inline input {
+      flex: 1;
+    }
+
+    @media (max-width: 900px) {
+      .headerInner,
+      .layout {
+        display: block;
+      }
+
+      .topLinks {
+        justify-content: flex-start;
+        margin-top: 14px;
+      }
+
+      .statusGrid,
+      .grid2 {
+        grid-template-columns: 1fr;
+      }
+
+      aside {
+        margin-top: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="headerInner">
+      <div class="brand">
+        <small>Chasing Majors</small>
+        <h1>PRV Sync Console</h1>
+      </div>
+      <nav class="topLinks" aria-label="Quick links">
+        <a id="actions-link" href="https://github.com/ChasingMajors/gadget/actions/workflows/sync-prv.yml" target="_blank" rel="noreferrer">GitHub Action</a>
+        <a href="https://dash.cloudflare.com/83cd48829e92ac6e4e15a25cb60cdf80/workers/services/view/cm-rarity-api/production/settings" target="_blank" rel="noreferrer">Cloudflare Worker</a>
+        <a href="https://dash.cloudflare.com/83cd48829e92ac6e4e15a25cb60cdf80/workers/d1/databases/5a66493d-f2e7-4ee5-8ebb-62eb1fb497ef/metrics" target="_blank" rel="noreferrer">D1 Database</a>
+        <a href="https://chromewebstore.google.com/detail/cm-rarity-gadget/mahhbgamdcjeihedomhknlmlmgfdhpog?authuser=0&hl=en" target="_blank" rel="noreferrer">Chrome Store</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="statusGrid" aria-label="System status">
+      <div class="metric">
+        <span>Worker</span>
+        <strong id="worker-status">Not checked</strong>
+      </div>
+      <div class="metric">
+        <span>Latest Sync</span>
+        <strong id="latest-sync">Not checked</strong>
+      </div>
+      <div class="metric">
+        <span>Dataset Test</span>
+        <strong id="lookup-status">Not checked</strong>
+      </div>
+      <div class="metric">
+        <span>Repo</span>
+        <strong id="repo-label">ChasingMajors/gadget</strong>
+      </div>
+    </div>
+
+    <div class="layout">
+      <div>
+        <section>
+          <div class="sectionHead">
+            <h2>Setup</h2>
+            <button class="ghost" id="save-settings" type="button">Save Settings</button>
+          </div>
+          <div class="body">
+            <div class="grid2">
+              <div class="field">
+                <label for="repo-owner">GitHub Owner</label>
+                <input id="repo-owner" value="ChasingMajors" autocomplete="off">
+              </div>
+              <div class="field">
+                <label for="repo-name">GitHub Repo</label>
+                <input id="repo-name" value="gadget" autocomplete="off">
+              </div>
+              <div class="field">
+                <label for="workflow-file">Workflow File</label>
+                <input id="workflow-file" value="sync-prv.yml" autocomplete="off">
+              </div>
+              <div class="field">
+                <label for="branch-name">Branch</label>
+                <input id="branch-name" value="main" autocomplete="off">
+              </div>
+            </div>
+
+            <div class="field" style="margin-top:14px">
+              <label for="github-token">GitHub Token</label>
+              <input id="github-token" type="password" autocomplete="off" placeholder="Paste token with Actions workflow permission">
+            </div>
+            <p class="note">The token stays in this browser tab. It is not saved by the page. Fine-grained tokens need access to <code>ChasingMajors/gadget</code> with repository permission <code>Actions: Read and write</code>. Classic tokens need the <code>repo</code> and <code>workflow</code> scopes.</p>
+          </div>
+        </section>
+
+        <section>
+          <div class="sectionHead">
+            <h2>Run PRV Sync</h2>
+            <span class="pill neutral" id="dispatch-pill">Ready</span>
+          </div>
+          <div class="body">
+            <div class="actions">
+              <button id="dispatch-sync" type="button">Run Sync</button>
+              <button class="secondary" id="refresh-runs" type="button">Refresh Runs</button>
+              <button class="secondary" id="open-actions" type="button">Open Action</button>
+            </div>
+            <div class="result" id="sync-result">Waiting.</div>
+          </div>
+        </section>
+
+        <section>
+          <div class="sectionHead">
+            <h2>Recent Runs</h2>
+            <span class="pill neutral" id="runs-pill">Idle</span>
+          </div>
+          <div class="body">
+            <div class="runList" id="run-list"></div>
+          </div>
+        </section>
+
+        <section>
+          <div class="sectionHead">
+            <h2>Live API Check</h2>
+            <button class="ghost" id="check-worker" type="button">Check Worker</button>
+          </div>
+          <div class="body">
+            <div class="field">
+              <label for="lookup-query">Test Query</label>
+              <div class="inline">
+                <input id="lookup-query" value="2025-26 Topps Finest Ace Bailey Sky Blue /150" autocomplete="off">
+                <button id="test-lookup" type="button">Test</button>
+              </div>
+            </div>
+            <div class="result" id="lookup-result">Waiting.</div>
+          </div>
+        </section>
+      </div>
+
+      <aside>
+        <div class="sectionHead">
+          <h2>Publish Path</h2>
+        </div>
+        <ol class="checklist">
+          <li>
+            <div>
+              <strong>Update PRV sheet</strong>
+              <span>Edit the tab used by the GitHub secret <code>CM_PRV_CSV_URL</code>.</span>
+            </div>
+          </li>
+          <li>
+            <div>
+              <strong>Run sync</strong>
+              <span>The workflow imports the CSV into <code>backend/data/cards.json</code>.</span>
+            </div>
+          </li>
+          <li>
+            <div>
+              <strong>Confirm run success</strong>
+              <span>The Action validates and commits the dataset.</span>
+            </div>
+          </li>
+          <li>
+            <div>
+              <strong>Wait for Worker deploy</strong>
+              <span>Cloudflare picks up the committed dataset from GitHub.</span>
+            </div>
+          </li>
+          <li>
+            <div>
+              <strong>Test a listing</strong>
+              <span>Use COMC first, then eBay for noisy-title coverage.</span>
+            </div>
+          </li>
+        </ol>
+      </aside>
+    </div>
+  </main>
+
+  <script>
+    const state = {
+      owner: "ChasingMajors",
+      repo: "gadget",
+      workflow: "sync-prv.yml",
+      branch: "main",
+      apiBase: "https://api.chasingmajors.com"
+    };
+
+    const els = {
+      owner: document.getElementById("repo-owner"),
+      repo: document.getElementById("repo-name"),
+      workflow: document.getElementById("workflow-file"),
+      branch: document.getElementById("branch-name"),
+      token: document.getElementById("github-token"),
+      saveSettings: document.getElementById("save-settings"),
+      dispatchSync: document.getElementById("dispatch-sync"),
+      refreshRuns: document.getElementById("refresh-runs"),
+      openActions: document.getElementById("open-actions"),
+      checkWorker: document.getElementById("check-worker"),
+      testLookup: document.getElementById("test-lookup"),
+      lookupQuery: document.getElementById("lookup-query"),
+      syncResult: document.getElementById("sync-result"),
+      lookupResult: document.getElementById("lookup-result"),
+      runList: document.getElementById("run-list"),
+      dispatchPill: document.getElementById("dispatch-pill"),
+      runsPill: document.getElementById("runs-pill"),
+      workerStatus: document.getElementById("worker-status"),
+      latestSync: document.getElementById("latest-sync"),
+      lookupStatus: document.getElementById("lookup-status"),
+      repoLabel: document.getElementById("repo-label"),
+      actionsLink: document.getElementById("actions-link")
+    };
+
+    function loadSettings() {
+      const saved = JSON.parse(localStorage.getItem("cmPrvSyncSettings") || "{}");
+      Object.assign(state, saved);
+      els.owner.value = state.owner;
+      els.repo.value = state.repo;
+      els.workflow.value = state.workflow;
+      els.branch.value = state.branch;
+      refreshLabels();
+    }
+
+    function readSettings() {
+      state.owner = els.owner.value.trim() || "ChasingMajors";
+      state.repo = els.repo.value.trim() || "gadget";
+      state.workflow = els.workflow.value.trim() || "sync-prv.yml";
+      state.branch = els.branch.value.trim() || "main";
+      refreshLabels();
+    }
+
+    function saveSettings() {
+      readSettings();
+      localStorage.setItem("cmPrvSyncSettings", JSON.stringify({
+        owner: state.owner,
+        repo: state.repo,
+        workflow: state.workflow,
+        branch: state.branch
+      }));
+      setText(els.syncResult, "Settings saved.");
+    }
+
+    function refreshLabels() {
+      els.repoLabel.textContent = `${state.owner}/${state.repo}`;
+      els.actionsLink.href = actionsUrl();
+    }
+
+    function workflowApiUrl() {
+      return `https://api.github.com/repos/${encodeURIComponent(state.owner)}/${encodeURIComponent(state.repo)}/actions/workflows/${encodeURIComponent(state.workflow)}`;
+    }
+
+    function actionsUrl() {
+      return `https://github.com/${encodeURIComponent(state.owner)}/${encodeURIComponent(state.repo)}/actions/workflows/${encodeURIComponent(state.workflow)}`;
+    }
+
+    function setText(element, value) {
+      element.textContent = typeof value === "string" ? value : JSON.stringify(value, null, 2);
+    }
+
+    function setPill(element, label, tone) {
+      element.textContent = label;
+      element.className = `pill ${tone || "neutral"}`;
+    }
+
+    function tokenHeaders() {
+      const token = els.token.value.trim();
+      if (!token) {
+        throw new Error("Paste a GitHub token first.");
+      }
+
+      return {
+        "Accept": "application/vnd.github+json",
+        "Authorization": `Bearer ${token}`,
+        "X-GitHub-Api-Version": "2022-11-28"
+      };
+    }
+
+    async function dispatchWorkflow() {
+      readSettings();
+      setPill(els.dispatchPill, "Running", "warn");
+      setText(els.syncResult, "Dispatching workflow...");
+
+      const response = await fetch(`${workflowApiUrl()}/dispatches`, {
+        method: "POST",
+        headers: {
+          ...tokenHeaders(),
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ ref: state.branch })
+      });
+
+      if (response.status !== 204) {
+        const text = await response.text();
+        throw new Error(text || `GitHub returned HTTP ${response.status}`);
+      }
+
+      setPill(els.dispatchPill, "Started", "good");
+      setText(els.syncResult, "Sync started. Wait a few seconds, then refresh recent runs.");
+      window.open(actionsUrl(), "_blank", "noreferrer");
+      setTimeout(refreshRuns, 5000);
+    }
+
+    function runTone(run) {
+      if (run.status !== "completed") return "warn";
+      if (run.conclusion === "success") return "good";
+      if (run.conclusion === "failure" || run.conclusion === "cancelled" || run.conclusion === "timed_out") return "bad";
+      return "neutral";
+    }
+
+    async function refreshRuns() {
+      readSettings();
+      setPill(els.runsPill, "Loading", "warn");
+      els.runList.innerHTML = "";
+
+      const response = await fetch(`${workflowApiUrl()}/runs?per_page=5`, {
+        headers: tokenHeaders()
+      });
+      const payload = await response.json();
+
+      if (!response.ok) {
+        throw new Error(payload.message || `GitHub returned HTTP ${response.status}`);
+      }
+
+      const runs = payload.workflow_runs || [];
+      if (!runs.length) {
+        els.runList.textContent = "No runs found.";
+        els.latestSync.textContent = "No runs found";
+        setPill(els.runsPill, "Empty", "neutral");
+        return;
+      }
+
+      els.latestSync.textContent = `${runs[0].status}${runs[0].conclusion ? ` / ${runs[0].conclusion}` : ""}`;
+      setPill(els.runsPill, "Updated", "good");
+
+      for (const run of runs) {
+        const item = document.createElement("div");
+        item.className = "runItem";
+
+        const meta = document.createElement("div");
+        meta.className = "runMeta";
+
+        const title = document.createElement("strong");
+        title.textContent = run.display_title || run.name || "Sync PRV data";
+
+        const pill = document.createElement("span");
+        pill.className = `pill ${runTone(run)}`;
+        pill.textContent = run.conclusion || run.status;
+
+        meta.append(title, pill);
+
+        const when = document.createElement("span");
+        when.className = "note";
+        when.textContent = `${new Date(run.created_at).toLocaleString()} · ${run.head_branch || state.branch}`;
+
+        const link = document.createElement("a");
+        link.href = run.html_url;
+        link.target = "_blank";
+        link.rel = "noreferrer";
+        link.textContent = "Open run";
+
+        item.append(meta, when, link);
+        els.runList.appendChild(item);
+      }
+    }
+
+    async function checkWorker() {
+      els.workerStatus.textContent = "Checking...";
+      const response = await fetch(`${state.apiBase}/health`, { headers: { Accept: "application/json" } });
+      const payload = await response.json();
+
+      if (!response.ok || !payload.ok) {
+        throw new Error(payload.error || `Worker returned HTTP ${response.status}`);
+      }
+
+      els.workerStatus.textContent = "Healthy";
+      return payload;
+    }
+
+    async function testLookup() {
+      const query = els.lookupQuery.value.trim();
+      if (!query) {
+        throw new Error("Enter a test query.");
+      }
+
+      els.lookupStatus.textContent = "Checking...";
+      setText(els.lookupResult, "Running lookup...");
+
+      const url = new URL(`${state.apiBase}/rarity`);
+      url.searchParams.set("q", query);
+      url.searchParams.set("source", "comc");
+      url.searchParams.set("url", "https://www.comc.com/");
+
+      const response = await fetch(url, { headers: { Accept: "application/json" } });
+      const payload = await response.json();
+
+      if (!response.ok) {
+        throw new Error(payload.error || `API returned HTTP ${response.status}`);
+      }
+
+      els.lookupStatus.textContent = payload.rarityTier || payload.matchMode || "Response received";
+      setText(els.lookupResult, payload);
+    }
+
+    function handle(action, output) {
+      return async () => {
+        try {
+          await action();
+        } catch (error) {
+          if (output) {
+            setText(output, error.message);
+          }
+          setPill(els.dispatchPill, "Needs attention", "bad");
+          if (action === refreshRuns) setPill(els.runsPill, "Error", "bad");
+          if (action === checkWorker) els.workerStatus.textContent = "Error";
+          if (action === testLookup) els.lookupStatus.textContent = "Error";
+        }
+      };
+    }
+
+    els.saveSettings.addEventListener("click", saveSettings);
+    els.dispatchSync.addEventListener("click", handle(dispatchWorkflow, els.syncResult));
+    els.refreshRuns.addEventListener("click", handle(refreshRuns, els.syncResult));
+    els.openActions.addEventListener("click", () => {
+      readSettings();
+      window.open(actionsUrl(), "_blank", "noreferrer");
+    });
+    els.checkWorker.addEventListener("click", handle(checkWorker, els.lookupResult));
+    els.testLookup.addEventListener("click", handle(testLookup, els.lookupResult));
+
+    loadSettings();
+    handle(checkWorker, els.lookupResult)();
+  </script>
+</body>
+</html>

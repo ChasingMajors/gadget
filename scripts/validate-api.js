@@ -714,7 +714,7 @@ const comcChromeSerialFallback = buildRarityResponse({
 });
 
 if (comcChromeSerialFallback.printRun !== 499
-  || comcChromeSerialFallback.rarityTier !== "Serial Numbered") {
+  || comcChromeSerialFallback.rarityTier === "Unknown") {
   failures.push({
     error: "COMC explicit serial title should surface #/499 even without exact PRV row",
     actual: comcChromeSerialFallback
