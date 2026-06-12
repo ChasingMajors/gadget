@@ -69,10 +69,6 @@ async function authHeaders() {
     headers.Authorization = `Bearer ${session.token}`;
   }
 
-  if (globalThis.CM_RARITY_CONFIG.MVP_ADMIN_MODE) {
-    headers["X-CM-User-State"] = "admin";
-  }
-
   return headers;
 }
 

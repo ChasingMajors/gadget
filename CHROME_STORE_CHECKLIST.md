@@ -2,7 +2,7 @@
 
 ## Before Submission
 
-- Confirm `MVP_ADMIN_MODE` is `false` in `config.js`.
+- Confirm `config.js` does not expose client-side admin mode.
 - Confirm `API_BASE_URL` points to the production Chasing Majors API.
 - Confirm `/rarity` is hosted with HTTPS and returns the documented response shape.
 - Confirm `/me` and `/billing/checkout` are hosted with HTTPS.
@@ -52,11 +52,11 @@
 
 - Use an unlisted listing for the first newsletter beta.
 - Share the beta promo code in the newsletter only after it has been tested in Stripe live mode.
-- Keep `CM_ALLOW_CLIENT_ADMIN` available only for internal testing; do not rely on it for newsletter testers.
+- Use backend-issued access tokens for internal/admin testing.
 
 ## Post-Submission Hardening
 
 - Move daily lookup enforcement to the backend.
-- Replace temporary beta/admin shortcuts with token-based entitlement.
+- Keep admin access token-based through `/admin/issue-token`.
 - Add background-service-worker request telemetry.
 - Add a versioned build artifact process.

@@ -139,8 +139,9 @@
       getSession()
     ]);
     const config = window.CM_RARITY_CONFIG;
-    const isAdmin = Boolean(config.MVP_ADMIN_MODE) || userState.plan === "admin" || userState.status === "admin";
-    const isPaid = userState.plan === "paid" || isAdmin;
+    const hasSessionToken = Boolean(session.token);
+    const isAdmin = hasSessionToken && (userState.plan === "admin" || userState.status === "admin");
+    const isPaid = hasSessionToken && (userState.plan === "paid" || isAdmin);
     const remainingFreeLookups = Math.max(0, config.FREE_DAILY_LIMIT - dailyUsage.count);
 
     return {

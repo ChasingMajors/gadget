@@ -20,7 +20,7 @@ function sendJson(response, statusCode, body) {
   response.writeHead(statusCode, {
     "Access-Control-Allow-Origin": ALLOWED_ORIGIN,
     "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
-    "Access-Control-Allow-Headers": "Accept, Content-Type, Authorization, X-CM-User-State",
+    "Access-Control-Allow-Headers": "Accept, Content-Type, Authorization",
     "Cache-Control": "no-store",
     "Content-Type": "application/json; charset=utf-8"
   });
@@ -43,29 +43,12 @@ function bearerToken(request) {
 
 function accountFromRequest(request) {
   const token = bearerToken(request);
-  const requestedState = request.headers["x-cm-user-state"] || "";
-
-  if (process.env.CM_ALLOW_CLIENT_ADMIN === "true" && requestedState === "admin") {
-    return {
-      status: "admin",
-      plan: "admin",
-      email: process.env.CM_BETA_PAID_EMAIL || ""
-    };
-  }
 
   if (!token) {
     return {
       status: "anonymous",
       plan: "free",
       email: ""
-    };
-  }
-
-  if (process.env.CM_BETA_PAID_TOKEN && token === process.env.CM_BETA_PAID_TOKEN) {
-    return {
-      status: "logged_in",
-      plan: "paid",
-      email: process.env.CM_BETA_PAID_EMAIL || ""
     };
   }
 

@@ -7,7 +7,6 @@ Validate whether collectors understand and value Chasing Majors rarity intellige
 ## Current Beta Build
 
 - Distribution target: unlisted Chrome Web Store listing.
-- Public beta mode: `MVP_ADMIN_MODE` is off.
 - API target: `https://api.chasingmajors.com`.
 - Billing: Stripe Checkout subscription at $5/month.
 - Signup/billing CTAs: Worker-powered `/billing/start` redirect into Stripe Checkout.
@@ -44,11 +43,11 @@ Validate whether collectors understand and value Chasing Majors rarity intellige
 
 ## Internal Testing
 
-Private admin testing can temporarily use:
+Private admin testing should use the support/admin token endpoint:
 
 ```txt
-MVP_ADMIN_MODE: true
-CM_ALLOW_CLIENT_ADMIN=true
+POST https://api.chasingmajors.com/admin/issue-token
+X-CM-Admin-Secret: <CM_ADMIN_SECRET>
 ```
 
-Do not ship that combination to newsletter testers. Public beta builds should keep `MVP_ADMIN_MODE: false`.
+Paste the returned `cm_live_...` token into the toolbar popup.

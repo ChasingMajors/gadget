@@ -12,7 +12,7 @@ function json(body, status = 200) {
     headers: {
       "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
-      "Access-Control-Allow-Headers": "Accept, Content-Type, Authorization, X-CM-User-State",
+      "Access-Control-Allow-Headers": "Accept, Content-Type, Authorization",
       "Cache-Control": "no-store",
       "Content-Type": "application/json; charset=utf-8"
     }
@@ -221,29 +221,12 @@ function canUseAdminTools(request, env) {
 
 async function accountFromRequest(request, env = {}) {
   const token = bearerToken(request);
-  const requestedState = request.headers.get("X-CM-User-State") || "";
-
-  if (env.CM_ALLOW_CLIENT_ADMIN === "true" && requestedState === "admin") {
-    return {
-      status: "admin",
-      plan: "admin",
-      email: env.CM_BETA_PAID_EMAIL || ""
-    };
-  }
 
   if (!token) {
     return {
       status: "anonymous",
       plan: "free",
       email: ""
-    };
-  }
-
-  if (env.CM_BETA_PAID_TOKEN && token === env.CM_BETA_PAID_TOKEN) {
-    return {
-      status: "logged_in",
-      plan: "paid",
-      email: env.CM_BETA_PAID_EMAIL || ""
     };
   }
 
@@ -311,8 +294,8 @@ async function createCheckoutSession(request, env, options = {}) {
   const body = options.body || {};
   const origin = new URL(request.url).origin;
   const email = String(body.email || account.email || "").trim().toLowerCase();
-  const successUrl = body.successUrl || `${origin}/billing/success?session_id={CHECKOUT_SESSION_ID}`;
-  const cancelUrl = body.cancelUrl || `${origin}/signup?checkout=cancel`;
+  const successUrl = `${origin}/billing/success?session_id={CHECKOUT_SESSION_ID}`;
+  const cancelUrl = `${origin}/signup?checkout=cancel`;
   const params = new URLSearchParams({
     mode: "subscription",
     "line_items[0][price]": env.STRIPE_PRICE_ID,

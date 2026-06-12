@@ -18,8 +18,7 @@ The MVP should answer:
 - The hover/click panel renders the full API response shape.
 - API calls are routed through `background.js`, which is the right place for future auth, CORS handling, rate limits, and telemetry.
 - Fallback data remains available when the API is unreachable.
-- `MVP_ADMIN_MODE` is disabled for public beta builds so newsletter testers see the real free/paid behavior.
-- Internal trials can temporarily enable `MVP_ADMIN_MODE` locally, but the Worker also needs `CM_ALLOW_CLIENT_ADMIN=true` to return paid fields for that shortcut.
+- Internal trials use backend-issued `cm_live_...` tokens so testing follows the same entitlement path as production.
 
 ## Required Hosted API
 
@@ -66,13 +65,13 @@ Response:
    Some cards will have print run but not pack odds, or POP counts but no exact scarcity model. The API should return `null` for unknown fields and use `lockedFields` only for entitlement.
 
 4. Admin versus paid entitlement
-   Public beta builds should keep `MVP_ADMIN_MODE` off. Real production needs the backend to decide access from a token rather than trusting extension config.
+   Public beta builds should use backend-issued tokens. The backend decides access from a token rather than trusting extension config.
 
 5. Performance and rate limits
    Search pages can contain many listings. The backend should cache by normalized title/source and the extension should avoid aggressive lookup bursts.
 
 6. Chrome Web Store readiness
-   Before submission, turn off `MVP_ADMIN_MODE`, add a privacy policy, avoid unnecessary host permissions, and confirm the extension does not imply affiliation with eBay or COMC.
+   Before submission, add a privacy policy, avoid unnecessary host permissions, and confirm the extension does not imply affiliation with eBay or COMC.
 
 ## Recommended Trial Scope
 
@@ -111,7 +110,7 @@ GET /rarity?q=2025-26%20Topps%20Finest%20Ace%20Bailey%20Sky%20Blue%20/150&source
 
 ## Production Prep After MVP
 
-- Replace temporary beta token/admin shortcuts with real login/token state.
+- Keep entitlement on real login/token state.
 - Move lookup counting to the backend.
 - Add request signing or a session token.
 - Add telemetry for impressions, opens, match confidence, and upgrade clicks.

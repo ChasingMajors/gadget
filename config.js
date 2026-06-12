@@ -11,8 +11,7 @@
     BILLING_URL: `${API_BASE_URL}/billing/start?source=extension&intent=billing`,
     FEEDBACK_URL: "mailto:chasingmajors@gmail.com?subject=CM%20Rarity%20Gadget%20Beta%20Feedback",
     API_CACHE_TTL_MS: 0,
-    AUTH_ENABLED: true,
-    MVP_ADMIN_MODE: false
+    AUTH_ENABLED: true
   });
 
   globalThis.CM_RARITY_CONFIG = config;

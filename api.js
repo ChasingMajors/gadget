@@ -1,33 +1,4 @@
 (function () {
-  const MOCK_RESPONSES = [
-    {
-      title: "Matched card",
-      matchConfidence: 0.82,
-      rarityTier: "Short Print",
-      scarcityScore: 74,
-      printRun: null,
-      packOdds: null,
-      popTotal: null,
-      popGem: null,
-      lockedFields: ["printRun", "packOdds", "popTotal", "popGem"],
-      upgradeUrl: `${window.CM_RARITY_CONFIG.APP_URL}/upgrade`,
-      matchMode: "card"
-    },
-    {
-      title: "Matched card",
-      matchConfidence: 0.9,
-      rarityTier: "Rare",
-      scarcityScore: 86,
-      printRun: null,
-      packOdds: null,
-      popTotal: null,
-      popGem: null,
-      lockedFields: ["printRun", "packOdds", "popTotal", "popGem"],
-      upgradeUrl: `${window.CM_RARITY_CONFIG.APP_URL}/upgrade`,
-      matchMode: "set"
-    }
-  ];
-
   const cache = new Map();
 
   function config() {
@@ -77,20 +48,22 @@
       headers.Authorization = `Bearer ${session.token}`;
     }
 
-    if (config().MVP_ADMIN_MODE) {
-      headers["X-CM-User-State"] = "admin";
-    }
-
     return headers;
   }
 
   function fallbackResponse(title) {
-    const seed = Array.from(title).reduce((sum, char) => sum + char.charCodeAt(0), 0);
-    const response = MOCK_RESPONSES[seed % MOCK_RESPONSES.length];
-
     return {
-      ...response,
       title,
+      matchConfidence: 0,
+      rarityTier: "Unknown",
+      scarcityScore: null,
+      printRun: null,
+      packOdds: null,
+      popTotal: null,
+      popGem: null,
+      lockedFields: [],
+      upgradeUrl: `${config().APP_URL}/upgrade`,
+      matchMode: "card",
       isFallback: true
     };
   }

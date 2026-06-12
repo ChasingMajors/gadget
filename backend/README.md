@@ -65,10 +65,7 @@ Environment:
 - `CM_UPGRADE_URL`: upgrade CTA URL.
 - `CM_ALLOWED_ORIGIN`: CORS origin, defaults to `*` for MVP.
 - `CM_APP_URL`: Chasing Majors app URL for billing redirects.
-- `CM_ALLOW_CLIENT_ADMIN`: set to `true` only for internal unpacked-extension trials with `MVP_ADMIN_MODE`.
 - `CM_ADMIN_SECRET`: private support/admin secret for issuing a new activation token without Stripe checkout.
-- `CM_BETA_PAID_TOKEN`: temporary beta bearer token that unlocks paid access.
-- `CM_BETA_PAID_EMAIL`: optional email associated with the temporary beta token.
 - `STRIPE_SECRET_KEY`: Stripe secret key. Keep this server-side only.
 - `STRIPE_PRICE_ID`: Stripe recurring $5/month price ID.
 - `STRIPE_WEBHOOK_SECRET`: Stripe webhook signing secret. Required for production entitlement sync.
@@ -79,7 +76,6 @@ Cloudflare secret setup:
 wrangler secret put STRIPE_SECRET_KEY
 wrangler secret put STRIPE_WEBHOOK_SECRET
 wrangler secret put CM_ADMIN_SECRET
-wrangler secret put CM_BETA_PAID_TOKEN
 ```
 
 Set `STRIPE_PRICE_ID` as a runtime text variable or secret. It is not sensitive, but it must match the same Stripe mode as `STRIPE_SECRET_KEY`.
@@ -98,14 +94,6 @@ customer.subscription.created
 customer.subscription.updated
 customer.subscription.deleted
 ```
-
-Cloudflare variables for internal testing:
-
-```bash
-wrangler secret put CM_ALLOW_CLIENT_ADMIN
-```
-
-Set `CM_ALLOW_CLIENT_ADMIN` to `true` only while `config.js` has `MVP_ADMIN_MODE: true`. Disable both before Chrome Web Store beta.
 
 Issue a support/admin activation token:
 

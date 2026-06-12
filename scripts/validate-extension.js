@@ -88,8 +88,8 @@ function checkConfig() {
     warnings.push("config.js API_BASE_URL is set to an MVP/staging API. Point it to production before Chrome Web Store submission.");
   }
 
-  if (config.includes("MVP_ADMIN_MODE: true")) {
-    warnings.push("MVP_ADMIN_MODE is enabled. This is okay for internal trials, but turn it off before Chrome Web Store submission.");
+  if (config.includes("MVP_ADMIN_MODE")) {
+    errors.push("config.js should not expose MVP_ADMIN_MODE. Admin access must use backend-issued tokens.");
   }
 
   ["LOGIN_URL", "SIGNUP_URL", "BILLING_URL", "FEEDBACK_URL", "AUTH_ENABLED"].forEach((key) => {
