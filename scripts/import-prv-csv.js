@@ -147,7 +147,8 @@ function hasSetSchema(record) {
       "calculated print run",
       "calculatedpr"
     ])
-      || firstValue(record, ["serial", "serialnumber", "numberedto"])));
+      || firstValue(record, ["serial", "serialnumber", "numberedto"])
+      || firstValue(record, ["packodds", "pack odds", "odds", "notes"])));
 }
 
 function titleTerms(title) {
@@ -232,7 +233,7 @@ function setRowToCard(record) {
   const packOdds = firstValue(record, ["packodds", "odds", "notes"]);
   const cmURL = firstValue(record, ["cmurl"]);
 
-  if (!displayName || effectivePrintRun === null) {
+  if (!displayName || (effectivePrintRun === null && !packOdds)) {
     return null;
   }
 
@@ -264,7 +265,7 @@ function setRowToCard(record) {
     requiredTerms,
     serialTerms: normalizedSerial ? [normalizedSerial, normalizedSerial.slice(1)] : [],
     rarityTier: setType || "Product",
-    scarcityScore: effectivePrintRun <= 1000 ? 82 : effectivePrintRun <= 10000 ? 68 : 54,
+    scarcityScore: effectivePrintRun === null ? 62 : effectivePrintRun <= 1000 ? 82 : effectivePrintRun <= 10000 ? 68 : 54,
     printRun: effectivePrintRun,
     packOdds: packOdds || null,
     popTotal: 0,

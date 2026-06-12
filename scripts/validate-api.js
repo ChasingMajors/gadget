@@ -179,6 +179,42 @@ function validateSetPrvPrintRunAliases() {
   }
 }
 
+function validateSetPrvPackOddsOnlyRows() {
+  const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "cm-prv-odds-import-"));
+  const inputPath = path.join(tempDir, "new-prv-odds.csv");
+  const outputPath = path.join(tempDir, "cards.json");
+  const csv = [
+    "Code,DisplayName,Keywords,year,sport,manufacturer,product,setType,setLine,parallel,printRun,serial,subSetSize,packOdds",
+    "1993_94_topps_finest_basketball,1993-94 Topps Finest Basketball,topps finest refractor basketball,1993-94,Basketball,Topps,Finest,Parallel,Base,Refractor,,,220,1:9 packs"
+  ].join("\n");
+
+  fs.writeFileSync(inputPath, csv);
+  const result = spawnSync(process.execPath, ["scripts/import-prv-csv.js", inputPath, outputPath], {
+    encoding: "utf8"
+  });
+
+  if (result.status !== 0) {
+    failures.push({
+      error: "Pack-odds-only PRV row import fixture failed",
+      stderr: result.stderr,
+      stdout: result.stdout
+    });
+    return;
+  }
+
+  const imported = JSON.parse(fs.readFileSync(outputPath, "utf8"))[0];
+  if (!imported
+    || imported.canonicalTitle !== "1993-94 Topps Finest Basketball - Parallel - Base - Refractor"
+    || imported.printRun !== null
+    || imported.packOdds !== "1:9 packs"
+    || !imported.requiredTerms.includes("refractor")) {
+    failures.push({
+      error: "Pack-odds-only PRV rows should import without print run or serial",
+      imported
+    });
+  }
+}
+
 function datasetContainsExpectedTitle(expected) {
   return cards.some((card) => card.canonicalTitle === expected);
 }
@@ -225,6 +261,7 @@ for (const testCase of optionalCases) {
 
 validateSetPrvImportHeaders();
 validateSetPrvPrintRunAliases();
+validateSetPrvPackOddsOnlyRows();
 
 const falseSetPositiveResponse = buildRarityResponse({
   query: "2025-26 Bowman #1 Cooper Flagg",
