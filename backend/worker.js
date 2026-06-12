@@ -24,6 +24,10 @@ function html(body, status = 200) {
     status,
     headers: {
       "Cache-Control": "no-store",
+      "Content-Security-Policy": "default-src 'none'; style-src 'unsafe-inline'; form-action 'self'; base-uri 'none'; frame-ancestors 'none'",
+      "Referrer-Policy": "no-referrer",
+      "X-Content-Type-Options": "nosniff",
+      "X-Frame-Options": "DENY",
       "Content-Type": "text/html; charset=utf-8"
     }
   });
