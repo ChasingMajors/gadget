@@ -153,7 +153,7 @@ Local ZIP build:
 npm run package:extension
 ```
 
-This creates `dist/cm-rarity-gadget-v4.0.0.zip`. Keep the unpacked extension folder path stable on each tester Mac so Chrome can reload updates without removing/re-adding the extension.
+This creates `dist/cm-rarity-gadget-v4.0.1.zip`. Keep the unpacked extension folder path stable on each tester Mac so Chrome can reload updates without removing/re-adding the extension.
 
 ## Validation
 
