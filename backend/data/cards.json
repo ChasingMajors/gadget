@@ -323135,12 +323135,12 @@
     }
   },
   {
-    "id": "1998-99-fleer-tradition-basketball-parallel-classic-61",
-    "canonicalTitle": "1998-99 Fleer Tradition Basketball - Parallel - Classic '61",
+    "id": "1998-99-fleer-tradition-basketball-parallel",
+    "canonicalTitle": "1998-99 Fleer Tradition Basketball - Parallel",
     "aliases": [
       "1998-99 Fleer Tradition Basketball",
-      "1998-99 Fleer Tradition Basketball - Parallel - Classic '61",
-      "1998-99 Fleer Tradition Classic '61 /61",
+      "1998-99 Fleer Tradition Basketball - Parallel",
+      "1998-99 Fleer Tradition /61",
       "1998-99 Fleer Tradition Parallel",
       "1998-99 Fleer Tradition"
     ],
@@ -323149,9 +323149,7 @@
       "99",
       "fleer",
       "tradition",
-      "basketball",
-      "classic",
-      "61"
+      "basketball"
     ],
     "serialTerms": [
       "/61",
@@ -323172,7 +323170,7 @@
       "brand": "Fleer",
       "product": "Tradition",
       "setType": "Parallel",
-      "setLine": "Classic '61",
+      "setLine": "",
       "parallel": "",
       "serial": "61",
       "subsetSize": 147
@@ -323259,21 +323257,23 @@
     }
   },
   {
-    "id": "1994-bowmans-best-baseball-base-refractor",
-    "canonicalTitle": "1994 Bowmans Best Baseball - Base - Refractor",
+    "id": "1994-bowman-s-best-baseball-base-refractor",
+    "canonicalTitle": "1994 Bowman's Best Baseball - Base - Refractor",
     "aliases": [
-      "1994 Bowmans Best Baseball",
-      "1994 Bowmans Best Baseball - Base - Refractor",
+      "1994 Bowman's Best Baseball",
+      "1994 Bowman's Best Baseball - Base - Refractor",
       "1994 Bowmans Best Base Refractor",
       "1994 Bowmans Best Base",
-      "1994 Bowmans Best Refractor"
+      "1994 Bowmans Best Refractor",
+      "bowmans best baseball refractor"
     ],
     "requiredTerms": [
       "1994",
-      "bowmans",
+      "bowman",
       "best",
       "baseball",
-      "refractor"
+      "refractor",
+      "bowmansbestbaseballrefractor"
     ],
     "serialTerms": [],
     "rarityTier": "Base",
@@ -323305,14 +323305,16 @@
       "1994 Topps Finest Baseball - Base - Refractor",
       "1994 Topps Finest Base Refractor",
       "1994 Topps Finest Base",
-      "1994 Topps Finest Refractor"
+      "1994 Topps Finest Refractor",
+      "topps finest baseball refractor"
     ],
     "requiredTerms": [
       "1994",
       "topps",
       "finest",
       "baseball",
-      "refractor"
+      "refractor",
+      "toppsfinestbaseballrefractor"
     ],
     "serialTerms": [],
     "rarityTier": "Base",
@@ -323568,6 +323570,1320 @@
       "parallel": "",
       "serial": "",
       "subsetSize": null
+    }
+  },
+  {
+    "id": "1994-bowman-s-best-baseball-base-red-refractor",
+    "canonicalTitle": "1994 Bowman's Best Baseball - Base - Red - Refractor",
+    "aliases": [
+      "1994 Bowman's Best Baseball",
+      "1994 Bowman's Best Baseball - Base - Red - Refractor",
+      "1994 Bowman Best Red Refractor",
+      "1994 Bowman Best Base",
+      "1994 Bowman Best Refractor",
+      "bowmans best baseball red refractor"
+    ],
+    "requiredTerms": [
+      "1994",
+      "bowman",
+      "best",
+      "baseball",
+      "red",
+      "refractor",
+      "bowmansbestbaseballredrefractor"
+    ],
+    "serialTerms": [],
+    "rarityTier": "Base",
+    "scarcityScore": 62,
+    "printRun": null,
+    "packOdds": "1:9",
+    "popTotal": 0,
+    "popGem": 0,
+    "matchMode": "set",
+    "sourceUrl": null,
+    "metadata": {
+      "year": "1994",
+      "code": "1994_bowmans_best_baseball",
+      "sport": "Baseball",
+      "brand": "Bowman",
+      "product": "Best",
+      "setType": "Base",
+      "setLine": "Red",
+      "parallel": "Refractor",
+      "serial": "",
+      "subsetSize": 200
+    }
+  },
+  {
+    "id": "1994-bowman-s-best-football-base-blue-refractor",
+    "canonicalTitle": "1994 Bowman's Best Football - Base - Blue - Refractor",
+    "aliases": [
+      "1994 Bowman's Best Football",
+      "1994 Bowman's Best Football - Base - Blue - Refractor",
+      "1994 Bowman Best Blue Refractor",
+      "1994 Bowman Best Base",
+      "1994 Bowman Best Refractor",
+      "bowmans best football blue refractor"
+    ],
+    "requiredTerms": [
+      "1994",
+      "bowman",
+      "best",
+      "football",
+      "blue",
+      "refractor",
+      "bowmansbestfootballbluerefractor"
+    ],
+    "serialTerms": [],
+    "rarityTier": "Base",
+    "scarcityScore": 62,
+    "printRun": null,
+    "packOdds": "1:6",
+    "popTotal": 0,
+    "popGem": 0,
+    "matchMode": "set",
+    "sourceUrl": null,
+    "metadata": {
+      "year": "1994",
+      "code": "1994_bowmans_best_football",
+      "sport": "Football",
+      "brand": "Bowman",
+      "product": "Best",
+      "setType": "Base",
+      "setLine": "Blue",
+      "parallel": "Refractor",
+      "serial": "",
+      "subsetSize": 180
+    }
+  },
+  {
+    "id": "1996-97-topps-chrome-basketball-base-refractor",
+    "canonicalTitle": "1996-97 Topps Chrome Basketball - Base - Refractor",
+    "aliases": [
+      "1996-97 Topps Chrome Basketball",
+      "1996-97 Topps Chrome Basketball - Base - Refractor",
+      "1996-97 Topps Chrome Base Refractor",
+      "1996-97 Topps Chrome Base",
+      "1996-97 Topps Chrome Refractor",
+      "topps chrome basketball refractor"
+    ],
+    "requiredTerms": [
+      "1996",
+      "97",
+      "topps",
+      "chrome",
+      "basketball",
+      "refractor",
+      "toppschromebasketballrefractor"
+    ],
+    "serialTerms": [],
+    "rarityTier": "Base",
+    "scarcityScore": 62,
+    "printRun": null,
+    "packOdds": "1:12",
+    "popTotal": 0,
+    "popGem": 0,
+    "matchMode": "set",
+    "sourceUrl": null,
+    "metadata": {
+      "year": "1996-97",
+      "code": "1996_topps_chrome_basketball",
+      "sport": "Basketball",
+      "brand": "Topps",
+      "product": "Chrome",
+      "setType": "Base",
+      "setLine": "Base",
+      "parallel": "Refractor",
+      "serial": "",
+      "subsetSize": null
+    }
+  },
+  {
+    "id": "1996-topps-chrome-baseball-base-refractor",
+    "canonicalTitle": "1996 Topps Chrome Baseball - Base - Refractor",
+    "aliases": [
+      "1996 Topps Chrome Baseball",
+      "1996 Topps Chrome Baseball - Base - Refractor",
+      "1996 Topps Chrome Base Refractor",
+      "1996 Topps Chrome Base",
+      "1996 Topps Chrome Refractor",
+      "topps chrome baseball refractor"
+    ],
+    "requiredTerms": [
+      "1996",
+      "topps",
+      "chrome",
+      "baseball",
+      "refractor",
+      "toppschromebaseballrefractor"
+    ],
+    "serialTerms": [],
+    "rarityTier": "Base",
+    "scarcityScore": 62,
+    "printRun": null,
+    "packOdds": "1:12",
+    "popTotal": 0,
+    "popGem": 0,
+    "matchMode": "set",
+    "sourceUrl": null,
+    "metadata": {
+      "year": "1996",
+      "code": "1996_topps_chrome_baseball",
+      "sport": "Baseball",
+      "brand": "Topps",
+      "product": "Chrome",
+      "setType": "Base",
+      "setLine": "Base",
+      "parallel": "Refractor",
+      "serial": "",
+      "subsetSize": null
+    }
+  },
+  {
+    "id": "1997-98-topps-chrome-basketball-base-refractor",
+    "canonicalTitle": "1997-98 Topps Chrome Basketball - Base - Refractor",
+    "aliases": [
+      "1997-98 Topps Chrome Basketball",
+      "1997-98 Topps Chrome Basketball - Base - Refractor",
+      "1997-98 Topps Chrome Base Refractor",
+      "1997-98 Topps Chrome Base",
+      "1997-98 Topps Chrome Refractor",
+      "topps chrome basketball refractor"
+    ],
+    "requiredTerms": [
+      "1997",
+      "98",
+      "topps",
+      "chrome",
+      "basketball",
+      "refractor",
+      "toppschromebasketballrefractor"
+    ],
+    "serialTerms": [],
+    "rarityTier": "Base",
+    "scarcityScore": 62,
+    "printRun": null,
+    "packOdds": "1:12",
+    "popTotal": 0,
+    "popGem": 0,
+    "matchMode": "set",
+    "sourceUrl": null,
+    "metadata": {
+      "year": "1997-98",
+      "code": "1997_topps_chrome_basketball",
+      "sport": "Basketball",
+      "brand": "Topps",
+      "product": "Chrome",
+      "setType": "Base",
+      "setLine": "Base",
+      "parallel": "Refractor",
+      "serial": "",
+      "subsetSize": null
+    }
+  },
+  {
+    "id": "1997-98-metal-universe-basketball-parallel-base-precious-metal-gems",
+    "canonicalTitle": "1997-98 Metal Universe Basketball - Parallel - Base - Precious Metal Gems",
+    "aliases": [
+      "1997-98 Metal Universe Basketball",
+      "1997-98 Metal Universe Basketball - Parallel - Base - Precious Metal Gems",
+      "1997-98 Fleer/SkyBox Metal Universe Base Precious Metal Gems /100",
+      "1997-98 Fleer/SkyBox Metal Universe Parallel",
+      "1997-98 Fleer/SkyBox Metal Universe Precious Metal Gems",
+      "metal universe basketball precious metal gems pmg"
+    ],
+    "requiredTerms": [
+      "1997",
+      "98",
+      "metal",
+      "universe",
+      "basketball",
+      "precious",
+      "gems",
+      "metaluniversebasketballpreciousmetalgemspmg"
+    ],
+    "serialTerms": [
+      "/100",
+      "100"
+    ],
+    "rarityTier": "Parallel",
+    "scarcityScore": 82,
+    "printRun": 100,
+    "packOdds": null,
+    "popTotal": 0,
+    "popGem": 0,
+    "matchMode": "set",
+    "sourceUrl": null,
+    "metadata": {
+      "year": "1997-98",
+      "code": "1997_metal_universe_basketball",
+      "sport": "Basketball",
+      "brand": "Fleer/SkyBox",
+      "product": "Metal Universe",
+      "setType": "Parallel",
+      "setLine": "Base",
+      "parallel": "Precious Metal Gems",
+      "serial": "100",
+      "subsetSize": null
+    }
+  },
+  {
+    "id": "1998-99-metal-universe-basketball-parallel-base-precious-metal-gems",
+    "canonicalTitle": "1998-99 Metal Universe Basketball - Parallel - Base - Precious Metal Gems",
+    "aliases": [
+      "1998-99 Metal Universe Basketball",
+      "1998-99 Metal Universe Basketball - Parallel - Base - Precious Metal Gems",
+      "1998-99 Fleer/SkyBox Metal Universe Base Precious Metal Gems /50",
+      "1998-99 Fleer/SkyBox Metal Universe Parallel",
+      "1998-99 Fleer/SkyBox Metal Universe Precious Metal Gems",
+      "metal universe basketball precious metal gems pmg"
+    ],
+    "requiredTerms": [
+      "1998",
+      "99",
+      "metal",
+      "universe",
+      "basketball",
+      "precious",
+      "gems",
+      "metaluniversebasketballpreciousmetalgemspmg"
+    ],
+    "serialTerms": [
+      "/50",
+      "50"
+    ],
+    "rarityTier": "Parallel",
+    "scarcityScore": 82,
+    "printRun": 50,
+    "packOdds": null,
+    "popTotal": 0,
+    "popGem": 0,
+    "matchMode": "set",
+    "sourceUrl": null,
+    "metadata": {
+      "year": "1998-99",
+      "code": "1998_metal_universe_basketball",
+      "sport": "Basketball",
+      "brand": "Fleer/SkyBox",
+      "product": "Metal Universe",
+      "setType": "Parallel",
+      "setLine": "Base",
+      "parallel": "Precious Metal Gems",
+      "serial": "50",
+      "subsetSize": null
+    }
+  },
+  {
+    "id": "1997-98-flair-showcase-basketball-parallel-legacy-collection",
+    "canonicalTitle": "1997-98 Flair Showcase Basketball - Parallel - Legacy Collection",
+    "aliases": [
+      "1997-98 Flair Showcase Basketball",
+      "1997-98 Flair Showcase Basketball - Parallel - Legacy Collection",
+      "1997-98 Fleer Flair Showcase Legacy Collection /100",
+      "1997-98 Fleer Flair Showcase Parallel",
+      "1997-98 Fleer Flair Showcase",
+      "flair showcase basketball legacy collection"
+    ],
+    "requiredTerms": [
+      "1997",
+      "98",
+      "flair",
+      "showcase",
+      "basketball",
+      "legacy",
+      "collection",
+      "flairshowcasebasketballlegacycollection"
+    ],
+    "serialTerms": [
+      "/100",
+      "100"
+    ],
+    "rarityTier": "Parallel",
+    "scarcityScore": 82,
+    "printRun": 100,
+    "packOdds": null,
+    "popTotal": 0,
+    "popGem": 0,
+    "matchMode": "set",
+    "sourceUrl": null,
+    "metadata": {
+      "year": "1997-98",
+      "code": "1997_flair_showcase_basketball",
+      "sport": "Basketball",
+      "brand": "Fleer",
+      "product": "Flair Showcase",
+      "setType": "Parallel",
+      "setLine": "Legacy Collection",
+      "parallel": "",
+      "serial": "100",
+      "subsetSize": null
+    }
+  },
+  {
+    "id": "1997-98-skybox-z-force-basketball-parallel-base-rave",
+    "canonicalTitle": "1997-98 SkyBox Z-Force Basketball - Parallel - Base - Rave",
+    "aliases": [
+      "1997-98 SkyBox Z-Force Basketball",
+      "1997-98 SkyBox Z-Force Basketball - Parallel - Base - Rave",
+      "1997-98 SkyBox Z-Force Base Rave /399",
+      "1997-98 SkyBox Z-Force Parallel",
+      "1997-98 SkyBox Z-Force Rave",
+      "skybox z force basketball rave"
+    ],
+    "requiredTerms": [
+      "1997",
+      "98",
+      "skybox",
+      "force",
+      "basketball",
+      "rave",
+      "skyboxzforcebasketballrave"
+    ],
+    "serialTerms": [
+      "/399",
+      "399"
+    ],
+    "rarityTier": "Parallel",
+    "scarcityScore": 82,
+    "printRun": 399,
+    "packOdds": null,
+    "popTotal": 0,
+    "popGem": 0,
+    "matchMode": "set",
+    "sourceUrl": null,
+    "metadata": {
+      "year": "1997-98",
+      "code": "1997_skybox_z_force_basketball",
+      "sport": "Basketball",
+      "brand": "SkyBox",
+      "product": "Z-Force",
+      "setType": "Parallel",
+      "setLine": "Base",
+      "parallel": "Rave",
+      "serial": "399",
+      "subsetSize": null
+    }
+  },
+  {
+    "id": "1997-98-skybox-z-force-basketball-parallel-base-super-rave",
+    "canonicalTitle": "1997-98 SkyBox Z-Force Basketball - Parallel - Base - Super Rave",
+    "aliases": [
+      "1997-98 SkyBox Z-Force Basketball",
+      "1997-98 SkyBox Z-Force Basketball - Parallel - Base - Super Rave",
+      "1997-98 SkyBox Z-Force Base Super Rave /50",
+      "1997-98 SkyBox Z-Force Parallel",
+      "1997-98 SkyBox Z-Force Super Rave",
+      "skybox z force basketball super rave"
+    ],
+    "requiredTerms": [
+      "1997",
+      "98",
+      "skybox",
+      "force",
+      "basketball",
+      "super",
+      "rave",
+      "skyboxzforcebasketballsuperrave"
+    ],
+    "serialTerms": [
+      "/50",
+      "50"
+    ],
+    "rarityTier": "Parallel",
+    "scarcityScore": 82,
+    "printRun": 50,
+    "packOdds": null,
+    "popTotal": 0,
+    "popGem": 0,
+    "matchMode": "set",
+    "sourceUrl": null,
+    "metadata": {
+      "year": "1997-98",
+      "code": "1997_skybox_z_force_basketball",
+      "sport": "Basketball",
+      "brand": "SkyBox",
+      "product": "Z-Force",
+      "setType": "Parallel",
+      "setLine": "Base",
+      "parallel": "Super Rave",
+      "serial": "50",
+      "subsetSize": null
+    }
+  },
+  {
+    "id": "1997-98-e-x2001-basketball-insert-jambalaya",
+    "canonicalTitle": "1997-98 E-X2001 Basketball - Insert - Jambalaya",
+    "aliases": [
+      "1997-98 E-X2001 Basketball",
+      "1997-98 E-X2001 Basketball - Insert - Jambalaya",
+      "1997-98 Fleer/SkyBox E-X2001 Jambalaya",
+      "1997-98 Fleer/SkyBox E-X2001 Insert",
+      "1997-98 Fleer/SkyBox E-X2001",
+      "ex2001 basketball jambalaya"
+    ],
+    "requiredTerms": [
+      "1997",
+      "98",
+      "x2001",
+      "basketball",
+      "jambalaya",
+      "ex2001basketballjambalaya"
+    ],
+    "serialTerms": [],
+    "rarityTier": "Insert",
+    "scarcityScore": 62,
+    "printRun": null,
+    "packOdds": "1:720",
+    "popTotal": 0,
+    "popGem": 0,
+    "matchMode": "set",
+    "sourceUrl": null,
+    "metadata": {
+      "year": "1997-98",
+      "code": "1997_skybox_ex2001_basketball",
+      "sport": "Basketball",
+      "brand": "Fleer/SkyBox",
+      "product": "E-X2001",
+      "setType": "Insert",
+      "setLine": "Jambalaya",
+      "parallel": "",
+      "serial": "",
+      "subsetSize": null
+    }
+  },
+  {
+    "id": "1998-99-flair-showcase-basketball-parallel-legacy-collection",
+    "canonicalTitle": "1998-99 Flair Showcase Basketball - Parallel - Legacy Collection",
+    "aliases": [
+      "1998-99 Flair Showcase Basketball",
+      "1998-99 Flair Showcase Basketball - Parallel - Legacy Collection",
+      "1998-99 Fleer Flair Showcase Legacy Collection /99",
+      "1998-99 Fleer Flair Showcase Parallel",
+      "1998-99 Fleer Flair Showcase",
+      "flair showcase basketball legacy collection"
+    ],
+    "requiredTerms": [
+      "1998",
+      "99",
+      "flair",
+      "showcase",
+      "basketball",
+      "legacy",
+      "collection",
+      "flairshowcasebasketballlegacycollection"
+    ],
+    "serialTerms": [
+      "/99",
+      "99"
+    ],
+    "rarityTier": "Parallel",
+    "scarcityScore": 82,
+    "printRun": 99,
+    "packOdds": null,
+    "popTotal": 0,
+    "popGem": 0,
+    "matchMode": "set",
+    "sourceUrl": null,
+    "metadata": {
+      "year": "1998-99",
+      "code": "1998_flair_showcase_basketball",
+      "sport": "Basketball",
+      "brand": "Fleer",
+      "product": "Flair Showcase",
+      "setType": "Parallel",
+      "setLine": "Legacy Collection",
+      "parallel": "",
+      "serial": "99",
+      "subsetSize": null
+    }
+  },
+  {
+    "id": "1998-99-skybox-premium-basketball-parallel-base-star-rubies",
+    "canonicalTitle": "1998-99 SkyBox Premium Basketball - Parallel - Base - Star Rubies",
+    "aliases": [
+      "1998-99 SkyBox Premium Basketball",
+      "1998-99 SkyBox Premium Basketball - Parallel - Base - Star Rubies",
+      "1998-99 SkyBox Premium Base Star Rubies /50",
+      "1998-99 SkyBox Premium Parallel",
+      "1998-99 SkyBox Premium Star Rubies",
+      "skybox premium basketball star rubies"
+    ],
+    "requiredTerms": [
+      "1998",
+      "99",
+      "skybox",
+      "premium",
+      "basketball",
+      "star",
+      "rubies",
+      "skyboxpremiumbasketballstarrubies"
+    ],
+    "serialTerms": [
+      "/50",
+      "50"
+    ],
+    "rarityTier": "Parallel",
+    "scarcityScore": 82,
+    "printRun": 50,
+    "packOdds": null,
+    "popTotal": 0,
+    "popGem": 0,
+    "matchMode": "set",
+    "sourceUrl": null,
+    "metadata": {
+      "year": "1998-99",
+      "code": "1998_skybox_premium_basketball",
+      "sport": "Basketball",
+      "brand": "SkyBox",
+      "product": "Premium",
+      "setType": "Parallel",
+      "setLine": "Base",
+      "parallel": "Star Rubies",
+      "serial": "50",
+      "subsetSize": null
+    }
+  },
+  {
+    "id": "1998-99-topps-chrome-basketball-base-refractor",
+    "canonicalTitle": "1998-99 Topps Chrome Basketball - Base - Refractor",
+    "aliases": [
+      "1998-99 Topps Chrome Basketball",
+      "1998-99 Topps Chrome Basketball - Base - Refractor",
+      "1998-99 Topps Chrome Base Refractor",
+      "1998-99 Topps Chrome Base",
+      "1998-99 Topps Chrome Refractor",
+      "topps chrome basketball refractor"
+    ],
+    "requiredTerms": [
+      "1998",
+      "99",
+      "topps",
+      "chrome",
+      "basketball",
+      "refractor",
+      "toppschromebasketballrefractor"
+    ],
+    "serialTerms": [],
+    "rarityTier": "Base",
+    "scarcityScore": 62,
+    "printRun": null,
+    "packOdds": "1:12",
+    "popTotal": 0,
+    "popGem": 0,
+    "matchMode": "set",
+    "sourceUrl": null,
+    "metadata": {
+      "year": "1998-99",
+      "code": "1998_topps_chrome_basketball",
+      "sport": "Basketball",
+      "brand": "Topps",
+      "product": "Chrome",
+      "setType": "Base",
+      "setLine": "Base",
+      "parallel": "Refractor",
+      "serial": "",
+      "subsetSize": null
+    }
+  },
+  {
+    "id": "2003-04-topps-chrome-basketball-base-refractor",
+    "canonicalTitle": "2003-04 Topps Chrome Basketball - Base - Refractor",
+    "aliases": [
+      "2003-04 Topps Chrome Basketball",
+      "2003-04 Topps Chrome Basketball - Base - Refractor",
+      "2003-04 Topps Chrome Base Refractor /999",
+      "2003-04 Topps Chrome Base",
+      "2003-04 Topps Chrome Refractor",
+      "topps chrome basketball refractor lebron wade carmelo bosh"
+    ],
+    "requiredTerms": [
+      "2003",
+      "04",
+      "topps",
+      "chrome",
+      "basketball",
+      "refractor",
+      "toppschromebasketballrefractorlebronwadecarmelobosh"
+    ],
+    "serialTerms": [
+      "/999",
+      "999"
+    ],
+    "rarityTier": "Base",
+    "scarcityScore": 82,
+    "printRun": 999,
+    "packOdds": null,
+    "popTotal": 0,
+    "popGem": 0,
+    "matchMode": "set",
+    "sourceUrl": null,
+    "metadata": {
+      "year": "2003-04",
+      "code": "2003_topps_chrome_basketball",
+      "sport": "Basketball",
+      "brand": "Topps",
+      "product": "Chrome",
+      "setType": "Base",
+      "setLine": "Base",
+      "parallel": "Refractor",
+      "serial": "999",
+      "subsetSize": null
+    }
+  },
+  {
+    "id": "2003-04-bowman-chrome-basketball-base-refractor",
+    "canonicalTitle": "2003-04 Bowman Chrome Basketball - Base - Refractor",
+    "aliases": [
+      "2003-04 Bowman Chrome Basketball",
+      "2003-04 Bowman Chrome Basketball - Base - Refractor",
+      "2003-04 Bowman Chrome Base Refractor /300",
+      "2003-04 Bowman Chrome Base",
+      "2003-04 Bowman Chrome Refractor",
+      "bowman chrome basketball refractor lebron wade carmelo bosh"
+    ],
+    "requiredTerms": [
+      "2003",
+      "04",
+      "bowman",
+      "chrome",
+      "basketball",
+      "refractor",
+      "bowmanchromebasketballrefractorlebronwadecarmelobosh"
+    ],
+    "serialTerms": [
+      "/300",
+      "300"
+    ],
+    "rarityTier": "Base",
+    "scarcityScore": 82,
+    "printRun": 300,
+    "packOdds": null,
+    "popTotal": 0,
+    "popGem": 0,
+    "matchMode": "set",
+    "sourceUrl": null,
+    "metadata": {
+      "year": "2003-04",
+      "code": "2003_bowman_chrome_basketball",
+      "sport": "Basketball",
+      "brand": "Bowman",
+      "product": "Chrome",
+      "setType": "Base",
+      "setLine": "Base",
+      "parallel": "Refractor",
+      "serial": "300",
+      "subsetSize": null
+    }
+  },
+  {
+    "id": "2003-04-bowman-chrome-basketball-base-x-fractor",
+    "canonicalTitle": "2003-04 Bowman Chrome Basketball - Base - X-Fractor",
+    "aliases": [
+      "2003-04 Bowman Chrome Basketball",
+      "2003-04 Bowman Chrome Basketball - Base - X-Fractor",
+      "2003-04 Bowman Chrome Base X-Fractor /150",
+      "2003-04 Bowman Chrome Base",
+      "2003-04 Bowman Chrome X-Fractor",
+      "bowman chrome basketball xfractor lebron wade carmelo bosh"
+    ],
+    "requiredTerms": [
+      "2003",
+      "04",
+      "bowman",
+      "chrome",
+      "basketball",
+      "xfractors",
+      "bowmanchromebasketballxfractorlebronwadecarmelobosh"
+    ],
+    "serialTerms": [
+      "/150",
+      "150"
+    ],
+    "rarityTier": "Base",
+    "scarcityScore": 82,
+    "printRun": 150,
+    "packOdds": null,
+    "popTotal": 0,
+    "popGem": 0,
+    "matchMode": "set",
+    "sourceUrl": null,
+    "metadata": {
+      "year": "2003-04",
+      "code": "2003_bowman_chrome_basketball",
+      "sport": "Basketball",
+      "brand": "Bowman",
+      "product": "Chrome",
+      "setType": "Base",
+      "setLine": "Base",
+      "parallel": "X-Fractor",
+      "serial": "150",
+      "subsetSize": null
+    }
+  },
+  {
+    "id": "1994-95-upper-deck-sp-championship-basketball-insert-playoff-heroes-die-cut",
+    "canonicalTitle": "1994-95 Upper Deck SP Championship Basketball - Insert - Playoff Heroes - Die-Cut",
+    "aliases": [
+      "1994-95 Upper Deck SP Championship Basketball",
+      "1994-95 Upper Deck SP Championship Basketball - Insert - Playoff Heroes - Die-Cut",
+      "1994-95 Upper Deck SP Championship Playoff Heroes Die-Cut",
+      "1994-95 Upper Deck SP Championship Insert",
+      "1994-95 Upper Deck SP Championship Die-Cut",
+      "upper deck sp championship basketball playoff heroes die cut"
+    ],
+    "requiredTerms": [
+      "1994",
+      "95",
+      "upper",
+      "deck",
+      "sp",
+      "championship",
+      "basketball",
+      "playoff",
+      "heroes",
+      "die",
+      "cut",
+      "upperdeckspchampionshipbasketballplayoffheroesdiecut"
+    ],
+    "serialTerms": [],
+    "rarityTier": "Insert",
+    "scarcityScore": 62,
+    "printRun": null,
+    "packOdds": "1:225",
+    "popTotal": 0,
+    "popGem": 0,
+    "matchMode": "set",
+    "sourceUrl": null,
+    "metadata": {
+      "year": "1994-95",
+      "code": "1994_95_upper_deck_sp_championship_basketball",
+      "sport": "Basketball",
+      "brand": "Upper Deck",
+      "product": "SP Championship",
+      "setType": "Insert",
+      "setLine": "Playoff Heroes",
+      "parallel": "Die-Cut",
+      "serial": "",
+      "subsetSize": null
+    }
+  },
+  {
+    "id": "1994-95-fleer-ultra-basketball-insert-scoring-kings",
+    "canonicalTitle": "1994-95 Fleer Ultra Basketball - Insert - Scoring Kings",
+    "aliases": [
+      "1994-95 Fleer Ultra Basketball",
+      "1994-95 Fleer Ultra Basketball - Insert - Scoring Kings",
+      "1994-95 Fleer Ultra Scoring Kings",
+      "1994-95 Fleer Ultra Insert",
+      "1994-95 Fleer Ultra",
+      "fleer ultra basketball scoring kings"
+    ],
+    "requiredTerms": [
+      "1994",
+      "95",
+      "fleer",
+      "ultra",
+      "basketball",
+      "scoring",
+      "kings",
+      "fleerultrabasketballscoringkings"
+    ],
+    "serialTerms": [],
+    "rarityTier": "Insert",
+    "scarcityScore": 62,
+    "printRun": null,
+    "packOdds": "1:37",
+    "popTotal": 0,
+    "popGem": 0,
+    "matchMode": "set",
+    "sourceUrl": null,
+    "metadata": {
+      "year": "1994-95",
+      "code": "1994_95_fleer_ultra_basketball",
+      "sport": "Basketball",
+      "brand": "Fleer",
+      "product": "Ultra",
+      "setType": "Insert",
+      "setLine": "Scoring Kings",
+      "parallel": "",
+      "serial": "",
+      "subsetSize": null
+    }
+  },
+  {
+    "id": "1994-95-fleer-ultra-basketball-insert-defensive-gems",
+    "canonicalTitle": "1994-95 Fleer Ultra Basketball - Insert - Defensive Gems",
+    "aliases": [
+      "1994-95 Fleer Ultra Basketball",
+      "1994-95 Fleer Ultra Basketball - Insert - Defensive Gems",
+      "1994-95 Fleer Ultra Defensive Gems",
+      "1994-95 Fleer Ultra Insert",
+      "1994-95 Fleer Ultra",
+      "fleer ultra basketball defensive gems"
+    ],
+    "requiredTerms": [
+      "1994",
+      "95",
+      "fleer",
+      "ultra",
+      "basketball",
+      "defensive",
+      "gems",
+      "fleerultrabasketballdefensivegems"
+    ],
+    "serialTerms": [],
+    "rarityTier": "Insert",
+    "scarcityScore": 62,
+    "printRun": null,
+    "packOdds": "1:37",
+    "popTotal": 0,
+    "popGem": 0,
+    "matchMode": "set",
+    "sourceUrl": null,
+    "metadata": {
+      "year": "1994-95",
+      "code": "1994_95_fleer_ultra_basketball",
+      "sport": "Basketball",
+      "brand": "Fleer",
+      "product": "Ultra",
+      "setType": "Insert",
+      "setLine": "Defensive Gems",
+      "parallel": "",
+      "serial": "",
+      "subsetSize": null
+    }
+  },
+  {
+    "id": "1994-95-upper-deck-collector-s-choice-basketball-base-gold-signature",
+    "canonicalTitle": "1994-95 Upper Deck Collector's Choice Basketball - Base - Gold Signature",
+    "aliases": [
+      "1994-95 Upper Deck Collector's Choice Basketball",
+      "1994-95 Upper Deck Collector's Choice Basketball - Base - Gold Signature",
+      "1994-95 Upper Deck Collector's Choice Base Gold Signature",
+      "1994-95 Upper Deck Collector's Choice Base",
+      "1994-95 Upper Deck Collector's Choice Gold Signature",
+      "upper deck collectors choice basketball gold signature hard pull"
+    ],
+    "requiredTerms": [
+      "1994",
+      "95",
+      "upper",
+      "deck",
+      "collector",
+      "choice",
+      "basketball",
+      "gold",
+      "signature",
+      "upperdeckcollectorschoicebasketballgoldsignaturehardpull"
+    ],
+    "serialTerms": [],
+    "rarityTier": "Base",
+    "scarcityScore": 62,
+    "printRun": null,
+    "packOdds": "1:35",
+    "popTotal": 0,
+    "popGem": 0,
+    "matchMode": "set",
+    "sourceUrl": null,
+    "metadata": {
+      "year": "1994-95",
+      "code": "1994_95_upper_deck_collectors_choice_basketball",
+      "sport": "Basketball",
+      "brand": "Upper Deck",
+      "product": "Collector's Choice",
+      "setType": "Base",
+      "setLine": "Base",
+      "parallel": "Gold Signature",
+      "serial": "",
+      "subsetSize": null
+    }
+  },
+  {
+    "id": "1994-95-topps-finest-basketball-insert-ironman",
+    "canonicalTitle": "1994-95 Topps Finest Basketball - Insert - Ironman",
+    "aliases": [
+      "1994-95 Topps Finest Basketball",
+      "1994-95 Topps Finest Basketball - Insert - Ironman",
+      "1994-95 Topps Finest Ironman",
+      "1994-95 Topps Finest Insert",
+      "1994-95 Topps Finest",
+      "topps finest basketball ironman"
+    ],
+    "requiredTerms": [
+      "1994",
+      "95",
+      "topps",
+      "finest",
+      "basketball",
+      "ironman",
+      "toppsfinestbasketballironman"
+    ],
+    "serialTerms": [],
+    "rarityTier": "Insert",
+    "scarcityScore": 62,
+    "printRun": null,
+    "packOdds": "1:24",
+    "popTotal": 0,
+    "popGem": 0,
+    "matchMode": "set",
+    "sourceUrl": null,
+    "metadata": {
+      "year": "1994-95",
+      "code": "1994_95_topps_finest_basketball",
+      "sport": "Basketball",
+      "brand": "Topps",
+      "product": "Finest",
+      "setType": "Insert",
+      "setLine": "Ironman",
+      "parallel": "",
+      "serial": "",
+      "subsetSize": 10
+    }
+  },
+  {
+    "id": "1994-95-topps-finest-basketball-insert-cornerstone",
+    "canonicalTitle": "1994-95 Topps Finest Basketball - Insert - Cornerstone",
+    "aliases": [
+      "1994-95 Topps Finest Basketball",
+      "1994-95 Topps Finest Basketball - Insert - Cornerstone",
+      "1994-95 Topps Finest Cornerstone",
+      "1994-95 Topps Finest Insert",
+      "1994-95 Topps Finest",
+      "topps finest basketball cornerstone"
+    ],
+    "requiredTerms": [
+      "1994",
+      "95",
+      "topps",
+      "finest",
+      "basketball",
+      "cornerstone",
+      "toppsfinestbasketballcornerstone"
+    ],
+    "serialTerms": [],
+    "rarityTier": "Insert",
+    "scarcityScore": 62,
+    "printRun": null,
+    "packOdds": "1:24",
+    "popTotal": 0,
+    "popGem": 0,
+    "matchMode": "set",
+    "sourceUrl": null,
+    "metadata": {
+      "year": "1994-95",
+      "code": "1994_95_topps_finest_basketball",
+      "sport": "Basketball",
+      "brand": "Topps",
+      "product": "Finest",
+      "setType": "Insert",
+      "setLine": "Cornerstone",
+      "parallel": "",
+      "serial": "",
+      "subsetSize": 15
+    }
+  },
+  {
+    "id": "1994-95-topps-stadium-club-basketball-insert-beam-team",
+    "canonicalTitle": "1994-95 Topps Stadium Club Basketball - Insert - Beam Team",
+    "aliases": [
+      "1994-95 Topps Stadium Club Basketball",
+      "1994-95 Topps Stadium Club Basketball - Insert - Beam Team",
+      "1994-95 Topps Stadium Club Beam Team",
+      "1994-95 Topps Stadium Club Insert",
+      "1994-95 Topps Stadium Club",
+      "topps stadium club basketball beam team verify exact odds"
+    ],
+    "requiredTerms": [
+      "1994",
+      "95",
+      "topps",
+      "stadium",
+      "club",
+      "basketball",
+      "beam",
+      "team",
+      "toppsstadiumclubbasketballbeamteamverifyexactodds"
+    ],
+    "serialTerms": [],
+    "rarityTier": "Insert",
+    "scarcityScore": 62,
+    "printRun": null,
+    "packOdds": "1:24",
+    "popTotal": 0,
+    "popGem": 0,
+    "matchMode": "set",
+    "sourceUrl": null,
+    "metadata": {
+      "year": "1994-95",
+      "code": "1994_95_topps_stadium_club_basketball",
+      "sport": "Basketball",
+      "brand": "Topps",
+      "product": "Stadium Club",
+      "setType": "Insert",
+      "setLine": "Beam Team",
+      "parallel": "",
+      "serial": "",
+      "subsetSize": 27
+    }
+  },
+  {
+    "id": "1994-95-topps-stadium-club-basketball-base-first-day-issue",
+    "canonicalTitle": "1994-95 Topps Stadium Club Basketball - Base - First Day Issue",
+    "aliases": [
+      "1994-95 Topps Stadium Club Basketball",
+      "1994-95 Topps Stadium Club Basketball - Base - First Day Issue",
+      "1994-95 Topps Stadium Club Base First Day Issue",
+      "1994-95 Topps Stadium Club Base",
+      "1994-95 Topps Stadium Club First Day Issue",
+      "topps stadium club basketball first day issue"
+    ],
+    "requiredTerms": [
+      "1994",
+      "95",
+      "topps",
+      "stadium",
+      "club",
+      "basketball",
+      "first",
+      "day",
+      "issue",
+      "toppsstadiumclubbasketballfirstdayissue"
+    ],
+    "serialTerms": [],
+    "rarityTier": "Base",
+    "scarcityScore": 62,
+    "printRun": null,
+    "packOdds": "1:24",
+    "popTotal": 0,
+    "popGem": 0,
+    "matchMode": "set",
+    "sourceUrl": null,
+    "metadata": {
+      "year": "1994-95",
+      "code": "1994_95_topps_stadium_club_basketball",
+      "sport": "Basketball",
+      "brand": "Topps",
+      "product": "Stadium Club",
+      "setType": "Base",
+      "setLine": "Base",
+      "parallel": "First Day Issue",
+      "serial": "",
+      "subsetSize": 362
+    }
+  },
+  {
+    "id": "1994-donruss-baseball-insert-elite-series",
+    "canonicalTitle": "1994 Donruss Baseball - Insert - Elite Series",
+    "aliases": [
+      "1994 Donruss Baseball",
+      "1994 Donruss Baseball - Insert - Elite Series",
+      "1994 Donruss Elite Series /100000",
+      "1994 Donruss Insert",
+      "1994 Donruss",
+      "donruss baseball elite series"
+    ],
+    "requiredTerms": [
+      "1994",
+      "donruss",
+      "baseball",
+      "elite",
+      "series",
+      "donrussbaseballeliteseries"
+    ],
+    "serialTerms": [
+      "/100000",
+      "100000"
+    ],
+    "rarityTier": "Insert",
+    "scarcityScore": 54,
+    "printRun": 100000,
+    "packOdds": "1:216",
+    "popTotal": 0,
+    "popGem": 0,
+    "matchMode": "set",
+    "sourceUrl": null,
+    "metadata": {
+      "year": "1994",
+      "code": "1994_donruss_baseball_elite_series",
+      "sport": "Baseball",
+      "brand": "Donruss",
+      "product": "",
+      "setType": "Insert",
+      "setLine": "Elite Series",
+      "parallel": "",
+      "serial": "100000",
+      "subsetSize": 12
+    }
+  },
+  {
+    "id": "1994-upper-deck-sp-baseball-insert-holoview-fx-special-fx-die-cut",
+    "canonicalTitle": "1994 Upper Deck SP Baseball - Insert - Holoview FX - Special FX Die-Cut",
+    "aliases": [
+      "1994 Upper Deck SP Baseball",
+      "1994 Upper Deck SP Baseball - Insert - Holoview FX - Special FX Die-Cut",
+      "1994 Upper Deck SP Holoview FX Special FX Die-Cut",
+      "1994 Upper Deck SP Insert",
+      "1994 Upper Deck SP Special FX Die-Cut",
+      "upper deck sp baseball holoview holoview fx special FX die cut"
+    ],
+    "requiredTerms": [
+      "1994",
+      "upper",
+      "deck",
+      "sp",
+      "baseball",
+      "holoview",
+      "fx",
+      "special",
+      "die",
+      "cut",
+      "upperdeckspbaseballholoviewholoviewfxspecialfxdiecut"
+    ],
+    "serialTerms": [],
+    "rarityTier": "Insert",
+    "scarcityScore": 62,
+    "printRun": null,
+    "packOdds": "1:75",
+    "popTotal": 0,
+    "popGem": 0,
+    "matchMode": "set",
+    "sourceUrl": null,
+    "metadata": {
+      "year": "1994",
+      "code": "1994_upper_deck_sp_baseball",
+      "sport": "Baseball",
+      "brand": "Upper Deck",
+      "product": "SP",
+      "setType": "Insert",
+      "setLine": "Holoview FX",
+      "parallel": "Special FX Die-Cut",
+      "serial": "",
+      "subsetSize": 38
+    }
+  },
+  {
+    "id": "1994-upper-deck-sp-baseball-insert-holoview-fx",
+    "canonicalTitle": "1994 Upper Deck SP Baseball - Insert - Holoview FX",
+    "aliases": [
+      "1994 Upper Deck SP Baseball",
+      "1994 Upper Deck SP Baseball - Insert - Holoview FX",
+      "1994 Upper Deck SP Holoview FX",
+      "1994 Upper Deck SP Insert",
+      "1994 Upper Deck SP",
+      "upper deck sp baseball holoview fx"
+    ],
+    "requiredTerms": [
+      "1994",
+      "upper",
+      "deck",
+      "sp",
+      "baseball",
+      "holoview",
+      "fx",
+      "upperdeckspbaseballholoviewfx"
+    ],
+    "serialTerms": [],
+    "rarityTier": "Insert",
+    "scarcityScore": 62,
+    "printRun": null,
+    "packOdds": "1:5",
+    "popTotal": 0,
+    "popGem": 0,
+    "matchMode": "set",
+    "sourceUrl": null,
+    "metadata": {
+      "year": "1994",
+      "code": "1994_upper_deck_sp_baseball",
+      "sport": "Baseball",
+      "brand": "Upper Deck",
+      "product": "SP",
+      "setType": "Insert",
+      "setLine": "Holoview FX",
+      "parallel": "",
+      "serial": "",
+      "subsetSize": 38
+    }
+  },
+  {
+    "id": "1994-flair-baseball-insert-hot-gloves",
+    "canonicalTitle": "1994 Flair Baseball - Insert - Hot Gloves",
+    "aliases": [
+      "1994 Flair Baseball",
+      "1994 Flair Baseball - Insert - Hot Gloves",
+      "1994 Fleer Flair Hot Gloves",
+      "1994 Fleer Flair Insert",
+      "1994 Fleer Flair",
+      "flair baseball hot gloves"
+    ],
+    "requiredTerms": [
+      "1994",
+      "flair",
+      "baseball",
+      "hot",
+      "gloves",
+      "flairbaseballhotgloves"
+    ],
+    "serialTerms": [],
+    "rarityTier": "Insert",
+    "scarcityScore": 62,
+    "printRun": null,
+    "packOdds": "1:24",
+    "popTotal": 0,
+    "popGem": 0,
+    "matchMode": "set",
+    "sourceUrl": null,
+    "metadata": {
+      "year": "1994",
+      "code": "1994_flair_baseball",
+      "sport": "Baseball",
+      "brand": "Fleer",
+      "product": "Flair",
+      "setType": "Insert",
+      "setLine": "Hot Gloves",
+      "parallel": "",
+      "serial": "",
+      "subsetSize": 10
+    }
+  },
+  {
+    "id": "1994-flair-baseball-insert-hot-gloves",
+    "canonicalTitle": "1994 Flair Baseball - Insert - Hot Gloves",
+    "aliases": [
+      "1994 Flair Baseball",
+      "1994 Flair Baseball - Insert - Hot Gloves",
+      "1994 Fleer Flair Hot Gloves",
+      "1994 Fleer Flair Insert",
+      "1994 Fleer Flair",
+      "flair baseball hot numbers"
+    ],
+    "requiredTerms": [
+      "1994",
+      "flair",
+      "baseball",
+      "hot",
+      "gloves",
+      "flairbaseballhotnumbers"
+    ],
+    "serialTerms": [],
+    "rarityTier": "Insert",
+    "scarcityScore": 62,
+    "printRun": null,
+    "packOdds": "1:24",
+    "popTotal": 0,
+    "popGem": 0,
+    "matchMode": "set",
+    "sourceUrl": null,
+    "metadata": {
+      "year": "1994",
+      "code": "1994_flair_baseball",
+      "sport": "Baseball",
+      "brand": "Fleer",
+      "product": "Flair",
+      "setType": "Insert",
+      "setLine": "Hot Gloves",
+      "parallel": "",
+      "serial": "",
+      "subsetSize": 10
     }
   }
 ]
