@@ -9,14 +9,21 @@
   }
 
   async function loadRarityForListing(listing) {
-    const cacheKey = `${listing.source}:${listing.title}:${listing.pageUrl}`;
+    const session = await window.CMRarityStorage.getSession();
+    const accountKey = session.token
+      ? `${session.plan}:${session.email}:${session.token.slice(-12)}`
+      : "anonymous";
+    const cacheKey = `${accountKey}:${listing.source}:${listing.title}:${listing.pageUrl}`;
 
     if (!lookupPromises.has(cacheKey)) {
-      lookupPromises.set(cacheKey, window.CMRarityApi.fetchRarity({
+      const lookup = window.CMRarityApi.fetchRarity({
         title: listing.title,
         source: listing.source,
         pageUrl: listing.pageUrl
-      }));
+      }).finally(() => {
+        lookupPromises.delete(cacheKey);
+      });
+      lookupPromises.set(cacheKey, lookup);
     }
 
     return lookupPromises.get(cacheKey);

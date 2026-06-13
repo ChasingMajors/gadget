@@ -59,14 +59,20 @@ function setSession(session) {
   });
 }
 
-async function authHeaders() {
+function sessionCacheKey(session) {
+  return session.token
+    ? `${session.plan}:${session.email}:${session.token.slice(-12)}`
+    : "anonymous";
+}
+
+async function authHeaders(session) {
   const headers = {
     "Accept": "application/json"
   };
-  const session = await getSession();
+  const activeSession = session || await getSession();
 
-  if (session.token) {
-    headers.Authorization = `Bearer ${session.token}`;
+  if (activeSession.token) {
+    headers.Authorization = `Bearer ${activeSession.token}`;
   }
 
   return headers;
@@ -90,7 +96,8 @@ function sanitizeApiResponse(data, title) {
 }
 
 async function fetchRarity(payload) {
-  const cacheKey = `${payload.source}:${payload.title}:${payload.pageUrl}`;
+  const session = await getSession();
+  const cacheKey = `${sessionCacheKey(session)}:${payload.source}:${payload.title}:${payload.pageUrl}`;
   const ttl = cacheTtlMs();
   const cached = cache.get(cacheKey);
 
@@ -100,7 +107,7 @@ async function fetchRarity(payload) {
 
   const response = await fetch(buildRarityUrl(payload), {
     method: "GET",
-    headers: await authHeaders(),
+    headers: await authHeaders(session),
     credentials: "omit"
   });
 

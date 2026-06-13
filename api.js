@@ -38,14 +38,20 @@
     return url.toString();
   }
 
-  async function authHeaders() {
+  function sessionCacheKey(session) {
+    return session?.token
+      ? `${session.plan}:${session.email}:${session.token.slice(-12)}`
+      : "anonymous";
+  }
+
+  async function authHeaders(session) {
     const headers = {
       "Accept": "application/json"
     };
-    const session = await window.CMRarityStorage?.getSession?.();
+    const activeSession = session || await window.CMRarityStorage?.getSession?.();
 
-    if (session?.token) {
-      headers.Authorization = `Bearer ${session.token}`;
+    if (activeSession?.token) {
+      headers.Authorization = `Bearer ${activeSession.token}`;
     }
 
     return headers;
@@ -157,7 +163,8 @@
   }
 
   async function fetchRarity({ title, source, pageUrl }) {
-    const cacheKey = `${source}:${title}:${pageUrl}`;
+    const session = await window.CMRarityStorage?.getSession?.();
+    const cacheKey = `${sessionCacheKey(session)}:${source}:${title}:${pageUrl}`;
     const ttl = cacheTtlMs();
     const cached = cache.get(cacheKey);
 
