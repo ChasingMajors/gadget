@@ -322715,14 +322715,14 @@
     }
   },
   {
-    "id": "1994-95-upper-deck-sp-championship-basketball-insert-playoff-heroes-die-cut",
-    "canonicalTitle": "1994-95 Upper Deck SP Championship Basketball - Insert - Playoff Heroes - Die-Cut",
+    "id": "1994-95-upper-deck-sp-championship-series-basketball-insert-playoff-heroes-die-cut",
+    "canonicalTitle": "1994-95 Upper Deck SP Championship Series Basketball - Insert - Playoff Heroes - Die-Cut",
     "aliases": [
-      "1994-95 Upper Deck SP Championship Basketball",
-      "1994-95 Upper Deck SP Championship Basketball - Insert - Playoff Heroes - Die-Cut",
-      "1994-95 Upper Deck SP Championship Playoff Heroes Die-Cut",
-      "1994-95 Upper Deck SP Championship Insert",
-      "1994-95 Upper Deck SP Championship Die-Cut"
+      "1994-95 Upper Deck SP Championship Series Basketball",
+      "1994-95 Upper Deck SP Championship Series Basketball - Insert - Playoff Heroes - Die-Cut",
+      "1994-95 Upper Deck SP Championship Series Playoff Heroes Die-Cut",
+      "1994-95 Upper Deck SP Championship Series Insert",
+      "1994-95 Upper Deck SP Championship Series Die-Cut"
     ],
     "requiredTerms": [
       "1994",
@@ -322731,6 +322731,7 @@
       "deck",
       "sp",
       "championship",
+      "series",
       "basketball",
       "playoff",
       "heroes",
@@ -322748,10 +322749,10 @@
     "sourceUrl": null,
     "metadata": {
       "year": "1994-95",
-      "code": "1994_95_upper_deck_sp_championship_basketball",
+      "code": "1994_95_upper_deck_sp_championship_series_basketball",
       "sport": "Basketball",
       "brand": "Upper Deck",
-      "product": "SP Championship",
+      "product": "SP Championship Series",
       "setType": "Insert",
       "setLine": "Playoff Heroes",
       "parallel": "Die-Cut",
@@ -322760,14 +322761,14 @@
     }
   },
   {
-    "id": "1994-95-upper-deck-sp-championship-basketball-insert-playoff-heroes",
-    "canonicalTitle": "1994-95 Upper Deck SP Championship Basketball - Insert - Playoff Heroes",
+    "id": "1994-95-upper-deck-sp-championship-series-basketball-insert-playoff-heroes",
+    "canonicalTitle": "1994-95 Upper Deck SP Championship Series Basketball - Insert - Playoff Heroes",
     "aliases": [
-      "1994-95 Upper Deck SP Championship Basketball",
-      "1994-95 Upper Deck SP Championship Basketball - Insert - Playoff Heroes",
-      "1994-95 Upper Deck SP Championship Playoff Heroes",
-      "1994-95 Upper Deck SP Championship Insert",
-      "1994-95 Upper Deck SP Championship"
+      "1994-95 Upper Deck SP Championship Series Basketball",
+      "1994-95 Upper Deck SP Championship Series Basketball - Insert - Playoff Heroes",
+      "1994-95 Upper Deck SP Championship Series Playoff Heroes",
+      "1994-95 Upper Deck SP Championship Series Insert",
+      "1994-95 Upper Deck SP Championship Series"
     ],
     "requiredTerms": [
       "1994",
@@ -322776,6 +322777,7 @@
       "deck",
       "sp",
       "championship",
+      "series",
       "basketball",
       "playoff",
       "heroes"
@@ -322791,10 +322793,10 @@
     "sourceUrl": null,
     "metadata": {
       "year": "1994-95",
-      "code": "1994_95_upper_deck_sp_championship_basketball",
+      "code": "1994_95_upper_deck_sp_championship_series_basketball",
       "sport": "Basketball",
       "brand": "Upper Deck",
-      "product": "SP Championship",
+      "product": "SP Championship Series",
       "setType": "Insert",
       "setLine": "Playoff Heroes",
       "parallel": "",
@@ -323257,11 +323259,11 @@
     }
   },
   {
-    "id": "1994-bowman-s-best-baseball-base-refractor",
-    "canonicalTitle": "1994 Bowman's Best Baseball - Base - Refractor",
+    "id": "1994-bowmans-best-baseball-base-refractor",
+    "canonicalTitle": "1994 Bowmans Best Baseball - Base - Refractor",
     "aliases": [
-      "1994 Bowman's Best Baseball",
-      "1994 Bowman's Best Baseball - Base - Refractor",
+      "1994 Bowmans Best Baseball",
+      "1994 Bowmans Best Baseball - Base - Refractor",
       "1994 Bowmans Best Base Refractor",
       "1994 Bowmans Best Base",
       "1994 Bowmans Best Refractor",
@@ -323269,7 +323271,7 @@
     ],
     "requiredTerms": [
       "1994",
-      "bowman",
+      "bowmans",
       "best",
       "baseball",
       "refractor",
@@ -323417,17 +323419,17 @@
     }
   },
   {
-    "id": "1994-bowmans-best-football-base-refractor",
-    "canonicalTitle": "1994 Bowmans Best Football - Base - Refractor",
+    "id": "1995-bowmans-best-football-base-refractor",
+    "canonicalTitle": "1995 Bowmans Best Football - Base - Refractor",
     "aliases": [
-      "1994 Bowmans Best Football",
-      "1994 Bowmans Best Football - Base - Refractor",
+      "1995 Bowmans Best Football",
+      "1995 Bowmans Best Football - Base - Refractor",
       "1995 Bowmans Best Base Refractor",
       "1995 Bowmans Best Base",
       "1995 Bowmans Best Refractor"
     ],
     "requiredTerms": [
-      "1994",
+      "1995",
       "bowmans",
       "best",
       "football",
@@ -323444,7 +323446,7 @@
     "sourceUrl": null,
     "metadata": {
       "year": "1995",
-      "code": "1994_bowmans_best_football",
+      "code": "1995_bowmans_best_football",
       "sport": "Football",
       "brand": "Bowmans",
       "product": "Best",
@@ -323561,7 +323563,7 @@
     "sourceUrl": null,
     "metadata": {
       "year": "2025-26",
-      "code": "2025_26_Topps_Motif_Basketball",
+      "code": "2025_26_topps_motif_basketball",
       "sport": "Basketball",
       "brand": "Topps",
       "product": "Motif",
@@ -323573,11 +323575,11 @@
     }
   },
   {
-    "id": "1994-bowman-s-best-baseball-base-red-refractor",
-    "canonicalTitle": "1994 Bowman's Best Baseball - Base - Red - Refractor",
+    "id": "1994-bowman-best-baseball-base-red-refractor",
+    "canonicalTitle": "1994 Bowman Best Baseball - Base - Red - Refractor",
     "aliases": [
-      "1994 Bowman's Best Baseball",
-      "1994 Bowman's Best Baseball - Base - Red - Refractor",
+      "1994 Bowman Best Baseball",
+      "1994 Bowman Best Baseball - Base - Red - Refractor",
       "1994 Bowman Best Red Refractor",
       "1994 Bowman Best Base",
       "1994 Bowman Best Refractor",
@@ -323603,7 +323605,7 @@
     "sourceUrl": null,
     "metadata": {
       "year": "1994",
-      "code": "1994_bowmans_best_baseball",
+      "code": "1994_bowman_best_baseball",
       "sport": "Baseball",
       "brand": "Bowman",
       "product": "Best",
@@ -323615,11 +323617,11 @@
     }
   },
   {
-    "id": "1994-bowman-s-best-football-base-blue-refractor",
-    "canonicalTitle": "1994 Bowman's Best Football - Base - Blue - Refractor",
+    "id": "1994-bowman-best-football-base-blue-refractor",
+    "canonicalTitle": "1994 Bowman Best Football - Base - Blue - Refractor",
     "aliases": [
-      "1994 Bowman's Best Football",
-      "1994 Bowman's Best Football - Base - Blue - Refractor",
+      "1994 Bowman Best Football",
+      "1994 Bowman Best Football - Base - Blue - Refractor",
       "1994 Bowman Best Blue Refractor",
       "1994 Bowman Best Base",
       "1994 Bowman Best Refractor",
@@ -323645,7 +323647,7 @@
     "sourceUrl": null,
     "metadata": {
       "year": "1994",
-      "code": "1994_bowmans_best_football",
+      "code": "1994_bowman_best_football",
       "sport": "Football",
       "brand": "Bowman",
       "product": "Best",
@@ -323687,7 +323689,7 @@
     "sourceUrl": null,
     "metadata": {
       "year": "1996-97",
-      "code": "1996_topps_chrome_basketball",
+      "code": "1996_97_topps_chrome_basketball",
       "sport": "Basketball",
       "brand": "Topps",
       "product": "Chrome",
@@ -323770,7 +323772,7 @@
     "sourceUrl": null,
     "metadata": {
       "year": "1997-98",
-      "code": "1997_topps_chrome_basketball",
+      "code": "1997_98_topps_chrome_basketball",
       "sport": "Basketball",
       "brand": "Topps",
       "product": "Chrome",
@@ -323782,11 +323784,11 @@
     }
   },
   {
-    "id": "1997-98-metal-universe-basketball-parallel-base-precious-metal-gems",
-    "canonicalTitle": "1997-98 Metal Universe Basketball - Parallel - Base - Precious Metal Gems",
+    "id": "1997-98-fleer-skybox-metal-universe-basketball-parallel-base-precious-metal-gems",
+    "canonicalTitle": "1997-98 Fleer/SkyBox Metal Universe Basketball - Parallel - Base - Precious Metal Gems",
     "aliases": [
-      "1997-98 Metal Universe Basketball",
-      "1997-98 Metal Universe Basketball - Parallel - Base - Precious Metal Gems",
+      "1997-98 Fleer/SkyBox Metal Universe Basketball",
+      "1997-98 Fleer/SkyBox Metal Universe Basketball - Parallel - Base - Precious Metal Gems",
       "1997-98 Fleer/SkyBox Metal Universe Base Precious Metal Gems /100",
       "1997-98 Fleer/SkyBox Metal Universe Parallel",
       "1997-98 Fleer/SkyBox Metal Universe Precious Metal Gems",
@@ -323795,6 +323797,7 @@
     "requiredTerms": [
       "1997",
       "98",
+      "fleer/skybox",
       "metal",
       "universe",
       "basketball",
@@ -323816,7 +323819,7 @@
     "sourceUrl": null,
     "metadata": {
       "year": "1997-98",
-      "code": "1997_metal_universe_basketball",
+      "code": "1997_98_fleer_skybox_metal_universe_basketball",
       "sport": "Basketball",
       "brand": "Fleer/SkyBox",
       "product": "Metal Universe",
@@ -323828,11 +323831,11 @@
     }
   },
   {
-    "id": "1998-99-metal-universe-basketball-parallel-base-precious-metal-gems",
-    "canonicalTitle": "1998-99 Metal Universe Basketball - Parallel - Base - Precious Metal Gems",
+    "id": "1998-99-fleer-skybox-metal-universe-basketball-parallel-base-precious-metal-gems",
+    "canonicalTitle": "1998-99 Fleer/SkyBox Metal Universe Basketball - Parallel - Base - Precious Metal Gems",
     "aliases": [
-      "1998-99 Metal Universe Basketball",
-      "1998-99 Metal Universe Basketball - Parallel - Base - Precious Metal Gems",
+      "1998-99 Fleer/SkyBox Metal Universe Basketball",
+      "1998-99 Fleer/SkyBox Metal Universe Basketball - Parallel - Base - Precious Metal Gems",
       "1998-99 Fleer/SkyBox Metal Universe Base Precious Metal Gems /50",
       "1998-99 Fleer/SkyBox Metal Universe Parallel",
       "1998-99 Fleer/SkyBox Metal Universe Precious Metal Gems",
@@ -323841,6 +323844,7 @@
     "requiredTerms": [
       "1998",
       "99",
+      "fleer/skybox",
       "metal",
       "universe",
       "basketball",
@@ -323862,7 +323866,7 @@
     "sourceUrl": null,
     "metadata": {
       "year": "1998-99",
-      "code": "1998_metal_universe_basketball",
+      "code": "1998_99_fleer_skybox_metal_universe_basketball",
       "sport": "Basketball",
       "brand": "Fleer/SkyBox",
       "product": "Metal Universe",
@@ -323874,11 +323878,11 @@
     }
   },
   {
-    "id": "1997-98-flair-showcase-basketball-parallel-legacy-collection",
-    "canonicalTitle": "1997-98 Flair Showcase Basketball - Parallel - Legacy Collection",
+    "id": "1997-98-fleer-flair-showcase-basketball-parallel-legacy-collection",
+    "canonicalTitle": "1997-98 Fleer Flair Showcase Basketball - Parallel - Legacy Collection",
     "aliases": [
-      "1997-98 Flair Showcase Basketball",
-      "1997-98 Flair Showcase Basketball - Parallel - Legacy Collection",
+      "1997-98 Fleer Flair Showcase Basketball",
+      "1997-98 Fleer Flair Showcase Basketball - Parallel - Legacy Collection",
       "1997-98 Fleer Flair Showcase Legacy Collection /100",
       "1997-98 Fleer Flair Showcase Parallel",
       "1997-98 Fleer Flair Showcase",
@@ -323887,6 +323891,7 @@
     "requiredTerms": [
       "1997",
       "98",
+      "fleer",
       "flair",
       "showcase",
       "basketball",
@@ -323908,7 +323913,7 @@
     "sourceUrl": null,
     "metadata": {
       "year": "1997-98",
-      "code": "1997_flair_showcase_basketball",
+      "code": "1997_98_fleer_flair_showcase_basketball",
       "sport": "Basketball",
       "brand": "Fleer",
       "product": "Flair Showcase",
@@ -323953,7 +323958,7 @@
     "sourceUrl": null,
     "metadata": {
       "year": "1997-98",
-      "code": "1997_skybox_z_force_basketball",
+      "code": "1997_98_skybox_z_force_basketball",
       "sport": "Basketball",
       "brand": "SkyBox",
       "product": "Z-Force",
@@ -323999,7 +324004,7 @@
     "sourceUrl": null,
     "metadata": {
       "year": "1997-98",
-      "code": "1997_skybox_z_force_basketball",
+      "code": "1997_98_skybox_z_force_basketball",
       "sport": "Basketball",
       "brand": "SkyBox",
       "product": "Z-Force",
@@ -324011,11 +324016,11 @@
     }
   },
   {
-    "id": "1997-98-e-x2001-basketball-insert-jambalaya",
-    "canonicalTitle": "1997-98 E-X2001 Basketball - Insert - Jambalaya",
+    "id": "1997-98-fleer-skybox-e-x2001-basketball-insert-jambalaya",
+    "canonicalTitle": "1997-98 Fleer/SkyBox E-X2001 Basketball - Insert - Jambalaya",
     "aliases": [
-      "1997-98 E-X2001 Basketball",
-      "1997-98 E-X2001 Basketball - Insert - Jambalaya",
+      "1997-98 Fleer/SkyBox E-X2001 Basketball",
+      "1997-98 Fleer/SkyBox E-X2001 Basketball - Insert - Jambalaya",
       "1997-98 Fleer/SkyBox E-X2001 Jambalaya",
       "1997-98 Fleer/SkyBox E-X2001 Insert",
       "1997-98 Fleer/SkyBox E-X2001",
@@ -324024,6 +324029,7 @@
     "requiredTerms": [
       "1997",
       "98",
+      "fleer/skybox",
       "x2001",
       "basketball",
       "jambalaya",
@@ -324040,7 +324046,7 @@
     "sourceUrl": null,
     "metadata": {
       "year": "1997-98",
-      "code": "1997_skybox_ex2001_basketball",
+      "code": "1997_98_fleer_skybox_e_x2001_basketball",
       "sport": "Basketball",
       "brand": "Fleer/SkyBox",
       "product": "E-X2001",
@@ -324052,11 +324058,11 @@
     }
   },
   {
-    "id": "1998-99-flair-showcase-basketball-parallel-legacy-collection",
-    "canonicalTitle": "1998-99 Flair Showcase Basketball - Parallel - Legacy Collection",
+    "id": "1998-99-fleer-flair-showcase-basketball-parallel-legacy-collection",
+    "canonicalTitle": "1998-99 Fleer Flair Showcase Basketball - Parallel - Legacy Collection",
     "aliases": [
-      "1998-99 Flair Showcase Basketball",
-      "1998-99 Flair Showcase Basketball - Parallel - Legacy Collection",
+      "1998-99 Fleer Flair Showcase Basketball",
+      "1998-99 Fleer Flair Showcase Basketball - Parallel - Legacy Collection",
       "1998-99 Fleer Flair Showcase Legacy Collection /99",
       "1998-99 Fleer Flair Showcase Parallel",
       "1998-99 Fleer Flair Showcase",
@@ -324065,6 +324071,7 @@
     "requiredTerms": [
       "1998",
       "99",
+      "fleer",
       "flair",
       "showcase",
       "basketball",
@@ -324086,7 +324093,7 @@
     "sourceUrl": null,
     "metadata": {
       "year": "1998-99",
-      "code": "1998_flair_showcase_basketball",
+      "code": "1998_99_fleer_flair_showcase_basketball",
       "sport": "Basketball",
       "brand": "Fleer",
       "product": "Flair Showcase",
@@ -324132,7 +324139,7 @@
     "sourceUrl": null,
     "metadata": {
       "year": "1998-99",
-      "code": "1998_skybox_premium_basketball",
+      "code": "1998_99_skybox_premium_basketball",
       "sport": "Basketball",
       "brand": "SkyBox",
       "product": "Premium",
@@ -324174,7 +324181,7 @@
     "sourceUrl": null,
     "metadata": {
       "year": "1998-99",
-      "code": "1998_topps_chrome_basketball",
+      "code": "1998_99_topps_chrome_basketball",
       "sport": "Basketball",
       "brand": "Topps",
       "product": "Chrome",
@@ -324219,7 +324226,7 @@
     "sourceUrl": null,
     "metadata": {
       "year": "2003-04",
-      "code": "2003_topps_chrome_basketball",
+      "code": "2003_04_topps_chrome_basketball",
       "sport": "Basketball",
       "brand": "Topps",
       "product": "Chrome",
@@ -324264,7 +324271,7 @@
     "sourceUrl": null,
     "metadata": {
       "year": "2003-04",
-      "code": "2003_bowman_chrome_basketball",
+      "code": "2003_04_bowman_chrome_basketball",
       "sport": "Basketball",
       "brand": "Bowman",
       "product": "Chrome",
@@ -324309,7 +324316,7 @@
     "sourceUrl": null,
     "metadata": {
       "year": "2003-04",
-      "code": "2003_bowman_chrome_basketball",
+      "code": "2003_04_bowman_chrome_basketball",
       "sport": "Basketball",
       "brand": "Bowman",
       "product": "Chrome",
@@ -324487,7 +324494,7 @@
     "sourceUrl": null,
     "metadata": {
       "year": "1994-95",
-      "code": "1994_95_upper_deck_collectors_choice_basketball",
+      "code": "1994_95_upper_deck_collector_s_choice_basketball",
       "sport": "Basketball",
       "brand": "Upper Deck",
       "product": "Collector's Choice",
@@ -324704,7 +324711,7 @@
     "sourceUrl": null,
     "metadata": {
       "year": "1994",
-      "code": "1994_donruss_baseball_elite_series",
+      "code": "1994_donruss_baseball",
       "sport": "Baseball",
       "brand": "Donruss",
       "product": "",
@@ -324805,11 +324812,11 @@
     }
   },
   {
-    "id": "1994-flair-baseball-insert-hot-gloves",
-    "canonicalTitle": "1994 Flair Baseball - Insert - Hot Gloves",
+    "id": "1994-fleer-flair-baseball-insert-hot-gloves",
+    "canonicalTitle": "1994 Fleer Flair Baseball - Insert - Hot Gloves",
     "aliases": [
-      "1994 Flair Baseball",
-      "1994 Flair Baseball - Insert - Hot Gloves",
+      "1994 Fleer Flair Baseball",
+      "1994 Fleer Flair Baseball - Insert - Hot Gloves",
       "1994 Fleer Flair Hot Gloves",
       "1994 Fleer Flair Insert",
       "1994 Fleer Flair",
@@ -324817,6 +324824,7 @@
     ],
     "requiredTerms": [
       "1994",
+      "fleer",
       "flair",
       "baseball",
       "hot",
@@ -324834,7 +324842,7 @@
     "sourceUrl": null,
     "metadata": {
       "year": "1994",
-      "code": "1994_flair_baseball",
+      "code": "1994_fleer_flair_baseball",
       "sport": "Baseball",
       "brand": "Fleer",
       "product": "Flair",
@@ -324846,11 +324854,11 @@
     }
   },
   {
-    "id": "1994-flair-baseball-insert-hot-gloves",
-    "canonicalTitle": "1994 Flair Baseball - Insert - Hot Gloves",
+    "id": "1994-fleer-flair-baseball-insert-hot-gloves",
+    "canonicalTitle": "1994 Fleer Flair Baseball - Insert - Hot Gloves",
     "aliases": [
-      "1994 Flair Baseball",
-      "1994 Flair Baseball - Insert - Hot Gloves",
+      "1994 Fleer Flair Baseball",
+      "1994 Fleer Flair Baseball - Insert - Hot Gloves",
       "1994 Fleer Flair Hot Gloves",
       "1994 Fleer Flair Insert",
       "1994 Fleer Flair",
@@ -324858,6 +324866,7 @@
     ],
     "requiredTerms": [
       "1994",
+      "fleer",
       "flair",
       "baseball",
       "hot",
@@ -324875,7 +324884,7 @@
     "sourceUrl": null,
     "metadata": {
       "year": "1994",
-      "code": "1994_flair_baseball",
+      "code": "1994_fleer_flair_baseball",
       "sport": "Baseball",
       "brand": "Fleer",
       "product": "Flair",
