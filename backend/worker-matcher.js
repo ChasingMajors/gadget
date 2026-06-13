@@ -524,7 +524,28 @@ export function scoreCard(query, card) {
 
 export function findBestMatch(query, cardData, minimumConfidence = 0.54) {
   const plainQueryTokens = tokenSet(query);
-  const ranked = cardData
+  const queryYears = Array.from(plainQueryTokens).filter((token) => /^(?:19|20)\d{2}$/.test(token));
+  const candidates = cardData.filter((card) => {
+    const intentTokens = cardTokensForIntent(card);
+    const overlap = Array.from(intentTokens).filter((token) => plainQueryTokens.has(token)).length;
+    if (!overlap) {
+      return false;
+    }
+
+    if (card.matchMode !== "set") {
+      return true;
+    }
+
+    const cardYears = metadataTokens(card.metadata?.year)
+      .filter((token) => /^(?:19|20)\d{2}$/.test(token));
+    if (queryYears.length && cardYears.length && !cardYears.some((token) => queryYears.includes(token))) {
+      return false;
+    }
+
+    return hasRequiredTerms(queryTokensForCard(query, card), card);
+  });
+
+  const ranked = candidates
     .map((card) => ({
       card,
       confidence: scoreCard(query, card),

@@ -132,6 +132,20 @@ function hasExplicitTitle(record) {
   return Boolean(firstValue(record, ["canonicaltitle", "title", "card", "cardtitle", "cardname", "description"]));
 }
 
+function packOddsText(value) {
+  const text = String(value || "").trim();
+  if (!text) {
+    return "";
+  }
+
+  return /(?:^|\b)1\s*:\s*[\d,]+/i.test(text) || /^base card$/i.test(text) ? text : "";
+}
+
+function packOddsValue(record) {
+  return firstValue(record, ["packodds", "pack odds", "odds"])
+    || packOddsText(firstValue(record, ["notes"]));
+}
+
 function hasSetSchema(record) {
   return Boolean(firstValue(record, ["displayname"])
     && (firstValue(record, [
@@ -148,7 +162,7 @@ function hasSetSchema(record) {
       "calculatedpr"
     ])
       || firstValue(record, ["serial", "serialnumber", "numberedto"])
-      || firstValue(record, ["packodds", "pack odds", "odds", "notes"])));
+      || packOddsValue(record)));
 }
 
 function titleTerms(title) {
@@ -230,7 +244,7 @@ function setRowToCard(record) {
   const effectivePrintRun = printRun ?? serialPrintRun;
   const subsetSize = numberValue(firstValue(record, ["subsetsize"]));
   const rawKeywords = listValue(firstValue(record, ["keywords"]));
-  const packOdds = firstValue(record, ["packodds", "odds", "notes"]);
+  const packOdds = packOddsValue(record);
   const cmURL = firstValue(record, ["cmurl"]);
 
   if (!displayName || (effectivePrintRun === null && !packOdds)) {
@@ -351,7 +365,7 @@ function rowToCard(record) {
     rarityTier: firstValue(record, ["raritytier", "tier"]) || (/^base$/i.test(parallel) ? "Base Rookie" : "Rare"),
     scarcityScore: numberValue(firstValue(record, ["scarcityscore", "score"])) ?? (/^base$/i.test(parallel) ? 54 : 75),
     printRun,
-    packOdds: firstValue(record, ["packodds", "odds"]) || (/^base$/i.test(parallel) ? "Base card" : null),
+    packOdds: packOddsValue(record) || (/^base$/i.test(parallel) ? "Base card" : null),
     popTotal: numberValue(firstValue(record, ["poptotal", "popcount"])) ?? 0,
     popGem: numberValue(firstValue(record, ["popgem", "gemcount"])) ?? 0
   };
