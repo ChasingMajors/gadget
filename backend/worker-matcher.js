@@ -150,12 +150,24 @@ function comcStructuredParts(query) {
     return [];
   }
 
-  return rawParts.slice(1)
-    .map((part) => part
+  const setParts = [];
+  for (const part of rawParts.slice(1)) {
+    const hasCardNumber = /\s+#\S+/.test(part);
+    const cleaned = part
       .replace(/\s+#\S+.*$/g, "")
       .replace(/^\[base\]$/i, "base")
-      .trim())
-    .filter(Boolean)
+      .trim();
+
+    if (cleaned) {
+      setParts.push(cleaned);
+    }
+
+    if (hasCardNumber) {
+      break;
+    }
+  }
+
+  return setParts
     .map((part) => metadataTokens(part))
     .filter((tokens) => tokens.length);
 }
@@ -250,6 +262,24 @@ function sportMismatchPenalty(queryTokens, card) {
   }
 
   return querySportTokens.some((token) => !sportTokens.has(token)) ? -0.72 : 0;
+}
+
+function yearMismatchPenalty(queryTokens, card) {
+  if (card.matchMode !== "set") {
+    return 0;
+  }
+
+  const metadata = card.metadata || {};
+  const cardYearTokens = metadataTokens(metadata.year)
+    .filter((token) => /^(?:19|20)\d{2}$/.test(token));
+  const queryYearTokens = Array.from(queryTokens)
+    .filter((token) => /^(?:19|20)\d{2}$/.test(token));
+
+  if (!cardYearTokens.length || !queryYearTokens.length) {
+    return 0;
+  }
+
+  return cardYearTokens.some((token) => queryYearTokens.includes(token)) ? 0 : -0.95;
 }
 
 function setSpecificityPenalty(queryTokens, card) {
@@ -477,6 +507,7 @@ export function scoreCard(query, card) {
     + serialLimitScore(query, normalizedQuery, card)
     + serialVariantPenalty(query, queryTokens, card)
     + variantMismatchPenalty(queryTokens, card)
+    + yearMismatchPenalty(queryTokens, card)
     + sportMismatchPenalty(queryTokens, card)
     + synonymScore(query, card)
     + comcStructuredScore(query, queryTokens, card)

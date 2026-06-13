@@ -73,6 +73,13 @@ const requiredCases = [
       "2025-26 Topps Chrome Basketball - Base - X-Fractor"
     ],
     expectedPrintRun: 7750
+  },
+  {
+    query: "1993 Topps Finest - Base - Refractor #3 Baseballs Finest - Bryan Harvey Baseball Baseball's Finest - Bryan Harvey",
+    source: "comc",
+    expected: "1993 Topps Finest Baseball - Base - Refractor",
+    expectedPackOdds: "1:15",
+    minimumConfidence: 0.9
   }
 ];
 
@@ -234,6 +241,7 @@ function runCase(testCase) {
   const passedMatched = expectedTitles.includes(response.title)
     && response.rarityTier !== "Unknown"
     && (testCase.expectedPrintRun === undefined || response.printRun === testCase.expectedPrintRun)
+    && (testCase.expectedPackOdds === undefined || response.packOdds === testCase.expectedPackOdds)
     && (testCase.minimumConfidence === undefined || response.matchConfidence >= testCase.minimumConfidence);
   const passed = passedUnknown || passedMatched;
 
@@ -244,7 +252,8 @@ function runCase(testCase) {
       actual: response.title,
       rarityTier: response.rarityTier,
       matchConfidence: response.matchConfidence,
-      printRun: response.printRun
+      printRun: response.printRun,
+      packOdds: response.packOdds
     });
   }
 }
