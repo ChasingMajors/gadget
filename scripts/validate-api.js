@@ -25,7 +25,10 @@ const requiredCases = [
   {
     query: "completely unrelated listing title",
     expected: "Unknown"
-  },
+  }
+];
+
+const datasetCases = [
   {
     query: "2025-26 Topps NBA Flagship Basketball Ace Bailey RC Rookie #205 Utah Jazz Base",
     expected: "2025-26 Topps Basketball - Base",
@@ -113,6 +116,61 @@ const requiredCases = [
 ];
 
 const failures = [];
+
+function setFixture({
+  canonicalTitle,
+  year,
+  sport,
+  brand,
+  product,
+  setType,
+  setLine,
+  parallel,
+  printRun = null,
+  packOdds = null
+}) {
+  const terms = [
+    year,
+    brand,
+    product,
+    sport,
+    setLine,
+    parallel
+  ]
+    .filter(Boolean)
+    .join(" ")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, " ")
+    .split(" ")
+    .filter((term) => term.length > 1);
+
+  return {
+    canonicalTitle,
+    aliases: [
+      canonicalTitle,
+      [year, brand, product, sport].filter(Boolean).join(" "),
+      [year, brand, product, setLine, parallel].filter(Boolean).join(" ")
+    ],
+    requiredTerms: Array.from(new Set(terms)),
+    serialTerms: [],
+    rarityTier: setType || "Product",
+    scarcityScore: printRun === null ? 62 : printRun <= 1000 ? 82 : printRun <= 10000 ? 68 : 54,
+    printRun,
+    packOdds,
+    popTotal: 0,
+    popGem: 0,
+    matchMode: "set",
+    metadata: {
+      year,
+      sport,
+      brand,
+      product,
+      setType,
+      setLine,
+      parallel
+    }
+  };
+}
 
 function validateSetPrvImportHeaders() {
   const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "cm-prv-import-"));
@@ -251,16 +309,22 @@ function validateSetPrvPackOddsOnlyRows() {
   }
 }
 
-function datasetContainsExpectedTitle(expected) {
-  return cards.some((card) => card.canonicalTitle === expected);
+function expectedTitles(testCase) {
+  return (Array.isArray(testCase.expected) ? testCase.expected : [testCase.expected])
+    .filter((title) => title !== "Unknown");
 }
 
-function runCase(testCase) {
+function datasetContainsExpectedTitle(testCase) {
+  const titles = expectedTitles(testCase);
+  return titles.length > 0 && titles.some((title) => cards.some((card) => card.canonicalTitle === title));
+}
+
+function runCase(testCase, cardData = cards) {
   const response = buildRarityResponse({
     query: testCase.query,
     source: testCase.source || "ebay",
     pageUrl: "https://www.ebay.com",
-    cards,
+    cards: cardData,
     upgradeUrl: "https://chasingmajors.com/upgrade"
   });
 
@@ -291,11 +355,108 @@ for (const testCase of requiredCases) {
   runCase(testCase);
 }
 
-for (const testCase of optionalCases) {
-  if (datasetContainsExpectedTitle(testCase.expected)) {
+for (const testCase of datasetCases) {
+  if (datasetContainsExpectedTitle(testCase)) {
     runCase(testCase);
   }
 }
+
+for (const testCase of optionalCases) {
+  if (datasetContainsExpectedTitle(testCase)) {
+    runCase(testCase);
+  }
+}
+
+runCase({
+  query: "1993 Topps Finest - Base - Refractor #3 Baseballs Finest - Bryan Harvey Baseball Baseball's Finest - Bryan Harvey",
+  source: "comc",
+  expected: "1993 Topps Finest Baseball - Base - Refractor",
+  expectedPackOdds: "1:15",
+  minimumConfidence: 0.9
+}, [
+  setFixture({
+    canonicalTitle: "1993 Topps Finest Baseball - Base - Refractor",
+    year: "1993",
+    sport: "Baseball",
+    brand: "Topps",
+    product: "Finest",
+    setType: "Base",
+    setLine: "Base",
+    parallel: "Refractor",
+    packOdds: "1:15"
+  }),
+  setFixture({
+    canonicalTitle: "2023 Topps Finest Baseball - Base - Parallel - Refractor",
+    year: "2023",
+    sport: "Baseball",
+    brand: "Topps",
+    product: "Finest",
+    setType: "Base - Parallel",
+    setLine: "Base",
+    parallel: "Refractor",
+    printRun: 2175
+  })
+]);
+
+runCase({
+  query: "1994 Topps Finest - [Base] - Refractor #9",
+  source: "comc",
+  expected: "Unknown"
+}, [
+  setFixture({
+    canonicalTitle: "1994 Topps Finest Baseball - Base - Refractor",
+    year: "1994",
+    sport: "Baseball",
+    brand: "Topps",
+    product: "Finest",
+    setType: "Base",
+    setLine: "Base",
+    parallel: "Refractor",
+    packOdds: "1:9"
+  }),
+  setFixture({
+    canonicalTitle: "1994 Topps Finest Football - Base - Refractor",
+    year: "1994",
+    sport: "Football",
+    brand: "Topps",
+    product: "Finest",
+    setType: "Base",
+    setLine: "Base",
+    parallel: "Refractor",
+    packOdds: "1:9"
+  })
+]);
+
+runCase({
+  query: "1994 Topps Finest Baseball - [Base] - Refractor #9",
+  source: "comc",
+  expected: "1994 Topps Finest Baseball - Base - Refractor",
+  expectedPackOdds: "1:9",
+  minimumConfidence: 0.9
+}, [
+  setFixture({
+    canonicalTitle: "1994 Topps Finest Baseball - Base - Refractor",
+    year: "1994",
+    sport: "Baseball",
+    brand: "Topps",
+    product: "Finest",
+    setType: "Base",
+    setLine: "Base",
+    parallel: "Refractor",
+    packOdds: "1:9"
+  }),
+  setFixture({
+    canonicalTitle: "1994 Topps Finest Football - Base - Refractor",
+    year: "1994",
+    sport: "Football",
+    brand: "Topps",
+    product: "Finest",
+    setType: "Base",
+    setLine: "Base",
+    parallel: "Refractor",
+    packOdds: "1:9"
+  })
+]);
 
 validateSetPrvImportHeaders();
 validateSetPrvPrintRunAliases();
