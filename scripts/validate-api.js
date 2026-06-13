@@ -80,6 +80,35 @@ const requiredCases = [
     expected: "1993 Topps Finest Baseball - Base - Refractor",
     expectedPackOdds: "1:15",
     minimumConfidence: 0.9
+  },
+  {
+    query: "1993-94 Topps Stadium Club - Finest - Test Refractor #8",
+    source: "comc",
+    expected: "Unknown"
+  },
+  {
+    query: "1994 Bowman's Best - Red - Refractor #30",
+    source: "comc",
+    expected: "Unknown"
+  },
+  {
+    query: "1994 Topps Finest - [Base] - Refractor #9",
+    source: "comc",
+    expected: "Unknown"
+  },
+  {
+    query: "1994 Topps Finest Baseball - [Base] - Refractor #9",
+    source: "comc",
+    expected: "1994 Topps Finest Baseball - Base - Refractor",
+    expectedPackOdds: "1:9",
+    minimumConfidence: 0.9
+  },
+  {
+    query: "2025-26 Topps - 8-Bit Ballers - Purple Holo Foil #8B-35",
+    source: "comc",
+    expected: "2025-26 Topps Basketball - Insert - 8-Bit Ballers - Purple Holo Foil",
+    expectedPrintRun: 250,
+    minimumConfidence: 0.68
   }
 ];
 

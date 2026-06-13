@@ -101,6 +101,7 @@ function normalizeTitle(title) {
   return String(title || "")
     .toLowerCase()
     .replace(/&amp;/g, " and ")
+    .replace(/\b([a-z0-9]+)['\u2019]s\b/g, "$1s")
     .replace(/\bx[\s-]?fractors?\b/g, " xfractors ")
     .replace(/[#(),.:;!?'"[\]{}|\\]/g, " ")
     .replace(/[-_]/g, " ")
@@ -263,6 +264,10 @@ function sportMismatchPenalty(queryTokens, card) {
   }
 
   return querySportTokens.some((token) => !sportTokens.has(token)) ? -0.72 : 0;
+}
+
+function sportIntentTokens(queryTokens) {
+  return Array.from(queryTokens).filter((token) => SPORT_TERMS.has(token));
 }
 
 function yearMismatchPenalty(queryTokens, card) {
@@ -519,6 +524,7 @@ function scoreCard(query, card) {
 }
 
 function findBestMatch(query, cards, minimumConfidence = 0.54) {
+  const plainQueryTokens = tokenSet(query);
   const ranked = cards
     .map((card) => ({
       card,
@@ -534,6 +540,25 @@ function findBestMatch(query, cards, minimumConfidence = 0.54) {
       card: null,
       confidence: best?.confidence || 0
     };
+  }
+
+  if (best.card.matchMode === "set" && !sportIntentTokens(plainQueryTokens).length) {
+    const bestSport = normalizeTitle(best.card.metadata?.sport);
+    const ambiguousSport = ranked.slice(1).some((candidate) => {
+      const candidateSport = normalizeTitle(candidate.card.metadata?.sport);
+      return candidate.confidence >= minimumConfidence
+        && best.confidence - candidate.confidence <= 0.04
+        && candidateSport
+        && bestSport
+        && candidateSport !== bestSport;
+    });
+
+    if (ambiguousSport) {
+      return {
+        card: null,
+        confidence: best.confidence
+      };
+    }
   }
 
   return best;
