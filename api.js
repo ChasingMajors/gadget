@@ -185,14 +185,7 @@
       }
       return rarity;
     } catch (error) {
-      const fallback = fallbackResponse(title);
-      if (ttl > 0) {
-        cache.set(cacheKey, {
-          rarity: fallback,
-          timestamp: Date.now()
-        });
-      }
-      return fallback;
+      return fallbackResponse(title);
     }
   }
 

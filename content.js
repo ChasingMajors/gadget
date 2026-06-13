@@ -34,10 +34,17 @@
 
     let hasCountedLookup = false;
     let hasLoaded = false;
+    let loadedRarity = null;
 
     const widget = window.CMRarityUI.attachBadge(listing, {
       async onOpen(panel) {
         const accessState = await window.CMRarityStorage.getAccessState();
+
+        if (loadedRarity) {
+          const refreshedAccessState = await window.CMRarityStorage.getAccessState();
+          widget.renderPanel(loadedRarity, refreshedAccessState);
+          return;
+        }
 
         if (!accessState.isPaid && !accessState.hasFreeLookup && !hasLoaded) {
           widget.renderLimitPanel(accessState);
@@ -51,12 +58,22 @@
         try {
           const rarity = await loadRarityForListing(listing);
 
-          if (!accessState.isPaid && !hasCountedLookup) {
+          if (rarity.isFallback && loadedRarity) {
+            const refreshedAccessState = await window.CMRarityStorage.getAccessState();
+            widget.renderPanel(loadedRarity, refreshedAccessState);
+            return;
+          }
+
+          if (!rarity.isFallback) {
+            loadedRarity = rarity;
+            hasLoaded = true;
+          }
+
+          if (!rarity.isFallback && !accessState.isPaid && !hasCountedLookup) {
             await window.CMRarityStorage.incrementDailyUsage();
             hasCountedLookup = true;
           }
 
-          hasLoaded = true;
           const refreshedAccessState = await window.CMRarityStorage.getAccessState();
           widget.renderPanel(rarity, refreshedAccessState);
         } catch (error) {
