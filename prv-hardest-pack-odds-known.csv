@@ -1,0 +1,18 @@
+year,sport,rank,Code,DisplayName,setType,setLine,parallel,printRun,serial,subSetSize,packOdds,sourceStatus
+1993,Baseball,1,1993_topps_finest_baseball,1993 Topps Finest Baseball,Base,Base,Refractor,,,199,1:15,confirmed in current PRV JSON
+1993-94,Basketball,1,1993_94_upper_deck_special_edition_basketball,1993-94 Upper Deck Special Edition Basketball,Base,Base,Electric Court Gold,,,,1:36,confirmed in current PRV JSON
+1993-94,Basketball,2,1993_94_topps_stadium_club_basketball,1993-94 Topps Stadium Club Basketball,Insert,Beam Team,,,,,1:24,confirmed in current PRV JSON
+1993-94,Basketball,3,1993_94_topps_stadium_club_basketball,1993-94 Topps Stadium Club Basketball,Base,Base,First Day Issue,1000,,,1:24,confirmed in current PRV JSON
+1994,Baseball,1,1994_bowmans_best_baseball,1994 Bowman's Best Baseball,Base,Base,Refractor,,,200,1:9,confirmed in current PRV JSON
+1994,Baseball,2,1994_topps_finest_baseball,1994 Topps Finest Baseball,Base,Base,Refractor,,,440,1:9,confirmed in current PRV JSON
+1994,Football,1,1994_topps_finest_football,1994 Topps Finest Football,Base,Base,Refractor,,,220,1:9,confirmed in current PRV JSON
+1994-95,Basketball,1,1994_95_upper_deck_sp_championship_basketball,1994-95 Upper Deck SP Championship Basketball,Insert,Playoff Heroes,Die-Cut,,,,1:225,confirmed in current PRV JSON
+1994-95,Basketball,2,1994_95_upper_deck_collectors_choice_basketball,1994-95 Upper Deck Collector's Choice Basketball,Base,Base,Gold Signature,,,,1:35*,confirmed in current PRV JSON
+1994-95,Basketball,3,1994_95_upper_deck_basketball,1994-95 Upper Deck Basketball,Insert,Special Edition,Gold,,,,1:35,confirmed in current PRV JSON
+1995,Baseball,1,1995_topps_finest_baseball,1995 Topps Finest Baseball,Base,Base,Refractor,,,330,1:12,confirmed in current PRV JSON
+1995,Football,1,1995_topps_finest_football,1995 Topps Finest Football,Base,Base,Refractor,,,275,1:12,confirmed in current PRV JSON
+1995,Football,2,1995_topps_finest_football,1995 Topps Finest Football,Insert,Booster,Refractor,,,275,1:12,confirmed in current PRV JSON
+1995,Football,3,1994_bowmans_best_football,1994 Bowman's Best Football,Base,Base,Refractor,,,180,1:6,confirmed in current PRV JSON
+1998-99,Basketball,1,1998_99_fleer_tradition_basketball,1998-99 Fleer Tradition Basketball,Insert,Lucky 13,,,,13,1:96,confirmed in current PRV JSON
+1998-99,Basketball,2,1998_99_fleer_tradition_basketball,1998-99 Fleer Tradition Basketball,Insert,Electrifying,,,,10,1:72,confirmed in current PRV JSON
+1998-99,Basketball,3,1998_99_fleer_tradition_basketball,1998-99 Fleer Tradition Basketball,Insert,Rookie Rewind,,,,10,1:36,confirmed in current PRV JSON

@@ -1,0 +1,20 @@
+year,sport,priority,Code,DisplayName,setType,setLine,parallel,printRun,serial,subSetSize,packOdds,researchNeed
+1993-94,Basketball,1,1993_94_topps_stadium_club_basketball,1993-94 Topps Stadium Club Basketball,Insert,Finest,Test Refractor,,,,,verify pack odds; likely high-value COMC target
+1994,Baseball,1,1994_bowmans_best_baseball_red_refractor,1994 Bowman's Best Baseball,Base,Red,Refractor,,,,,verify whether Red Refractor shares base refractor odds or separate odds
+1994,Football,1,1994_bowmans_best_football_red_refractor,1994 Bowman's Best Football,Base,Red,Refractor,,,,,verify whether Red Refractor shares base refractor odds or separate odds
+1995,Baseball,1,1995_bowmans_best_baseball_atomic_refractor,1995 Bowman's Best Baseball,Base,Base,Atomic Refractor,,,,,verify exact Atomic Refractor odds
+1995,Football,1,1995_bowmans_best_football_atomic_refractor,1995 Bowman's Best Football,Base,Base,Atomic Refractor,,,,,verify exact Atomic Refractor odds
+1996-97,Basketball,1,1996_topps_chrome_basketball_refractor,1996-97 Topps Chrome Basketball,Base,Base,Refractor,,,,1:12,verify wrapper/checklist source before import
+1996-97,Basketball,2,1996_topps_chrome_basketball_nba_at_50_refractor,1996-97 Topps Chrome Basketball,Insert,NBA at 50,Refractor,,,,,verify insert refractor odds
+1996,Baseball,1,1996_topps_chrome_baseball_refractor,1996 Topps Chrome Baseball,Base,Base,Refractor,,,,1:12,verify wrapper/checklist source before import
+1997-98,Basketball,1,1997_skybox_ex2001_basketball_jambalaya,1997-98 E-X2001 Basketball,Insert,Jambalaya,,,,,1:720,verify wrapper/checklist source before import
+1997-98,Basketball,2,1997_metal_universe_basketball_pmg,1997-98 Metal Universe Basketball,Parallel,Base,Precious Metal Gems,100,#/100,,,serial verified; optionally find pack odds
+1997-98,Basketball,3,1997_topps_finest_basketball_embossed_refractor,1997-98 Topps Finest Basketball,Base,Embossed,Refractor,,,,,verify exact pack odds
+1998-99,Basketball,1,1998_skybox_premium_basketball_star_rubies,1998-99 SkyBox Premium Basketball,Parallel,Base,Star Rubies,50,#/50,,,serial widely cataloged; optionally find pack odds
+1998-99,Basketball,2,1998_metal_universe_basketball_pmg,1998-99 Metal Universe Basketball,Parallel,Base,Precious Metal Gems,50,#/50,,,verify serial source and pack odds
+1998-99,Basketball,3,1998_topps_chrome_basketball_refractor,1998-99 Topps Chrome Basketball,Base,Base,Refractor,,,,1:12,verify wrapper/checklist source before import
+2000,Football,1,2000_bowman_chrome_football_refractor,2000 Bowman Chrome Football,Base,Base,Refractor,,,,,verify pack odds/serial
+2000,Football,2,2000_topps_chrome_football_refractor,2000 Topps Chrome Football,Base,Base,Refractor,,,,,verify pack odds/serial
+2003-04,Basketball,1,2003_bowman_chrome_basketball_xfractor,2003-04 Bowman Chrome Basketball,Base,Base,X-Fractor,150,#/150,,,serial widely cataloged
+2003-04,Basketball,2,2003_bowman_chrome_basketball_refractor,2003-04 Bowman Chrome Basketball,Base,Base,Refractor,300,#/300,,,serial widely cataloged
+2003-04,Basketball,3,2003_topps_chrome_basketball_refractor,2003-04 Topps Chrome Basketball,Base,Base,Refractor,999,#/999,,,serial widely cataloged

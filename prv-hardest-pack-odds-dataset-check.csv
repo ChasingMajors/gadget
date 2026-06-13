@@ -1,0 +1,37 @@
+list,year,sport,DisplayName,setLine,parallel,inDataset,matchType,matchedTitle,currentPackOdds,currentPrintRun,currentSerial,notes
+known,1993,Baseball,1993 Topps Finest Baseball,Base,Refractor,Yes,exact/set metadata,1993 Topps Finest Baseball - Base - Refractor,1:15,,,Already live in current JSON.
+known,1993-94,Basketball,1993-94 Upper Deck Special Edition Basketball,Base,Electric Court Gold,Yes,exact/set metadata,1993-94 Upper Deck Special Edition Basketball - Base - Electric Court Gold,1:36,,,Already live in current JSON.
+known,1993-94,Basketball,1993-94 Topps Stadium Club Basketball,Beam Team,,Yes,exact/set metadata,1993-94 Topps Staidum Club Basketball - Insert - Beam Team,1:24,,,Already live in current JSON; source data currently spells Stadium as Staidum.
+known,1993-94,Basketball,1993-94 Topps Stadium Club Basketball,Base,First Day Issue,Yes,exact/set metadata,1993-94 Topps Staidum Club Basketball - Base - First Day Issue,1:24,1000,,Already live in current JSON; source data currently spells Stadium as Staidum.
+known,1994,Baseball,1994 Bowman's Best Baseball,Base,Refractor,Yes,exact/set metadata,1994 Bowmans Best Baseball - Base - Refractor,1:9,,,Already live in current JSON.
+known,1994,Baseball,1994 Topps Finest Baseball,Base,Refractor,Yes,exact/set metadata,1994 Topps Finest Baseball - Base - Refractor,1:9,,,Already live in current JSON.
+known,1994,Football,1994 Topps Finest Football,Base,Refractor,Yes,exact/set metadata,1994 Topps Finest Football - Base - Refractor,1:9,,,Already live in current JSON.
+known,1994-95,Basketball,1994-95 Upper Deck SP Championship Basketball,Playoff Heroes,Die-Cut,Yes,exact title,1994-95 Upper Deck SP Championship Basketball - Insert - Playoff Heroes - Die-Cut,1:225,,,Already live in current JSON.
+known,1994-95,Basketball,1994-95 Upper Deck Collector's Choice Basketball,Base,Gold Signature,Yes,exact/set metadata,1994-95 Upper Deck Collectors Choice Basketball - Base - Gold Signature,1:35*,,,Already live in current JSON.
+known,1994-95,Basketball,1994-95 Upper Deck Basketball,Special Edition,Gold,Yes,exact title,1994-95 Upper Deck Basketball - Insert - Special Edition - Gold,1:35,,,Already live in current JSON.
+known,1995,Baseball,1995 Topps Finest Baseball,Base,Refractor,Yes,exact/set metadata,1995 Topps Finest Baseball - Base - Refractor,1:12,,,Already live in current JSON.
+known,1995,Football,1995 Topps Finest Football,Base,Refractor,Yes,exact/set metadata,1995 Topps Finest Football - Base - Refractor,1:12,,,Already live in current JSON.
+known,1995,Football,1995 Topps Finest Football,Booster,Refractor,Yes,exact title,1995 Topps Finest Football - Insert - Booster - Refractor,1:12,,,Already live in current JSON.
+known,1995,Football,1994 Bowman's Best Football,Base,Refractor,Yes,exact/set metadata,1994 Bowmans Best Football - Base - Refractor,1:6,,,Already live in current JSON; year value in current source row is 1995 while display/code says 1994.
+known,1998-99,Basketball,1998-99 Fleer Tradition Basketball,Lucky 13,,Yes,exact title,1998-99 Fleer Tradition Basketball - Insert - Lucky 13,1:96,,,Already live in current JSON.
+known,1998-99,Basketball,1998-99 Fleer Tradition Basketball,Electrifying,,Yes,exact title,1998-99 Fleer Tradition Basketball - Insert - Electrifying,1:72,,,Already live in current JSON.
+known,1998-99,Basketball,1998-99 Fleer Tradition Basketball,Rookie Rewind,,Yes,exact title,1998-99 Fleer Tradition Basketball - Insert - Rookie Rewind,1:36,,,Already live in current JSON.
+research,1993-94,Basketball,1993-94 Topps Stadium Club Basketball,Finest,Test Refractor,No,,,,,,Needs new PRV row if odds are verified.
+research,1994,Baseball,1994 Bowman's Best Baseball,Red,Refractor,Partial,nearby base refractor only,1994 Bowmans Best Baseball - Base - Refractor,1:9,,,No exact Red Refractor row currently.
+research,1994,Football,1994 Bowman's Best Football,Red,Refractor,Partial,nearby base refractor only,1994 Bowmans Best Football - Base - Refractor,1:6,,,No exact Red Refractor row currently.
+research,1995,Baseball,1995 Bowman's Best Baseball,Base,Atomic Refractor,No,,,,,,Needs new PRV row if odds/serial are verified.
+research,1995,Football,1995 Bowman's Best Football,Base,Atomic Refractor,No,,,,,,Needs new PRV row if odds/serial are verified.
+research,1996-97,Basketball,1996-97 Topps Chrome Basketball,Base,Refractor,No,,,,,,Needs new PRV row if odds are verified.
+research,1996-97,Basketball,1996-97 Topps Chrome Basketball,NBA at 50,Refractor,No,,,,,,Needs new PRV row if odds are verified.
+research,1996,Baseball,1996 Topps Chrome Baseball,Base,Refractor,No,,,,,,Needs new PRV row if odds are verified.
+research,1997-98,Basketball,1997-98 E-X2001 Basketball,Jambalaya,,No,,,,,,Needs new PRV row if 1:720 is verified.
+research,1997-98,Basketball,1997-98 Metal Universe Basketball,Base,Precious Metal Gems,No,,,,,,Needs new PRV row; serial #/100 is a strong candidate.
+research,1997-98,Basketball,1997-98 Topps Finest Basketball,Embossed,Refractor,No,,,,,,Needs new PRV row if odds are verified.
+research,1998-99,Basketball,1998-99 SkyBox Premium Basketball,Base,Star Rubies,No,,,,,,Needs new PRV row; serial #/50 is a strong candidate.
+research,1998-99,Basketball,1998-99 Metal Universe Basketball,Base,Precious Metal Gems,No,,,,,,Needs new PRV row; serial #/50 needs source verification.
+research,1998-99,Basketball,1998-99 Topps Chrome Basketball,Base,Refractor,No,,,,,,Needs new PRV row if odds are verified.
+research,2000,Football,2000 Bowman Chrome Football,Base,Refractor,No,,,,,,Needs new PRV row if odds/serial are verified.
+research,2000,Football,2000 Topps Chrome Football,Base,Refractor,No,,,,,,Needs new PRV row if odds/serial are verified.
+research,2003-04,Basketball,2003-04 Bowman Chrome Basketball,Base,X-Fractor,No,,,,,,Needs new PRV row; serial #/150 is a strong candidate.
+research,2003-04,Basketball,2003-04 Bowman Chrome Basketball,Base,Refractor,No,,,,,,Needs new PRV row; serial #/300 is a strong candidate.
+research,2003-04,Basketball,2003-04 Topps Chrome Basketball,Base,Refractor,No,,,,,,Needs new PRV row; serial #/999 is a strong candidate.
