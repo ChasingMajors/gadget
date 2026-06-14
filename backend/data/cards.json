@@ -324548,12 +324548,12 @@
     }
   },
   {
-    "id": "1994-95-topps-finest-basketball-insert-cornerstone",
-    "canonicalTitle": "1994-95 Topps Finest Basketball - Insert - Cornerstone",
+    "id": "1994-95-topps-finest-basketball-insert-corner-stone",
+    "canonicalTitle": "1994-95 Topps Finest Basketball - Insert - Corner Stone",
     "aliases": [
       "1994-95 Topps Finest Basketball",
-      "1994-95 Topps Finest Basketball - Insert - Cornerstone",
-      "1994-95 Topps Finest Cornerstone",
+      "1994-95 Topps Finest Basketball - Insert - Corner Stone",
+      "1994-95 Topps Finest Corner Stone",
       "1994-95 Topps Finest Insert",
       "1994-95 Topps Finest",
       "topps finest basketball cornerstone"
@@ -324564,7 +324564,8 @@
       "topps",
       "finest",
       "basketball",
-      "cornerstone",
+      "corner",
+      "stone",
       "toppsfinestbasketballcornerstone"
     ],
     "serialTerms": [],
@@ -324583,7 +324584,7 @@
       "brand": "Topps",
       "product": "Finest",
       "setType": "Insert",
-      "setLine": "Cornerstone",
+      "setLine": "Corner Stone",
       "parallel": "",
       "serial": "",
       "subsetSize": 15
