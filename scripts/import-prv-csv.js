@@ -115,6 +115,24 @@ function compactList(values, { maxEntries = 12, maxLength = 160 } = {}) {
     .slice(0, maxEntries);
 }
 
+function compactCard(card) {
+  const compacted = { ...card };
+  compacted.aliases = compactList(compacted.aliases, { maxEntries: 8, maxLength: 140 });
+  compacted.requiredTerms = compactList(compacted.requiredTerms, { maxEntries: 12, maxLength: 48 });
+
+  if (!compacted.serialTerms?.length) delete compacted.serialTerms;
+  if (compacted.sourceUrl === null || compacted.sourceUrl === "") delete compacted.sourceUrl;
+  if (compacted.popTotal === 0) delete compacted.popTotal;
+  if (compacted.popGem === 0) delete compacted.popGem;
+
+  if (compacted.metadata) {
+    compacted.metadata = { ...compacted.metadata };
+    delete compacted.metadata.subsetSize;
+  }
+
+  return compacted;
+}
+
 function slug(value) {
   return String(value || "")
     .toLowerCase()
@@ -382,7 +400,8 @@ function rowToCard(record) {
 const parsed = parseCsv(fs.readFileSync(inputPath, "utf8"));
 const cards = parsed.rows
   .map(rowToCard)
-  .filter(Boolean);
+  .filter(Boolean)
+  .map(compactCard);
 
 if (!cards.length) {
   console.error("No cards imported. Check CSV headers and rows.");
