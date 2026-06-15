@@ -117,7 +117,11 @@ function compactList(values, { maxEntries = 12, maxLength = 160 } = {}) {
 
 function compactCard(card) {
   const compacted = { ...card };
-  compacted.aliases = compactList(compacted.aliases, { maxEntries: 4, maxLength: 100 });
+  if (compacted.matchMode === "set") {
+    delete compacted.aliases;
+  } else {
+    compacted.aliases = compactList(compacted.aliases, { maxEntries: 4, maxLength: 100 });
+  }
   compacted.requiredTerms = compactList(compacted.requiredTerms, { maxEntries: 12, maxLength: 48 });
 
   if (!compacted.serialTerms?.length) delete compacted.serialTerms;

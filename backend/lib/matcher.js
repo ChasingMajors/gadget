@@ -97,6 +97,21 @@ const VARIANT_TERMS = new Set([
   "xfractors"
 ]);
 
+const PRODUCT_LINE_TERMS = new Set([
+  "best",
+  "chrome",
+  "club",
+  "contenders",
+  "donruss",
+  "finest",
+  "optic",
+  "prizm",
+  "sapphire",
+  "select",
+  "sp",
+  "stadium"
+]);
+
 function normalizeTitle(title) {
   return String(title || "")
     .toLowerCase()
@@ -290,6 +305,23 @@ function hasMetadataVariantOverlap(queryTokens, card) {
   ]);
 
   return queryVariantTokens.some((token) => tokens.has(token));
+}
+
+function hasProductLineOverlap(queryTokens, card) {
+  const queryProductLineTokens = Array.from(queryTokens).filter((token) => PRODUCT_LINE_TERMS.has(token));
+  if (!queryProductLineTokens.length) {
+    return true;
+  }
+
+  const metadata = card.metadata || {};
+  const tokens = new Set([
+    ...metadataTokens(metadata.product),
+    ...metadataTokens(metadata.setType),
+    ...metadataTokens(metadata.setLine),
+    ...metadataTokens(metadata.parallel)
+  ]);
+
+  return queryProductLineTokens.every((token) => tokens.has(token));
 }
 
 function yearMismatchPenalty(queryTokens, card) {
@@ -567,6 +599,10 @@ function findBestMatch(query, cards, minimumConfidence = 0.54) {
     }
 
     if (!hasMetadataVariantOverlap(plainQueryTokens, card)) {
+      return false;
+    }
+
+    if (card.matchMode === "set" && !hasProductLineOverlap(plainQueryTokens, card)) {
       return false;
     }
 
