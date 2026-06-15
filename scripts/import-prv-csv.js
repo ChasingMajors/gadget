@@ -122,7 +122,8 @@ function compactCard(card) {
   } else {
     compacted.aliases = compactList(compacted.aliases, { maxEntries: 4, maxLength: 100 });
   }
-  compacted.requiredTerms = compactList(compacted.requiredTerms, { maxEntries: 12, maxLength: 48 });
+  compacted.requiredTerms = compactList(compacted.requiredTerms, { maxEntries: 10, maxLength: 20 })
+    .filter((term) => !/[0-9]{4,}/.test(term));
 
   if (!compacted.serialTerms?.length) delete compacted.serialTerms;
   if (compacted.sourceUrl === null || compacted.sourceUrl === "") delete compacted.sourceUrl;
