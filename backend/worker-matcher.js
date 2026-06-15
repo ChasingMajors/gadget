@@ -269,6 +269,28 @@ function sportIntentTokens(queryTokens) {
   return Array.from(queryTokens).filter((token) => SPORT_TERMS.has(token));
 }
 
+function hasMetadataTokenOverlap(queryTokens, value) {
+  const tokens = metadataTokens(value);
+  return !tokens.length || tokens.some((token) => queryTokens.has(token));
+}
+
+function hasMetadataVariantOverlap(queryTokens, card) {
+  const queryVariantTokens = Array.from(queryTokens).filter((token) => VARIANT_TERMS.has(token));
+  if (!queryVariantTokens.length) {
+    return true;
+  }
+
+  const metadata = card.metadata || {};
+  const tokens = new Set([
+    ...metadataTokens(metadata.product),
+    ...metadataTokens(metadata.setType),
+    ...metadataTokens(metadata.setLine),
+    ...metadataTokens(metadata.parallel)
+  ]);
+
+  return queryVariantTokens.some((token) => tokens.has(token));
+}
+
 function yearMismatchPenalty(queryTokens, card) {
   if (card.matchMode !== "set") {
     return 0;
@@ -525,10 +547,25 @@ export function scoreCard(query, card) {
 export function findBestMatch(query, cardData, minimumConfidence = 0.54) {
   const plainQueryTokens = tokenSet(query);
   const queryYears = Array.from(plainQueryTokens).filter((token) => /^(?:19|20)\d{2}$/.test(token));
+  const querySports = sportIntentTokens(plainQueryTokens);
+  const queryBrands = Array.from(plainQueryTokens).filter((token) => BRAND_TERMS.has(token));
   const candidates = cardData.filter((card) => {
+    const metadata = card.metadata || {};
     const cardYears = metadataTokens(card.metadata?.year)
       .filter((token) => /^(?:19|20)\d{2}$/.test(token));
     if (queryYears.length && cardYears.length && !cardYears.some((token) => queryYears.includes(token))) {
+      return false;
+    }
+
+    if (querySports.length && !hasMetadataTokenOverlap(plainQueryTokens, metadata.sport)) {
+      return false;
+    }
+
+    if (queryBrands.length && !hasMetadataTokenOverlap(plainQueryTokens, metadata.brand)) {
+      return false;
+    }
+
+    if (!hasMetadataVariantOverlap(plainQueryTokens, card)) {
       return false;
     }
 

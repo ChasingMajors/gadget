@@ -107,6 +107,14 @@ function listValue(value) {
     .filter(Boolean);
 }
 
+function compactList(values, { maxEntries = 12, maxLength = 160 } = {}) {
+  return Array.from(new Set(values
+    .map((value) => String(value || "").trim())
+    .filter(Boolean)
+    .filter((value) => value.length <= maxLength)))
+    .slice(0, maxEntries);
+}
+
 function slug(value) {
   return String(value || "")
     .toLowerCase()
@@ -263,19 +271,19 @@ function setRowToCard(record) {
     ...titleTerms(setLine),
     ...titleTerms(parallel),
     ...rawKeywords.map((keyword) => keyword.toLowerCase().replace(/[^a-z0-9/]+/g, "")).filter(Boolean)
-  ])).slice(0, 12);
+  ].filter((term) => term.length <= 48))).slice(0, 12);
 
   return {
     id: slug(canonicalTitle),
     canonicalTitle,
-    aliases: Array.from(new Set([
+    aliases: compactList([
       displayName,
       canonicalTitle,
       [year, brand, product, setLine, parallel, normalizedSerial].filter(Boolean).join(" "),
       [year, brand, product, setType].filter(Boolean).join(" "),
       [year, brand, product, parallel].filter(Boolean).join(" "),
       ...rawKeywords
-    ].filter(Boolean))),
+    ]),
     requiredTerms,
     serialTerms: normalizedSerial ? [normalizedSerial, normalizedSerial.slice(1)] : [],
     rarityTier: setType || "Product",
@@ -387,5 +395,5 @@ if (!cards.length) {
 }
 
 fs.mkdirSync(path.dirname(outputPath), { recursive: true });
-fs.writeFileSync(outputPath, `${JSON.stringify(cards, null, 2)}\n`);
+fs.writeFileSync(outputPath, `${JSON.stringify(cards)}\n`);
 console.log(`Imported ${cards.length} cards to ${outputPath}`);
