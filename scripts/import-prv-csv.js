@@ -117,7 +117,7 @@ function compactList(values, { maxEntries = 12, maxLength = 160 } = {}) {
 
 function compactCard(card) {
   const compacted = { ...card };
-  compacted.aliases = compactList(compacted.aliases, { maxEntries: 8, maxLength: 140 });
+  compacted.aliases = compactList(compacted.aliases, { maxEntries: 4, maxLength: 100 });
   compacted.requiredTerms = compactList(compacted.requiredTerms, { maxEntries: 12, maxLength: 48 });
 
   if (!compacted.serialTerms?.length) delete compacted.serialTerms;
