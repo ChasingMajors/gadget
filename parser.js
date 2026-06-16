@@ -82,6 +82,48 @@
     return cleanTitle(`${title} ${sport}`);
   }
 
+  function sportFromText(text) {
+    const match = String(text || "").match(/\b(Basketball|Baseball|Football|Hockey|Soccer)\b/i);
+    return match ? match[1] : "";
+  }
+
+  let cachedEbaySport;
+  function ebaySportFromContext(root) {
+    if (cachedEbaySport) {
+      return cachedEbaySport;
+    }
+
+    if (cachedEbaySport === undefined) {
+      const urlSport = sportFromText(window.location.href);
+      if (urlSport) {
+        cachedEbaySport = urlSport;
+        return cachedEbaySport;
+      }
+
+      const titleSport = sportFromText(document.title);
+      if (titleSport) {
+        cachedEbaySport = titleSport;
+        return cachedEbaySport;
+      }
+
+      const breadcrumbText = Array.from(document.querySelectorAll?.("nav[aria-label*='Breadcrumb' i], .breadcrumbs, .breadcrumb, [data-testid*='breadcrumb' i]") || [])
+        .map((element) => cleanTitle(element?.textContent || ""))
+        .join(" ");
+      cachedEbaySport = sportFromText(breadcrumbText) || "";
+    }
+
+    return cachedEbaySport || sportFromText(root?.textContent || "");
+  }
+
+  function enrichEbayTitle(title, root) {
+    const sport = ebaySportFromContext(root);
+    if (!sport || new RegExp(`\\b${sport}\\b`, "i").test(title)) {
+      return title;
+    }
+
+    return cleanTitle(`${title} ${sport}`);
+  }
+
   function humanizeComcPathPart(part) {
     return decodeURIComponent(String(part || ""))
       .replace(/[_+]+/g, " ")
@@ -293,9 +335,10 @@
 
   function titleForImage(image, source) {
     if (source === "ebay") {
+      const root = nearestListingRoot(image, source);
       const itemLinkTitle = closestTitleFromItemLinks(image);
       if (itemLinkTitle) {
-        return itemLinkTitle;
+        return enrichEbayTitle(itemLinkTitle, root);
       }
     }
 
@@ -326,7 +369,7 @@
 
     const title = cleanTitle(textFrom(root, sourceSelectors));
     if (!isBadTitle(title)) {
-      return title;
+      return source === "ebay" ? enrichEbayTitle(title, root) : title;
     }
 
     const fallbackTitle = cleanTitle(image.alt || image.getAttribute("aria-label") || "");

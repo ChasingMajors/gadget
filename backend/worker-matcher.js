@@ -66,7 +66,9 @@ const AUTOGRAPH_TERMS = new Set([
 
 const VARIANT_TERMS = new Set([
   "aqua",
+  "black",
   "blackout",
+  "bronze",
   "blue",
   "crackleboard",
   "diamante",
@@ -82,6 +84,8 @@ const VARIANT_TERMS = new Set([
   "orange",
   "parallel",
   "pink",
+  "platinum",
+  "purple",
   "prism",
   "pulsar",
   "rainbow",
@@ -91,9 +95,13 @@ const VARIANT_TERMS = new Set([
   "shimmer",
   "sapphire",
   "silver",
+  "teal",
+  "violet",
   "wave",
+  "white",
   "xfractor",
-  "xfractors"
+  "xfractors",
+  "yellow"
 ]);
 
 const PRODUCT_LINE_TERMS = new Set([
@@ -479,11 +487,12 @@ function includesAlias(query, card) {
     .some((alias) => alias && normalizedQuery.includes(alias));
 }
 
-function hasRequiredTerms(queryTokens, card) {
+function hasRequiredTerms(queryTokens, card, options = {}) {
   if (card.matchMode === "set") {
     const terms = card.requiredTerms || [];
     const hits = terms.filter((term) => queryTokens.has(term)).length;
-    return hits >= Math.min(4, terms.length);
+    const requiredHits = options.source === "ebay" ? 3 : 4;
+    return hits >= Math.min(requiredHits, terms.length);
   }
 
   return (card.requiredTerms || []).every((term) => queryTokens.has(term));
@@ -541,13 +550,13 @@ function variantMismatchPenalty(queryTokens, card) {
   return unmatchedQueryVariants(queryTokens, card).length ? -0.32 : 0;
 }
 
-export function scoreCard(query, card) {
+export function scoreCard(query, card, options = {}) {
   const queryTokens = queryTokensForCard(query, card);
   const normalizedQuery = normalizeTitle(query);
   const cardTokens = tokenSet([card.canonicalTitle, ...(card.aliases || [])].join(" "));
   const overlap = Array.from(cardTokens).filter((token) => queryTokens.has(token));
   const coverage = cardTokens.size ? overlap.length / cardTokens.size : 0;
-  const hasRequired = hasRequiredTerms(queryTokens, card);
+  const hasRequired = hasRequiredTerms(queryTokens, card, options);
   if (card.matchMode === "set" && !hasRequired) {
     return 0;
   }
@@ -576,7 +585,7 @@ export function scoreCard(query, card) {
   return Math.max(0, Math.min(0.99, Number(score.toFixed(2))));
 }
 
-export function findBestMatch(query, cardData, minimumConfidence = 0.54) {
+export function findBestMatch(query, cardData, minimumConfidence = 0.54, options = {}) {
   const plainQueryTokens = tokenSet(query);
   const queryYears = Array.from(plainQueryTokens).filter((token) => /^(?:19|20)\d{2}$/.test(token));
   const querySports = sportIntentTokens(plainQueryTokens);
@@ -615,13 +624,13 @@ export function findBestMatch(query, cardData, minimumConfidence = 0.54) {
       return true;
     }
 
-    return hasRequiredTerms(queryTokensForCard(query, card), card);
+    return hasRequiredTerms(queryTokensForCard(query, card), card, options);
   });
 
   const ranked = candidates
     .map((card) => ({
       card,
-      confidence: scoreCard(query, card),
+      confidence: scoreCard(query, card, options),
       specificity: setSpecificityHits(queryTokensForCard(query, card), card)
     }))
     .sort((a, b) => b.confidence - a.confidence || b.specificity - a.specificity);
@@ -662,7 +671,7 @@ function scarcityScoreForPrintRun(printRun) {
 }
 
 export function buildRarityResponse({ query, source, pageUrl, cards, upgradeUrl }) {
-  const match = findBestMatch(query, cards);
+  const match = findBestMatch(query, cards, 0.54, { source });
   const serialLimit = querySerialLimit(query);
 
   if (!match.card) {
