@@ -169,13 +169,92 @@ if (context.window.CMRarityParser.isSupportedCardYear("1989 Upper Deck Ken Griff
   process.exit(1);
 }
 
+if (context.window.CMRarityParser.isSupportedCardYear("86-87 Fleer Michael Jordan Rookie #57")) {
+  console.error("Parser validation failed. Short pre-1990 seasons should be skipped.");
+  process.exit(1);
+}
+
+if (context.window.CMRarityParser.isSupportedCardYear("89-90 Hoops David Robinson Rookie #138")) {
+  console.error("Parser validation failed. 1989-90 seasons should be skipped.");
+  process.exit(1);
+}
+
 if (!context.window.CMRarityParser.isSupportedCardYear("1990 Topps Frank Thomas Rookie #414")) {
   console.error("Parser validation failed. 1990 cards should remain supported.");
   process.exit(1);
 }
 
+if (!context.window.CMRarityParser.isSupportedCardYear("90-91 SkyBox Basketball Michael Jordan #41")) {
+  console.error("Parser validation failed. Short 1990-91 seasons should remain supported.");
+  process.exit(1);
+}
+
 if (!context.window.CMRarityParser.isSupportedCardYear("Topps Chrome Refractor Basketball")) {
   console.error("Parser validation failed. Listings without an explicit year should remain supported.");
+  process.exit(1);
+}
+
+const oldImage = makeElement({
+  tag: "img",
+  attrs: {
+    width: 240,
+    height: 320,
+    src: "https://i.ebayimg.com/images/old-card.jpg"
+  }
+});
+oldImage.alt = "";
+oldImage.src = oldImage.attrs.src;
+oldImage.currentSrc = oldImage.attrs.src;
+
+const oldListingLink = makeElement({
+  tag: "a",
+  text: "Nolan Ryan Baseball Card",
+  attrs: {
+    href: "https://www.ebay.com/itm/456",
+    title: "Nolan Ryan Baseball Card"
+  },
+  children: [oldImage]
+});
+
+const oldListingYear = makeElement({
+  tag: "span",
+  text: "1981 Topps"
+});
+
+const oldCard = makeElement({
+  className: "su-card-container",
+  children: [oldListingLink, oldListingYear]
+});
+
+const oldContext = {
+  window: {
+    location: {
+      hostname: "www.ebay.com",
+      href: "https://www.ebay.com/sch/i.html?_nkw=nolan+ryan"
+    },
+    getComputedStyle() {
+      return {
+        position: "relative"
+      };
+    },
+    CMRarityParser: null
+  },
+  document: {
+    body: makeElement({
+      children: [oldCard]
+    }),
+    documentElement: {
+      dataset: {}
+    },
+    images: [oldImage]
+  }
+};
+
+vm.createContext(oldContext);
+vm.runInContext(parserSource, oldContext);
+
+if (oldContext.window.CMRarityParser.findListings().length !== 0) {
+  console.error("Parser validation failed. Pre-1990 listing context should suppress the gadget.");
   process.exit(1);
 }
 

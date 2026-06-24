@@ -54,8 +54,18 @@
   }
 
   function firstCardYear(title) {
-    const match = String(title || "").match(/\b(19\d{2}|20\d{2})(?:\s*[-/]\s*\d{2,4})?\b/);
-    return match ? Number(match[1]) : null;
+    const text = String(title || "");
+    const fullYearMatch = text.match(/\b(19\d{2}|20\d{2})(?:\s*[-/]\s*\d{2,4})?\b/);
+    if (fullYearMatch) {
+      return Number(fullYearMatch[1]);
+    }
+
+    const shortSeasonMatch = text.match(/(?:^|\b)([5-9]\d)\s*[-/]\s*(\d{2})(?=\b|[^a-z0-9])/i);
+    if (shortSeasonMatch) {
+      return 1900 + Number(shortSeasonMatch[1]);
+    }
+
+    return null;
   }
 
   function isSupportedCardYear(title) {
@@ -416,6 +426,27 @@
     }) || image.parentElement;
   }
 
+  function yearContextForListing(image, container, title) {
+    const cardLink = image.closest("a")
+      || container?.querySelector?.("a[href*='/Cards/'], a[href*='/itm/'], a[href*='itm/'], a[title]");
+
+    return [
+      title,
+      window.location.href,
+      image.alt,
+      image.getAttribute("title"),
+      image.getAttribute("aria-label"),
+      image.currentSrc,
+      image.src,
+      cardLink?.href,
+      cardLink?.getAttribute?.("href"),
+      cardLink?.getAttribute?.("title"),
+      cardLink?.textContent,
+      container?.innerText,
+      container?.textContent
+    ].filter(Boolean).join(" ");
+  }
+
   function findListings() {
     const source = getSource();
 
@@ -423,17 +454,22 @@
       .filter(isLikelyCardImage)
       .map((image, index) => {
         const title = titleForImage(image, source);
+        const root = nearestListingRoot(image, source);
+        const container = getImageContainer(image);
 
         return {
           id: `${source}-${index}-${Math.round(image.getBoundingClientRect().top)}`,
           source,
           title,
           image,
-          container: getImageContainer(image),
+          container,
+          yearContext: yearContextForListing(image, root || container, title),
           pageUrl: window.location.href
         };
       })
-      .filter((listing) => listing.title.length > 6 && listing.container && isSupportedCardYear(listing.title));
+      .filter((listing) => listing.title.length > 6
+        && listing.container
+        && isSupportedCardYear(listing.yearContext || listing.title));
   }
 
   function titleFromEbaySearch() {
