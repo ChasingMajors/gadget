@@ -53,6 +53,16 @@
       || /\bwe.ve streamlined your search results\b/i.test(title);
   }
 
+  function firstCardYear(title) {
+    const match = String(title || "").match(/\b(19\d{2}|20\d{2})(?:\s*[-/]\s*\d{2,4})?\b/);
+    return match ? Number(match[1]) : null;
+  }
+
+  function isSupportedCardYear(title) {
+    const year = firstCardYear(title);
+    return year === null || year >= 1990;
+  }
+
   function cleanComcTitlePart(text) {
     return cleanTitle(text)
       .replace(/\bX[-\s]?Fractors?\b/gi, "Xfractors")
@@ -423,7 +433,7 @@
           pageUrl: window.location.href
         };
       })
-      .filter((listing) => listing.title.length > 6 && listing.container);
+      .filter((listing) => listing.title.length > 6 && listing.container && isSupportedCardYear(listing.title));
   }
 
   function titleFromEbaySearch() {
@@ -433,13 +443,13 @@
 
     const params = new URLSearchParams(window.location.search || "");
     const query = cleanTitle(params.get("_nkw") || "");
-    if (!isBadTitle(query)) {
+    if (!isBadTitle(query) && isSupportedCardYear(query)) {
       return query;
     }
 
     const input = document.querySelector("input[name='_nkw'], input[aria-label*='Search']");
     const inputTitle = cleanTitle(input?.value || input?.getAttribute("value") || "");
-    if (!isBadTitle(inputTitle)) {
+    if (!isBadTitle(inputTitle) && isSupportedCardYear(inputTitle)) {
       return inputTitle;
     }
 
@@ -449,6 +459,7 @@
   window.CMRarityParser = {
     findListings,
     titleFromEbaySearch,
-    getSource
+    getSource,
+    isSupportedCardYear
   };
 })();

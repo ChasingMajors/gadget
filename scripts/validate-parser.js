@@ -164,6 +164,21 @@ if (title !== expected) {
   process.exit(1);
 }
 
+if (context.window.CMRarityParser.isSupportedCardYear("1989 Upper Deck Ken Griffey Jr. Rookie #1")) {
+  console.error("Parser validation failed. Pre-1990 cards should be skipped.");
+  process.exit(1);
+}
+
+if (!context.window.CMRarityParser.isSupportedCardYear("1990 Topps Frank Thomas Rookie #414")) {
+  console.error("Parser validation failed. 1990 cards should remain supported.");
+  process.exit(1);
+}
+
+if (!context.window.CMRarityParser.isSupportedCardYear("Topps Chrome Refractor Basketball")) {
+  console.error("Parser validation failed. Listings without an explicit year should remain supported.");
+  process.exit(1);
+}
+
 const comcImage = makeElement({
   tag: "img",
   attrs: {
