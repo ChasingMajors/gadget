@@ -1,6 +1,6 @@
 # CM Rarity Gadget v4
 
-Chrome extension scaffold for Chasing Majors rarity intelligence on eBay and COMC listings.
+Chrome extension scaffold for Chasing Majors rarity intelligence on eBay, COMC, and Sportlots listings.
 
 ## Architecture
 
@@ -21,7 +21,7 @@ Chrome extension scaffold for Chasing Majors rarity intelligence on eBay and COM
 The extension calls:
 
 ```txt
-GET /rarity?q={encoded card title}&source={ebay|comc}&url={current page url}
+GET /rarity?q={encoded card title}&source={ebay|comc|sportlots}&url={current page url}
 ```
 
 Expected response:
@@ -153,7 +153,7 @@ Local ZIP build:
 npm run package:extension
 ```
 
-This creates `dist/cm-rarity-gadget-v4.0.5.zip`. Keep the unpacked extension folder path stable on each tester Mac so Chrome can reload updates without removing/re-adding the extension.
+This creates `dist/cm-rarity-gadget-v4.0.6.zip`. Keep the unpacked extension folder path stable on each tester Mac so Chrome can reload updates without removing/re-adding the extension.
 
 ## Validation
 

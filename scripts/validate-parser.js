@@ -614,4 +614,108 @@ if (comcUrlTitle !== expectedComcUrlTitle) {
   process.exit(1);
 }
 
+function sportlotsContext({ hostname = "www.sportlots.com", href, rowText }) {
+  const sportlotsImage = makeElement({
+    tag: "img",
+    attrs: {
+      width: 220,
+      height: 310,
+      src: "https://img.sportlots.com/cards/example.jpg"
+    }
+  });
+  sportlotsImage.alt = "";
+  sportlotsImage.src = sportlotsImage.attrs.src;
+  sportlotsImage.currentSrc = sportlotsImage.attrs.src;
+
+  const sportlotsLink = makeElement({
+    tag: "a",
+    text: rowText,
+    attrs: {
+      href: "https://www.sportlots.com/card/example",
+      title: rowText
+    },
+    children: [sportlotsImage]
+  });
+
+  const sportlotsCell = makeElement({
+    tag: "td",
+    text: rowText,
+    children: [sportlotsLink]
+  });
+
+  const sportlotsRow = makeElement({
+    tag: "tr",
+    children: [sportlotsCell]
+  });
+
+  return {
+    window: {
+      location: {
+        hostname,
+        href
+      },
+      getComputedStyle() {
+        return {
+          position: "relative"
+        };
+      },
+      CMRarityParser: null
+    },
+    document: {
+      body: makeElement({
+        children: [sportlotsRow]
+      }),
+      documentElement: {
+        dataset: {}
+      },
+      images: [sportlotsImage]
+    }
+  };
+}
+
+const sportlotsBaseballContext = sportlotsContext({
+  href: "https://www.sportlots.com/baseball/cards",
+  rowText: "1998 Ultra Gold Medallion"
+});
+vm.createContext(sportlotsBaseballContext);
+vm.runInContext(parserSource, sportlotsBaseballContext);
+
+const sportlotsBaseballTitle = sportlotsBaseballContext.window.CMRarityParser.findListings()[0]?.title;
+const expectedSportlotsBaseballTitle = "1998 Fleer Ultra Baseball - Gold Medallion";
+
+if (sportlotsBaseballTitle !== expectedSportlotsBaseballTitle) {
+  console.error(`Sportlots baseball parser validation failed. Expected "${expectedSportlotsBaseballTitle}" but got "${sportlotsBaseballTitle}"`);
+  process.exit(1);
+}
+
+const sportlotsFinestContext = sportlotsContext({
+  href: "https://www.sportlots.com/baseball/cards",
+  rowText: "1999 Finest Split Screen Right Refractors"
+});
+vm.createContext(sportlotsFinestContext);
+vm.runInContext(parserSource, sportlotsFinestContext);
+
+const sportlotsFinestTitle = sportlotsFinestContext.window.CMRarityParser.findListings()[0]?.title;
+const expectedSportlotsFinestTitle = "1999 Topps Finest Baseball - Split Screen Right Refractor";
+
+if (sportlotsFinestTitle !== expectedSportlotsFinestTitle) {
+  console.error(`Sportlots Finest parser validation failed. Expected "${expectedSportlotsFinestTitle}" but got "${sportlotsFinestTitle}"`);
+  process.exit(1);
+}
+
+const sportlotsBasketballContext = sportlotsContext({
+  href: "https://www.sportlots.com/basketball/cards",
+  rowText: "1998 Ultra Gold Medallion"
+});
+vm.createContext(sportlotsBasketballContext);
+vm.runInContext(parserSource, sportlotsBasketballContext);
+
+const sportlotsBasketballTitle = sportlotsBasketballContext.window.CMRarityParser.findListings()[0]?.title;
+const expectedSportlotsBasketballTitle = "1998-99 Fleer Ultra Basketball - Gold Medallion";
+
+if (sportlotsBasketballTitle !== expectedSportlotsBasketballTitle) {
+  console.error(`Sportlots basketball parser validation failed. Expected "${expectedSportlotsBasketballTitle}" but got "${sportlotsBasketballTitle}"`);
+  process.exit(1);
+}
+
 console.log("CM Rarity parser validation passed.");

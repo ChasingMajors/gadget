@@ -7,12 +7,16 @@
     {
       source: "comc",
       test: (host) => host.includes("comc.com")
+    },
+    {
+      source: "sportlots",
+      test: (host) => host.includes("sportlots.com")
     }
   ];
 
   function getSource() {
     const declaredSource = document.documentElement.dataset.cmSource || document.body?.dataset.cmSource;
-    if (declaredSource === "ebay" || declaredSource === "comc") {
+    if (declaredSource === "ebay" || declaredSource === "comc" || declaredSource === "sportlots") {
       return declaredSource;
     }
 
@@ -104,7 +108,24 @@
 
   function sportFromText(text) {
     const match = String(text || "").match(/\b(Basketball|Baseball|Football|Hockey|Soccer)\b/i);
-    return match ? match[1] : "";
+    return match ? match[1].charAt(0).toUpperCase() + match[1].slice(1).toLowerCase() : "";
+  }
+
+  function seasonYearForSport(yearText, sport) {
+    const year = firstCardYear(yearText);
+    if (!year) {
+      return "";
+    }
+
+    if (/^\d{4}\s*[-/]\s*\d{2,4}$/.test(String(yearText || "").trim())) {
+      return String(yearText).replace(/\s+/g, "");
+    }
+
+    if (/^(?:basketball|hockey)$/i.test(sport || "")) {
+      return `${year}-${String((year + 1) % 100).padStart(2, "0")}`;
+    }
+
+    return String(year);
   }
 
   let cachedEbaySport;
@@ -142,6 +163,108 @@
     }
 
     return cleanTitle(`${title} ${sport}`);
+  }
+
+  let cachedSportlotsSport;
+  function sportlotsSportFromContext(root) {
+    if (cachedSportlotsSport) {
+      return cachedSportlotsSport;
+    }
+
+    if (cachedSportlotsSport === undefined) {
+      const urlSport = sportFromText(window.location.href);
+      if (urlSport) {
+        cachedSportlotsSport = urlSport;
+        return cachedSportlotsSport;
+      }
+
+      const titleSport = sportFromText(document.title);
+      if (titleSport) {
+        cachedSportlotsSport = titleSport;
+        return cachedSportlotsSport;
+      }
+
+      const breadcrumbText = Array.from(document.querySelectorAll?.(".breadcrumbs, .breadcrumb, nav, h1, h2") || [])
+        .map((element) => cleanTitle(element?.textContent || ""))
+        .join(" ");
+      cachedSportlotsSport = sportFromText(breadcrumbText) || "";
+    }
+
+    return cachedSportlotsSport || sportFromText(root?.textContent || "");
+  }
+
+  function normalizeSportlotsProduct(rest) {
+    const productRules = [
+      [/^bowman'?s\s+best\b/i, "Bowman's Best"],
+      [/^bowman\s+best\b/i, "Bowman's Best"],
+      [/^fleer\s+ultra\b/i, "Fleer Ultra"],
+      [/^ultra\b/i, "Fleer Ultra"],
+      [/^topps\s+finest\b/i, "Topps Finest"],
+      [/^finest\b/i, "Topps Finest"],
+      [/^fleer\s+tradition\b/i, "Fleer Tradition"],
+      [/^tradition\b/i, "Fleer Tradition"],
+      [/^topps\s+chrome\b/i, "Topps Chrome"],
+      [/^chrome\b/i, "Topps Chrome"],
+      [/^topps\s+stadium\s+club\b/i, "Topps Stadium Club"],
+      [/^stadium\s+club\b/i, "Topps Stadium Club"],
+      [/^upper\s+deck\s+spx\b/i, "Upper Deck SPx"],
+      [/^spx\b/i, "Upper Deck SPx"],
+      [/^upper\s+deck\s+sp\b/i, "Upper Deck SP"],
+      [/^sp\b/i, "Upper Deck SP"]
+    ];
+
+    for (const [pattern, product] of productRules) {
+      const match = rest.match(pattern);
+      if (match) {
+        return {
+          product,
+          remainder: cleanTitle(rest.slice(match[0].length))
+        };
+      }
+    }
+
+    const fallback = rest.match(/^([A-Z][A-Za-z'&.]+(?:\s+[A-Z][A-Za-z'&.]+){0,2})\b/);
+    if (!fallback) {
+      return {
+        product: "",
+        remainder: rest
+      };
+    }
+
+    return {
+      product: fallback[1],
+      remainder: cleanTitle(rest.slice(fallback[1].length))
+    };
+  }
+
+  function normalizeSportlotsModifier(text) {
+    return cleanTitle(text)
+      .replace(/\bRefractors\b/gi, "Refractor")
+      .replace(/\bX[-\s]?Fractors?\b/gi, "X-Fractor");
+  }
+
+  function normalizeSportlotsTitle(title, root) {
+    const raw = cleanTitle(title)
+      .replace(/\b(?:single|card|cards|set|lot)\b$/i, "")
+      .trim();
+    const match = raw.match(/^\s*((?:19|20)\d{2}(?:\s*[-/]\s*\d{2,4})?|\d{2}\s*[-/]\s*\d{2})\s+(.+)$/);
+    if (!match) {
+      return raw;
+    }
+
+    const sport = sportlotsSportFromContext(root);
+    const year = seasonYearForSport(match[1], sport);
+    const { product, remainder } = normalizeSportlotsProduct(match[2]);
+    if (!year || !product) {
+      return sport && !new RegExp(`\\b${sport}\\b`, "i").test(raw) ? cleanTitle(`${raw} ${sport}`) : raw;
+    }
+
+    const modifier = normalizeSportlotsModifier(remainder);
+    return cleanTitle([
+      `${year} ${product}`,
+      sport,
+      modifier ? `- ${modifier}` : ""
+    ].filter(Boolean).join(" "));
   }
 
   function humanizeComcPathPart(part) {
@@ -268,6 +391,19 @@
           ".vim.x-item-title",
           ".x-item-title"
         ]
+      : source === "sportlots"
+        ? [
+            "tr",
+            ".card",
+            ".item",
+            ".set",
+            ".search-result",
+            ".product",
+            "li",
+            "article",
+            "main",
+            "body"
+          ]
       : [
           ".item",
           ".card",
@@ -353,6 +489,29 @@
     return fallback ? enrichComcTitle(fallback) : "";
   }
 
+  function sportlotsTitleForImage(image) {
+    const root = nearestListingRoot(image, "sportlots");
+    const cardLink = image.closest("a")
+      || root.querySelector("a[title]")
+      || root.querySelector("a");
+
+    const candidates = [
+      cardLink?.getAttribute?.("title"),
+      cardLink?.textContent,
+      image.getAttribute("title"),
+      image.alt,
+      image.getAttribute("aria-label"),
+      ...Array.from(root.querySelectorAll("a[title], td, .title, .item-title, h1, h2, h3"))
+        .map((element) => cleanTitle(element.getAttribute?.("title") || element.textContent || ""))
+    ]
+      .map(cleanTitle)
+      .filter((candidate) => !isBadTitle(candidate))
+      .filter((candidate) => /(?:19|20)\d{2}|\b\d{2}\s*[-/]\s*\d{2}\b/.test(candidate))
+      .sort((a, b) => b.length - a.length);
+
+    return candidates[0] ? normalizeSportlotsTitle(candidates[0], root) : "";
+  }
+
   function titleForImage(image, source) {
     if (source === "ebay") {
       const root = nearestListingRoot(image, source);
@@ -364,6 +523,10 @@
 
     if (source === "comc") {
       return comcTitleForImage(image);
+    }
+
+    if (source === "sportlots") {
+      return sportlotsTitleForImage(image);
     }
 
     const root = nearestListingRoot(image, source);
@@ -496,6 +659,7 @@
     findListings,
     titleFromEbaySearch,
     getSource,
-    isSupportedCardYear
+    isSupportedCardYear,
+    normalizeSportlotsTitle
   };
 })();

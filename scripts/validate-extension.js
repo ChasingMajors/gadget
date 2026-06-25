@@ -67,7 +67,7 @@ function checkManifest(manifest) {
   }
 
   const hostPermissions = manifest.host_permissions || [];
-  ["https://www.ebay.com/*", "https://www.comc.com/*", "https://api.chasingmajors.com/*"].forEach((permission) => {
+  ["https://www.ebay.com/*", "https://www.comc.com/*", "https://www.sportlots.com/*", "https://api.chasingmajors.com/*"].forEach((permission) => {
     if (!hostPermissions.includes(permission)) {
       errors.push(`manifest.json is missing host permission ${permission}`);
     }
