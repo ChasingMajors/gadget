@@ -359,6 +359,24 @@ if (comcListings.length !== 0) {
   process.exit(1);
 }
 
+[
+  "1998 Topps - [Base] #25",
+  "1998 Ultra - [Base] #370",
+  "1998 Upper Deck UD Choice - [Base] #323",
+  "1998 Metal Universe - [Base] #42",
+  "1998 Topps [Base] #25"
+].forEach((title) => {
+  if (!comcContext.window.CMRarityParser.isPlainComcBaseCardTitle(title)) {
+    console.error(`COMC plain base detector failed for "${title}"`);
+    process.exit(1);
+  }
+});
+
+if (comcContext.window.CMRarityParser.isPlainComcBaseCardTitle("1998 SPx - [Base] - Gold #1")) {
+  console.error("COMC plain base detector should keep [Base] - parallel cards.");
+  process.exit(1);
+}
+
 const comcAuctionImage = makeElement({
   tag: "img",
   attrs: {

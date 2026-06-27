@@ -8,6 +8,28 @@
     return hasAttachedMasterBadge || processedImages.has(listing.image) || !listing.title || listing.source === "unknown";
   }
 
+  function removeUnsupportedComcBaseBadges() {
+    if (window.CMRarityParser.getSource() !== "comc") {
+      return;
+    }
+
+    document.querySelectorAll(".cm-rarity-wrapper:not(.cm-rarity-master-wrapper)").forEach((wrapper) => {
+      const container = wrapper.parentElement;
+      const context = [
+        container?.innerText,
+        container?.textContent,
+        container?.querySelector?.("img")?.alt,
+        container?.querySelector?.("img")?.getAttribute?.("title"),
+        container?.querySelector?.("a[title]")?.getAttribute?.("title"),
+        container?.querySelector?.("a")?.textContent
+      ].filter(Boolean).join(" ");
+
+      if (window.CMRarityParser.isPlainComcBaseCardTitle?.(context)) {
+        wrapper.remove();
+      }
+    });
+  }
+
   async function loadRarityForListing(listing) {
     const session = await window.CMRarityStorage.getSession();
     const accountKey = session.token
@@ -171,6 +193,8 @@
   }
 
   function scan() {
+    removeUnsupportedComcBaseBadges();
+
     window.CMRarityParser.findListings()
       .filter((listing) => !shouldSkipListing(listing))
       .slice(0, 80)

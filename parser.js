@@ -612,8 +612,8 @@
 
   function isPlainComcBaseCardTitle(text) {
     const normalized = String(text || "").toLowerCase();
-    return /\s-\s+\[base\]\s+#/.test(normalized)
-      && !/\s-\s+\[base\]\s+-/.test(normalized);
+    return /\[\s*base\s*\]\s*#/.test(normalized)
+      && !/\[\s*base\s*\]\s*-/.test(normalized);
   }
 
   function isSupportedListing(listing) {
@@ -673,6 +673,7 @@
     findListings,
     titleFromEbaySearch,
     getSource,
+    isPlainComcBaseCardTitle,
     isSupportedCardYear,
     normalizeSportlotsTitle
   };
