@@ -353,11 +353,9 @@ vm.createContext(comcContext);
 vm.runInContext(parserSource, comcContext);
 
 const comcListings = comcContext.window.CMRarityParser.findListings();
-const comcTitle = comcListings[0]?.title;
-const expectedComc = "2025-26 Topps - [Base] #201 Cooper Flagg #/1,265,000 Basketball";
 
-if (comcTitle !== expectedComc) {
-  console.error(`COMC parser validation failed. Expected "${expectedComc}" but got "${comcTitle}"`);
+if (comcListings.length !== 0) {
+  console.error("COMC parser validation failed. Plain [Base] # cards should suppress the gadget.");
   process.exit(1);
 }
 

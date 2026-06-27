@@ -610,6 +610,20 @@
     ].filter(Boolean).join(" ");
   }
 
+  function isPlainComcBaseCardTitle(text) {
+    const normalized = String(text || "").toLowerCase();
+    return /\s-\s+\[base\]\s+#/.test(normalized)
+      && !/\s-\s+\[base\]\s+-/.test(normalized);
+  }
+
+  function isSupportedListing(listing) {
+    if (listing.source === "comc" && isPlainComcBaseCardTitle(`${listing.title} ${listing.yearContext}`)) {
+      return false;
+    }
+
+    return isSupportedCardYear(listing.yearContext || listing.title);
+  }
+
   function findListings() {
     const source = getSource();
 
@@ -632,7 +646,7 @@
       })
       .filter((listing) => listing.title.length > 6
         && listing.container
-        && isSupportedCardYear(listing.yearContext || listing.title));
+        && isSupportedListing(listing));
   }
 
   function titleFromEbaySearch() {
