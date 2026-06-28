@@ -364,7 +364,11 @@ if (comcListings.length !== 0) {
   "1998 Ultra - [Base] #370",
   "1998 Upper Deck UD Choice - [Base] #323",
   "1998 Metal Universe - [Base] #42",
-  "1998 Topps [Base] #25"
+  "1998 Topps [Base] #25",
+  "https://www.comc.com/Cards/Baseball/1998/Topps/25/Player_Name",
+  "https://img.comc.com/i/Baseball/1998/Ultra/370/Player-Name.jpg",
+  "https://www.comc.com/Cards/Baseball/1998/Upper_Deck_UD_Choice/323/Player_Name",
+  "https://img.comc.com/i/Basketball/1998/Metal-Universe/42/Player-Name.jpg"
 ].forEach((title) => {
   if (!comcContext.window.CMRarityParser.isPlainComcBaseCardTitle(title)) {
     console.error(`COMC plain base detector failed for "${title}"`);
