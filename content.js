@@ -1,8 +1,11 @@
 (function () {
+  const CONTENT_VERSION = "4.0.12";
   const processedImages = new WeakSet();
   const listingWidgets = new Set();
   const lookupPromises = new Map();
   let hasAttachedMasterBadge = false;
+
+  document.documentElement.dataset.cmRarityVersion = CONTENT_VERSION;
 
   function shouldSkipListing(listing) {
     return hasAttachedMasterBadge || processedImages.has(listing.image) || !listing.title || listing.source === "unknown";
@@ -15,16 +18,24 @@
 
     document.querySelectorAll(".cm-rarity-wrapper:not(.cm-rarity-master-wrapper)").forEach((wrapper) => {
       const container = wrapper.parentElement;
+      const elementContext = Array.from(container?.querySelectorAll?.("img, source, a") || [])
+        .map((element) => {
+          const names = typeof element.getAttributeNames === "function"
+            ? element.getAttributeNames()
+            : ["src", "srcset", "data-src", "data-original", "data-original-src", "data-lazy-src", "data-srcset", "href", "title"];
+
+          return [
+            element.currentSrc,
+            element.src,
+            element.href,
+            ...names.map((name) => element.getAttribute?.(name)),
+            ...(element.dataset ? Object.values(element.dataset) : [])
+          ].filter(Boolean).join(" ");
+        });
       const context = [
         container?.innerText,
         container?.textContent,
-        container?.querySelector?.("img")?.alt,
-        container?.querySelector?.("img")?.currentSrc,
-        container?.querySelector?.("img")?.src,
-        container?.querySelector?.("img")?.getAttribute?.("src"),
-        container?.querySelector?.("img")?.getAttribute?.("title"),
-        container?.querySelector?.("a[title]")?.getAttribute?.("title"),
-        container?.querySelector?.("a")?.textContent
+        ...elementContext
       ].filter(Boolean).join(" ");
 
       if (window.CMRarityParser.isPlainComcBaseCardTitle?.(context)) {

@@ -624,10 +624,50 @@
     return /\/(?:cards|i)\/(?:basketball|baseball|football|hockey|soccer)\/(?:19|20)\d{2}(?:[-/]\d{2,4})?\/[^/\s?]+---base\/\d+\b/i.test(String(url || ""));
   }
 
+  function urlContextFromElement(element) {
+    if (!element) {
+      return "";
+    }
+
+    const attributeNames = typeof element.getAttributeNames === "function"
+      ? element.getAttributeNames()
+      : [
+          "src",
+          "currentSrc",
+          "srcset",
+          "data-src",
+          "data-original",
+          "data-original-src",
+          "data-lazy-src",
+          "data-srcset",
+          "href"
+        ];
+    const attributes = attributeNames.map((name) => element.getAttribute?.(name));
+    const datasetValues = element.dataset ? Object.values(element.dataset) : [];
+
+    return [
+      element.currentSrc,
+      element.src,
+      element.href,
+      ...attributes,
+      ...datasetValues
+    ].filter(Boolean).join(" ");
+  }
+
+  function imageUrlContext(image) {
+    const container = image?.closest?.("picture") || image?.parentElement;
+    const relatedElements = [
+      image,
+      image?.closest?.("a"),
+      container,
+      ...Array.from(container?.querySelectorAll?.("source, img, a") || [])
+    ].filter(Boolean);
+
+    return relatedElements.map(urlContextFromElement).filter(Boolean).join(" ");
+  }
+
   function isUnsupportedComcBaseImage(image) {
-    return isPlainComcBaseImageUrl(image?.currentSrc)
-      || isPlainComcBaseImageUrl(image?.src)
-      || isPlainComcBaseImageUrl(image?.getAttribute?.("src"));
+    return isPlainComcBaseImageUrl(imageUrlContext(image));
   }
 
   function isSupportedListing(listing) {
@@ -690,6 +730,7 @@
     getSource,
     isPlainComcBaseCardTitle,
     isPlainComcBaseImageUrl,
+    isUnsupportedComcBaseImage,
     isSupportedCardYear,
     normalizeSportlotsTitle
   };

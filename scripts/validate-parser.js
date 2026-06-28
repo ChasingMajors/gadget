@@ -429,6 +429,24 @@ if (!comcContext.window.CMRarityParser.isPlainComcBaseImageUrl("https://img.comc
   process.exit(1);
 }
 
+const comcLazyBasePathImage = makeElement({
+  tag: "img",
+  attrs: {
+    width: 220,
+    height: 310,
+    src: "https://img.comc.com/placeholder.png",
+    "data-src": "https://img.comc.com/i/Football/1998/Metal-Universe---Base/42/Emmitt-Smith.jpg?id=af5b0f28-3e5b-4a49-889e-d67d39fcabc1&size=biggerthumb"
+  }
+});
+comcLazyBasePathImage.alt = "";
+comcLazyBasePathImage.src = comcLazyBasePathImage.attrs.src;
+comcLazyBasePathImage.currentSrc = comcLazyBasePathImage.attrs.src;
+
+if (!comcContext.window.CMRarityParser.isUnsupportedComcBaseImage(comcLazyBasePathImage)) {
+  console.error("COMC base image detector failed for lazy image attributes.");
+  process.exit(1);
+}
+
 [
   "https://img.comc.com/i/Football/1998/Bowman-Chrome---Base---Interstate/105/Emmitt-Smith.jpg?id=a323c823-1bf7-4c75-828c-2bc7accaeb13&size=biggerthumb",
   "https://img.comc.com/i/Football/1998/Pacific-Crown-Royale---Pillars-of-the-Game/4/Emmitt-Smith.jpg?id=790f2b3d-4307-4607-876f-51d30b1d672b&size=biggerthumb"
