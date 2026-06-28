@@ -19,6 +19,9 @@
         container?.innerText,
         container?.textContent,
         container?.querySelector?.("img")?.alt,
+        container?.querySelector?.("img")?.currentSrc,
+        container?.querySelector?.("img")?.src,
+        container?.querySelector?.("img")?.getAttribute?.("src"),
         container?.querySelector?.("img")?.getAttribute?.("title"),
         container?.querySelector?.("a[title]")?.getAttribute?.("title"),
         container?.querySelector?.("a")?.textContent

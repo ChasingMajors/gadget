@@ -258,6 +258,52 @@ if (oldContext.window.CMRarityParser.findListings().length !== 0) {
   process.exit(1);
 }
 
+const comcBasePathImage = makeElement({
+  tag: "img",
+  attrs: {
+    width: 220,
+    height: 310,
+    src: "https://img.comc.com/i/Football/1998/Metal-Universe---Base/42/Emmitt-Smith.jpg?id=af5b0f28-3e5b-4a49-889e-d67d39fcabc1&size=biggerthumb"
+  }
+});
+comcBasePathImage.alt = "";
+comcBasePathImage.src = comcBasePathImage.attrs.src;
+comcBasePathImage.currentSrc = comcBasePathImage.attrs.src;
+
+const comcBasePathContext = {
+  URL,
+  window: {
+    URL,
+    location: {
+      hostname: "www.comc.com",
+      href: "https://www.comc.com/Cards/Football/1998/Metal-Universe---Base/42/Emmitt_Smith"
+    },
+    getComputedStyle() {
+      return {
+        position: "relative"
+      };
+    },
+    CMRarityParser: null
+  },
+  document: {
+    body: makeElement({
+      children: [comcBasePathImage]
+    }),
+    documentElement: {
+      dataset: {}
+    },
+    images: [comcBasePathImage]
+  }
+};
+
+vm.createContext(comcBasePathContext);
+vm.runInContext(parserSource, comcBasePathContext);
+
+if (comcBasePathContext.window.CMRarityParser.findListings().length !== 0) {
+  console.error("COMC parser validation failed. Base image path should suppress the gadget before title parsing.");
+  process.exit(1);
+}
+
 const comcImage = makeElement({
   tag: "img",
   attrs: {
@@ -378,12 +424,21 @@ if (comcContext.window.CMRarityParser.isPlainComcBaseCardTitle("1998 SPx - [Base
   process.exit(1);
 }
 
+if (!comcContext.window.CMRarityParser.isPlainComcBaseImageUrl("https://img.comc.com/i/Football/1998/Metal-Universe---Base/42/Emmitt-Smith.jpg?id=af5b0f28-3e5b-4a49-889e-d67d39fcabc1&size=biggerthumb")) {
+  console.error("COMC base image URL detector failed for the live base path.");
+  process.exit(1);
+}
+
 [
   "https://img.comc.com/i/Football/1998/Bowman-Chrome---Base---Interstate/105/Emmitt-Smith.jpg?id=a323c823-1bf7-4c75-828c-2bc7accaeb13&size=biggerthumb",
   "https://img.comc.com/i/Football/1998/Pacific-Crown-Royale---Pillars-of-the-Game/4/Emmitt-Smith.jpg?id=790f2b3d-4307-4607-876f-51d30b1d672b&size=biggerthumb"
 ].forEach((title) => {
   if (comcContext.window.CMRarityParser.isPlainComcBaseCardTitle(title)) {
     console.error(`COMC plain base detector should keep "${title}"`);
+    process.exit(1);
+  }
+  if (comcContext.window.CMRarityParser.isPlainComcBaseImageUrl(title)) {
+    console.error(`COMC base image URL detector should keep "${title}"`);
     process.exit(1);
   }
 });

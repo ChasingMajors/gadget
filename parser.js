@@ -615,9 +615,19 @@
     const normalized = raw.toLowerCase();
     const plainBaseLabel = /\[\s*base\s*\]\s*#/.test(normalized)
       && !/\[\s*base\s*\]\s*-/.test(normalized);
-    const plainBaseUrl = /\/(?:cards|i)\/(?:basketball|baseball|football|hockey|soccer)\/(?:19|20)\d{2}(?:[-/]\d{2,4})?\/[^/\s?]+---base\/\d+\b/i.test(raw);
+    const plainBaseUrl = isPlainComcBaseImageUrl(raw);
 
     return plainBaseLabel || plainBaseUrl;
+  }
+
+  function isPlainComcBaseImageUrl(url) {
+    return /\/(?:cards|i)\/(?:basketball|baseball|football|hockey|soccer)\/(?:19|20)\d{2}(?:[-/]\d{2,4})?\/[^/\s?]+---base\/\d+\b/i.test(String(url || ""));
+  }
+
+  function isUnsupportedComcBaseImage(image) {
+    return isPlainComcBaseImageUrl(image?.currentSrc)
+      || isPlainComcBaseImageUrl(image?.src)
+      || isPlainComcBaseImageUrl(image?.getAttribute?.("src"));
   }
 
   function isSupportedListing(listing) {
@@ -633,6 +643,7 @@
 
     return Array.from(document.images)
       .filter(isLikelyCardImage)
+      .filter((image) => source !== "comc" || !isUnsupportedComcBaseImage(image))
       .map((image, index) => {
         const title = titleForImage(image, source);
         const root = nearestListingRoot(image, source);
@@ -678,6 +689,7 @@
     titleFromEbaySearch,
     getSource,
     isPlainComcBaseCardTitle,
+    isPlainComcBaseImageUrl,
     isSupportedCardYear,
     normalizeSportlotsTitle
   };
