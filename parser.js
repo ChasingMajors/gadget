@@ -615,7 +615,7 @@
     const normalized = raw.toLowerCase();
     const plainBaseLabel = /\[\s*base\s*\]\s*#/.test(normalized)
       && !/\[\s*base\s*\]\s*-/.test(normalized);
-    const plainBaseUrl = /\/(?:cards|i)\/(?:basketball|baseball|football|hockey|soccer)\/(?:19|20)\d{2}(?:[-/]\d{2,4})?\/(?:topps|ultra|upper[-_%20 ]deck[-_%20 ]ud[-_%20 ]choice|metal[-_%20 ]universe)\/\d+\b/i.test(raw);
+    const plainBaseUrl = /\/(?:cards|i)\/(?:basketball|baseball|football|hockey|soccer)\/(?:19|20)\d{2}(?:[-/]\d{2,4})?\/[^/\s?]+---base\/\d+\b/i.test(raw);
 
     return plainBaseLabel || plainBaseUrl;
   }

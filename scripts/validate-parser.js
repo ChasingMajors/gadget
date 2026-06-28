@@ -365,10 +365,7 @@ if (comcListings.length !== 0) {
   "1998 Upper Deck UD Choice - [Base] #323",
   "1998 Metal Universe - [Base] #42",
   "1998 Topps [Base] #25",
-  "https://www.comc.com/Cards/Baseball/1998/Topps/25/Player_Name",
-  "https://img.comc.com/i/Baseball/1998/Ultra/370/Player-Name.jpg",
-  "https://www.comc.com/Cards/Baseball/1998/Upper_Deck_UD_Choice/323/Player_Name",
-  "https://img.comc.com/i/Basketball/1998/Metal-Universe/42/Player-Name.jpg"
+  "https://img.comc.com/i/Football/1998/Metal-Universe---Base/42/Emmitt-Smith.jpg?id=af5b0f28-3e5b-4a49-889e-d67d39fcabc1&size=biggerthumb"
 ].forEach((title) => {
   if (!comcContext.window.CMRarityParser.isPlainComcBaseCardTitle(title)) {
     console.error(`COMC plain base detector failed for "${title}"`);
@@ -380,6 +377,16 @@ if (comcContext.window.CMRarityParser.isPlainComcBaseCardTitle("1998 SPx - [Base
   console.error("COMC plain base detector should keep [Base] - parallel cards.");
   process.exit(1);
 }
+
+[
+  "https://img.comc.com/i/Football/1998/Bowman-Chrome---Base---Interstate/105/Emmitt-Smith.jpg?id=a323c823-1bf7-4c75-828c-2bc7accaeb13&size=biggerthumb",
+  "https://img.comc.com/i/Football/1998/Pacific-Crown-Royale---Pillars-of-the-Game/4/Emmitt-Smith.jpg?id=790f2b3d-4307-4607-876f-51d30b1d672b&size=biggerthumb"
+].forEach((title) => {
+  if (comcContext.window.CMRarityParser.isPlainComcBaseCardTitle(title)) {
+    console.error(`COMC plain base detector should keep "${title}"`);
+    process.exit(1);
+  }
+});
 
 const comcAuctionImage = makeElement({
   tag: "img",
