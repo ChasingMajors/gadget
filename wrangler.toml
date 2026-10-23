@@ -9,3 +9,15 @@ enabled = true
 binding = "CM_DB"
 database_name = "cm-rarity-prod"
 database_id = "5a66493d-f2e7-4ee5-8ebb-62eb1fb497ef"
+
+[[d1_databases]]
+binding = "CV_SEARCH"
+database_name = "cm-cv-search"
+database_id = "9f264f1a-5a3b-4db5-b223-2c4c33af2c0f"
+
+# Rate limit for /cv-search: 20 requests / 10s per client IP (anti-scrape, free tier).
+[[unsafe.bindings]]
+name = "CV_SEARCH_RL"
+type = "ratelimit"
+namespace_id = "1101"
+simple = { limit = 20, period = 10 }

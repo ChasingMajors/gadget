@@ -337,6 +337,91 @@ async function createCheckoutSession(request, env, options = {}) {
   };
 }
 
+// CV Checklist Vault search — queries the dedicated cm-cv-search D1 (FTS5).
+// Isolated from /rarity, auth, Stripe, and the CM_DB binding.
+async function handleCvSearch(request, url, env) {
+  const q = (url.searchParams.get("q") || "").trim();
+  const sport = (url.searchParams.get("sport") || "").trim().toLowerCase();
+  const page = Math.max(1, parseInt(url.searchParams.get("page") || "1", 10) || 1);
+  const PAGE_SIZE = 50;
+  const MAX_PAGES = 20;
+
+  if (!env.CV_SEARCH) {
+    return json({ ok: false, error: "cv-search not configured", results: [], total: 0 }, 503);
+  }
+
+  // Anti-scrape rate limit: 20 req / 10s per client IP. Fails OPEN so a limiter
+  // error never breaks search for real users.
+  if (env.CV_SEARCH_RL) {
+    try {
+      const ip = request.headers.get("CF-Connecting-IP") || "anon";
+      const { success } = await env.CV_SEARCH_RL.limit({ key: ip });
+      if (!success) {
+        return json({ ok: false, error: "Too many requests. Please slow down.", results: [], total: 0 }, 429);
+      }
+    } catch (e) { /* fail open */ }
+  }
+
+  if (q.length < 2) {
+    return json({ ok: true, results: [], total: 0, page: 1, pageSize: PAGE_SIZE, totalPages: 0 });
+  }
+
+  const safePage = Math.min(page, MAX_PAGES);
+  const offset = (safePage - 1) * PAGE_SIZE;
+
+  const tokens = q
+    .toLowerCase()
+    .replace(/["*():^-]/g, " ")
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 8);
+  if (!tokens.length) {
+    return json({ ok: true, results: [], total: 0, page: 1, pageSize: PAGE_SIZE, totalPages: 0 });
+  }
+  const matchExpr = tokens.map((t, i) => (i === tokens.length - 1 ? `${t}*` : t)).join(" AND ");
+  const sportFilter = sport && sport !== "all" ? "AND c.sport = ?" : "";
+  const countCap = MAX_PAGES * PAGE_SIZE;
+
+  const countSql =
+    "SELECT COUNT(*) AS n FROM (" +
+    "SELECT c.rowid FROM cards_fts f JOIN cards c ON c.rowid = f.rowid " +
+    "WHERE cards_fts MATCH ? " + sportFilter + " LIMIT ?)";
+  const pageSql =
+    "SELECT c.type, c.sport, c.code, c.year, c.player, c.team, c.card_no, c.tag, " +
+    "p.displayName, p.manufacturer, p.product " +
+    "FROM cards_fts f JOIN cards c ON c.rowid = f.rowid " +
+    "LEFT JOIN products p ON p.code = c.code AND p.sport = c.sport " +
+    "WHERE cards_fts MATCH ? " + sportFilter + " ORDER BY c.rowid LIMIT ? OFFSET ?";
+
+  try {
+    const countArgs = sportFilter ? [matchExpr, sport, countCap] : [matchExpr, countCap];
+    const pageArgs = sportFilter ? [matchExpr, sport, PAGE_SIZE, offset] : [matchExpr, PAGE_SIZE, offset];
+    const countRow = await env.CV_SEARCH.prepare(countSql).bind(...countArgs).first();
+    const total = countRow ? Number(countRow.n) : 0;
+    const { results } = await env.CV_SEARCH.prepare(pageSql).bind(...pageArgs).all();
+    const rows = (results || []).map((r) => ({
+      term: r.player || r.displayName || "",
+      type: r.type,
+      sport: r.sport,
+      code: r.code,
+      displayName: r.displayName || "",
+      year: r.year || "",
+      manufacturer: r.manufacturer || "",
+      product: r.product || "",
+      section: "",
+      subset: "",
+      card_no: r.card_no || "",
+      player: r.player || "",
+      team: r.team || "",
+      tag: r.tag || ""
+    }));
+    const totalPages = total ? Math.min(Math.ceil(total / PAGE_SIZE), MAX_PAGES) : 0;
+    return json({ ok: true, results: rows, total, page: safePage, pageSize: PAGE_SIZE, totalPages, capped: total >= countCap });
+  } catch (err) {
+    return json({ ok: false, error: "cv-search unavailable", results: [], total: 0 }, 503);
+  }
+}
+
 async function handleCheckout(request, env) {
   const body = await request.json().catch(() => ({}));
   const checkout = await createCheckoutSession(request, env, {
@@ -721,6 +806,10 @@ export default {
 
     if (url.pathname === "/rarity") {
       return handleRarity(request, url, env);
+    }
+
+    if (url.pathname === "/cv-search" && request.method === "GET") {
+      return handleCvSearch(request, url, env);
     }
 
     if (url.pathname === "/billing/checkout" && request.method === "POST") {
