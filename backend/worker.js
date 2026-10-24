@@ -339,7 +339,7 @@ async function createCheckoutSession(request, env, options = {}) {
 
 // CV Checklist Vault search — queries the dedicated cm-cv-search D1 (FTS5).
 // Isolated from /rarity, auth, Stripe, and the CM_DB binding.
-async function handleCvSearch(request, url, env) {
+async function handleCvSearch(request, url, env, ctx) {
   const q = (url.searchParams.get("q") || "").trim();
   const sport = (url.searchParams.get("sport") || "").trim().toLowerCase();
   const page = Math.max(1, parseInt(url.searchParams.get("page") || "1", 10) || 1);
@@ -378,14 +378,29 @@ async function handleCvSearch(request, url, env) {
   if (!tokens.length) {
     return json({ ok: true, results: [], total: 0, page: 1, pageSize: PAGE_SIZE, totalPages: 0 });
   }
+
+  // Edge cache: popular/repeated queries are served from the Cloudflare Worker
+  // Cache API and cost ZERO D1 reads. Key is a normalized GET URL built from the
+  // canonical q + sport + page so equivalent queries collapse to one cache entry.
+  const cache = caches.default;
+  const normUrl = new URL(url.origin + "/cv-search");
+  normUrl.searchParams.set("q", q.toLowerCase());
+  normUrl.searchParams.set("sport", sport && sport !== "all" ? sport : "all");
+  normUrl.searchParams.set("page", String(safePage));
+  const cacheKey = new Request(normUrl.toString(), { method: "GET" });
+
+  const cached = await cache.match(cacheKey);
+  if (cached) {
+    // Cache HIT — return the stored JSON without touching D1.
+    return cached;
+  }
+
   const matchExpr = tokens.map((t, i) => (i === tokens.length - 1 ? `${t}*` : t)).join(" AND ");
   const sportFilter = sport && sport !== "all" ? "AND c.sport = ?" : "";
-  const countCap = MAX_PAGES * PAGE_SIZE;
 
-  const countSql =
-    "SELECT COUNT(*) AS n FROM (" +
-    "SELECT c.rowid FROM cards_fts f JOIN cards c ON c.rowid = f.rowid " +
-    "WHERE cards_fts MATCH ? " + sportFilter + " LIMIT ?)";
+  // Fetch PAGE_SIZE + 1 rows: the extra row (if present) signals a next page
+  // WITHOUT a separate COUNT(*) query. No exact total is needed.
+  const fetchLimit = PAGE_SIZE + 1;
   const pageSql =
     "SELECT c.type, c.sport, c.code, c.year, c.player, c.team, c.card_no, c.tag, " +
     "p.displayName, p.manufacturer, p.product " +
@@ -394,12 +409,12 @@ async function handleCvSearch(request, url, env) {
     "WHERE cards_fts MATCH ? " + sportFilter + " ORDER BY c.rowid LIMIT ? OFFSET ?";
 
   try {
-    const countArgs = sportFilter ? [matchExpr, sport, countCap] : [matchExpr, countCap];
-    const pageArgs = sportFilter ? [matchExpr, sport, PAGE_SIZE, offset] : [matchExpr, PAGE_SIZE, offset];
-    const countRow = await env.CV_SEARCH.prepare(countSql).bind(...countArgs).first();
-    const total = countRow ? Number(countRow.n) : 0;
+    const pageArgs = sportFilter ? [matchExpr, sport, fetchLimit, offset] : [matchExpr, fetchLimit, offset];
     const { results } = await env.CV_SEARCH.prepare(pageSql).bind(...pageArgs).all();
-    const rows = (results || []).map((r) => ({
+    const fetched = results || [];
+    const hasMore = fetched.length > PAGE_SIZE;
+    const pageRows = fetched.slice(0, PAGE_SIZE);
+    const rows = pageRows.map((r) => ({
       term: r.player || r.displayName || "",
       type: r.type,
       sport: r.sport,
@@ -415,8 +430,30 @@ async function handleCvSearch(request, url, env) {
       team: r.team || "",
       tag: r.tag || ""
     }));
-    const totalPages = total ? Math.min(Math.ceil(total / PAGE_SIZE), MAX_PAGES) : 0;
-    return json({ ok: true, results: rows, total, page: safePage, pageSize: PAGE_SIZE, totalPages, capped: total >= countCap });
+    // Derive total/totalPages cheaply so the frontend contract is preserved
+    // (no second COUNT query). total is a floor, not an exact count; totalPages
+    // enables the "Next" control exactly when another page exists.
+    const total = offset + rows.length + (hasMore ? 1 : 0);
+    const totalPages = hasMore ? Math.min(safePage + 1, MAX_PAGES) : safePage;
+    const payload = { ok: true, results: rows, total, page: safePage, pageSize: PAGE_SIZE, totalPages, hasMore };
+
+    // Cacheable response: 5-minute edge TTL. Only ok:true 200 responses are
+    // cached; errors (429/503) below are never cached. CORS headers mirror json().
+    const body = JSON.stringify(payload);
+    const cacheable = new Response(body, {
+      status: 200,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+        "Access-Control-Allow-Headers": "Accept, Content-Type, Authorization",
+        "Cache-Control": "public, max-age=300",
+        "Content-Type": "application/json; charset=utf-8"
+      }
+    });
+    if (ctx && typeof ctx.waitUntil === "function") {
+      ctx.waitUntil(cache.put(cacheKey, cacheable.clone()));
+    }
+    return cacheable;
   } catch (err) {
     return json({ ok: false, error: "cv-search unavailable", results: [], total: 0 }, 503);
   }
@@ -756,7 +793,7 @@ async function handleBillingSuccess(request, env) {
 }
 
 export default {
-  async fetch(request, env) {
+  async fetch(request, env, ctx) {
     const url = new URL(request.url);
 
     if (request.method === "OPTIONS") {
@@ -809,7 +846,7 @@ export default {
     }
 
     if (url.pathname === "/cv-search" && request.method === "GET") {
-      return handleCvSearch(request, url, env);
+      return handleCvSearch(request, url, env, ctx);
     }
 
     if (url.pathname === "/billing/checkout" && request.method === "POST") {
