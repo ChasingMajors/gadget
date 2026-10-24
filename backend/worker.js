@@ -389,10 +389,19 @@ async function handleCvSearch(request, url, env, ctx) {
   normUrl.searchParams.set("page", String(safePage));
   const cacheKey = new Request(normUrl.toString(), { method: "GET" });
 
+  // Normalize hit headers too: legacy cached responses may retain no-store.
+  function withCacheHeaders(response, state) {
+    const headers = new Headers(response.headers);
+    headers.set("Cache-Control", "public, max-age=300");
+    headers.set("X-CV-Cache", state);
+    headers.set("Access-Control-Expose-Headers", "X-CV-Cache");
+    return new Response(response.body, { status: 200, headers });
+  }
   const cached = await cache.match(cacheKey);
-  if (cached) {
-    // Cache HIT — return the stored JSON without touching D1.
-    return cached;
+  if (cached && cached.status === 200) {
+    const payload = await cached.clone().json().catch(() => null);
+    // Never serve a stale error or malformed entry as a successful cache hit.
+    if (payload && payload.ok === true) return withCacheHeaders(cached, "HIT");
   }
 
   const matchExpr = tokens.map((t, i) => (i === tokens.length - 1 ? `${t}*` : t)).join(" AND ");
@@ -440,7 +449,7 @@ async function handleCvSearch(request, url, env, ctx) {
     // Cacheable response: 5-minute edge TTL. Only ok:true 200 responses are
     // cached; errors (429/503) below are never cached. CORS headers mirror json().
     const body = JSON.stringify(payload);
-    const cacheable = new Response(body, {
+    const cacheable = withCacheHeaders(new Response(body, {
       status: 200,
       headers: {
         "Access-Control-Allow-Origin": "*",
@@ -449,7 +458,7 @@ async function handleCvSearch(request, url, env, ctx) {
         "Cache-Control": "public, max-age=300",
         "Content-Type": "application/json; charset=utf-8"
       }
-    });
+    }), "MISS");
     if (ctx && typeof ctx.waitUntil === "function") {
       ctx.waitUntil(cache.put(cacheKey, cacheable.clone()));
     }
