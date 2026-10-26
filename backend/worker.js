@@ -387,6 +387,7 @@ async function handleCvSearch(request, url, env, ctx) {
   normUrl.searchParams.set("q", q.toLowerCase());
   normUrl.searchParams.set("sport", sport && sport !== "all" ? sport : "all");
   normUrl.searchParams.set("page", String(safePage));
+  normUrl.searchParams.set("prv_signal", "1"); // isolate the additive response contract
   const cacheKey = new Request(normUrl.toString(), { method: "GET" });
 
   // Normalize hit headers too: legacy cached responses may retain no-store.
@@ -439,6 +440,72 @@ async function handleCvSearch(request, url, env, ctx) {
       team: r.team || "",
       tag: r.tag || ""
     }));
+    // Same unique normalized DisplayName+sport join as the homepage. The public
+    // catalog bridges CV identities to PRV codes; codes are never assumed equal.
+    // Only product results receive availability, never measurements on card rows.
+    const productRows = rows.filter(r => r.type === "product");
+    if (productRows.length) {
+      const norm = v => String(v == null ? "" : v).toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+      const identity = (name, sport) => norm(name) + "|" + norm(sport);
+      for (const r of productRows) Object.assign(r, {
+        has_prv: false, prv_row_count: 0, prv_status: "unavailable"
+      });
+      try {
+        const indexKey = new Request("https://app.chasingmajors.com/data/v2/vault/index.json");
+        let indexResponse = await cache.match(indexKey);
+        if (!indexResponse) {
+          const upstream = await fetch(indexKey, { signal: AbortSignal.timeout(1500) });
+          if (!upstream.ok) throw new Error("PRV catalog unavailable");
+          const catalog = await upstream.json();
+          if (!Array.isArray(catalog.index) || catalog.index.length > 5000) throw new Error("Invalid PRV catalog");
+          indexResponse = new Response(JSON.stringify(catalog), { headers: {
+            "Content-Type": "application/json", "Cache-Control": "public, max-age=300"
+          }});
+          if (ctx && typeof ctx.waitUntil === "function") ctx.waitUntil(cache.put(indexKey, indexResponse.clone()));
+        }
+        const catalog = await indexResponse.json();
+        if (!Array.isArray(catalog.index) || catalog.index.length > 5000) throw new Error("Invalid PRV catalog");
+        const identities = new Map();
+        for (const e of catalog.index) {
+          const key = identity(e.DisplayName, e.sport);
+          if (!e.DisplayName || !e.sport || !e.Code) continue;
+          identities.set(key, identities.has(key) ? null : e);
+        }
+        const matches = new Map();
+        for (const r of productRows) {
+          const entry = identities.get(identity(r.displayName, r.sport));
+          r.prv_status = identities.has(identity(r.displayName, r.sport)) && !entry ? "ambiguous" : "none";
+          if (!entry || !Number.isInteger(entry.row_count) || entry.row_count <= 0) continue;
+          r.prv_status = "not_indexed";
+          r.prv_code = entry.Code;
+          matches.set(JSON.stringify([entry.Code, entry.sport]), entry);
+        }
+        if (matches.size) {
+          const entries = [...matches.values()];
+          // Composite primary-key probes: at most one lookup for this page, no
+          // COUNT, row-table scan, or query per result. Counts are sync metadata.
+          const sql = entries.map(() => "SELECT code,sport,row_count,meta_json FROM search_sync_state " +
+            "WHERE namespace = 'prv' AND code = ? AND sport = ?").join(" UNION ALL ");
+          const args = entries.flatMap(e => [e.Code, e.sport]); // <= 100 bindings for 50 products
+          const summary = await env.CV_SEARCH.prepare(sql).bind(...args).all();
+          const indexed = new Map((summary.results || []).map(e => [JSON.stringify([e.code, e.sport]), e]));
+          for (const r of productRows) {
+            const entry = identities.get(identity(r.displayName, r.sport));
+            if (!entry || !matches.has(JSON.stringify([entry.Code, entry.sport]))) continue;
+            const hit = indexed.get(JSON.stringify([entry.Code, entry.sport]));
+            const meta = hit ? JSON.parse(hit.meta_json) : null;
+            if (hit && hit.row_count === entry.row_count &&
+                identity(meta.displayName, meta.sport) === identity(r.displayName, r.sport)) {
+              r.has_prv = true; r.prv_row_count = hit.row_count; r.prv_status = "available";
+            }
+          }
+        }
+      } catch (err) {
+        // PRV failure must not hide CV results or claim confirmed absence.
+        for (const r of productRows) if (r.prv_status === "not_indexed") r.prv_status = "unavailable";
+      }
+    }
     // Derive total/totalPages cheaply so the frontend contract is preserved
     // (no second COUNT query). total is a floor, not an exact count; totalPages
     // enables the "Next" control exactly when another page exists.
